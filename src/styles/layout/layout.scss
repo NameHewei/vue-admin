@@ -1,0 +1,64 @@
+$headerH: 55px;
+$sideW: 200px;
+$footerH: 30px;
+$bg:#2d3a4b;
+$borderC: #897537;
+
+.main-layout{
+    position: relative;
+    height: 100%;
+    background: #25282c url("../../assets/e4.png") no-repeat center/cover; 
+
+    .layout-header{
+        height: $headerH;
+        background-color: rgba(#333, .3);    
+    }
+    .layout-content-container{
+        position: absolute;
+        top: $headerH;
+        bottom: 0;
+        width: 100%;
+        overflow: hidden;
+    }
+    .layout-sidebar{
+        position: absolute;
+        height: 100%;
+        width: $sideW;
+        overflow: auto;
+        background-color: rgba(#333, .3);  
+    }
+
+    .layout-content{
+        position: absolute;
+        left: $sideW;
+        right: 0;
+        top: 1px;
+        bottom: $footerH;
+        padding: 10px;
+        overflow: auto;
+        .layout-content-inner{
+            min-width: 800px;
+        }
+    }
+
+    .layout-footer{
+        position: absolute;
+        left: $sideW;
+        right: 0;
+        bottom: 0;
+        height: $footerH;
+        line-height: $footerH;
+        text-align: center;
+        border-top: solid 1px $borderC;
+        color: #c5c5c5;
+        font-size: 14px;
+        background-color: rgba(#333, .3);  
+        a{
+            text-decoration: underline;
+        }
+    }
+}
+
+
+
+

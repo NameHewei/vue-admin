@@ -1,0 +1,83 @@
+$bg:#2d3a4b;
+$dark_gray:#889aa4;
+$light_gray:#eee;
+
+.login-part{
+    padding-top:20px;
+    .auto-login{
+        margin-bottom:10px;
+        color:#fff;
+    }
+}
+
+.login-container {
+    position: fixed;
+    height: 100%;
+    width:100%;
+    background: $bg url("../../../static/img/login-bg-2.jpg") no-repeat center/cover;
+    .login-inner{
+        position: absolute;
+        z-index: 5;
+        left: 50%;
+        top: 20%;
+        margin-left: -160px;
+        padding: 5px 20px;
+        width: 320px;
+        height: 290px;
+        color: #fff;
+        border-radius: 5px;
+        background: linear-gradient(rgba(100, 100, 100, .4), rgba(200, 200, 200, .7));
+        
+        h1 {
+            height: 80px;
+            padding-top: 20px;
+            font-size: 21px;
+            text-align: center;
+            color: #fff;
+            background: transparent;
+        }
+        >div{
+            position: relative;
+            margin: 10px 0;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 10px;
+            // border: #394453 solid 1px;
+            background-color: #fff;
+            border-radius: 4px;
+        }
+        >div:last-child{
+            margin-top: 30px;
+            text-align: center;
+            border-radius: 4px;
+            background-color: #409fff;
+            border: 0;
+        }
+        input{
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            left: 40px;
+            width: 80%;
+            height: 28px;
+            border: 0;
+            font-size: 15px;
+            color: #333;
+            background-color: transparent;
+        }
+    }
+    .password-eye{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    input::-webkit-input-placeholder{
+        font-size: 13px;
+    }
+
+    .login-btn{
+        margin-top: 20px;
+        padding: 8px 0;
+        width: 100%;
+    }
+}
