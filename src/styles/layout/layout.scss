@@ -3,11 +3,32 @@ $sideW: 200px;
 $footerH: 30px;
 $bg:#2d3a4b;
 $borderC: #897537;
+$bg: 'https://images.pexels.com/photos/1382394/pexels-photo-1382394.jpeg?auto=compress&cs=tinysrgb&h=350';
 
 .main-layout{
     position: relative;
     height: 100%;
-    background: #25282c url("../../assets/e4.png") no-repeat center/cover; 
+    
+    .mask {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: url($bg) no-repeat center/cover; 
+    }
+
+    .mask-cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        filter: blur(60px);
+        opacity: .6;
+        background: url($bg) no-repeat center/cover;
+    }
+
+    .main-content {
+        position: relative;
+        height: 100%;
+    }
 
     .layout-header{
         height: $headerH;
@@ -32,12 +53,13 @@ $borderC: #897537;
         position: absolute;
         left: $sideW;
         right: 0;
-        top: 1px;
+        top: 0;
         bottom: $footerH;
         padding: 10px;
         overflow: auto;
-        .layout-content-inner{
-            min-width: 800px;
+        .content-inner{
+            padding: 10px;
+            background-color: #fff;
         }
     }
 

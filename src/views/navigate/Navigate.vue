@@ -21,17 +21,17 @@
 <script>
 import axios from 'axios'
 export default {
-  data () {
-    return {
-      menu: [
-        { title: 'ECharts', children: [{ title: 'All-Charts', name: 'echarts'}] },
-        { title: 'WangEditor', children: [{ title: 'ediotr', name: 'wangEditor'}] },
-        { title: 'Other', children: [{ title: 'upload-img', name: 'uploadImg'}] }
-      ]
-    }
-  },
+    data () {
+        return {
+            menu: [
+                { title: 'ECharts', children: [{ title: 'All-Charts', name: 'echarts'}] },
+                { title: 'WangEditor', children: [{ title: 'ediotr', name: 'wangEditor'}] },
+                { title: 'Other', children: [{ title: 'upload-img', name: 'uploadImg'}] }
+            ]
+        }
+    },
 
-  mounted () {
+    mounted () {
     /* this.$http({
                 method: 'get',
                 url: 'user/',
@@ -39,29 +39,29 @@ export default {
                     console.log(res, 'res');
                 }
             }) */
-  },
+    },
 
-  computed: {
-    ak () {
-      return 'aaaa'
+    computed: {
+        ak () {
+            return 'aaaa'
+        }
+    },
+
+    methods: {
+        changePage (name) {
+            this.$router.push({name})
+        },
+        handleOpen (key, keyPath) {
+            console.log(key, keyPath)
+        },
+        handleClose (key, keyPath) {
+            console.log(key, keyPath)
+        },
+
+        ko () {
+
+        }
     }
-  },
-
-  methods: {
-    changePage (name) {
-      this.$router.push({name})
-    },
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
-    },
-
-    ko () {
-
-    }
-  }
 }
 </script>
 

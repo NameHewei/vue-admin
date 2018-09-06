@@ -15,25 +15,25 @@
 
 <script>
 export default {
-  data () {
-    return {
-      key: 1,
-      data: []
-    }
-  },
+    data () {
+        return {
+            key: 1,
+            data: []
+        }
+    },
 
-  mounted () {
-    fetch('http://localhost:1200', {
+    mounted () {
+        fetch('http://localhost:1200', {
 
-    }).then((res) => {
-      return res.text()
-    }).then((res) => {
-    //   this.data = res.result
-      console.log(res)
-    })
-  },
+        }).then((res) => {
+            return res.text()
+        }).then((res) => {
+            //   this.data = res.result
+            console.log(res)
+        })
+    },
 
-  methods: {}
+    methods: {}
 }
 </script>
 

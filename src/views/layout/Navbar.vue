@@ -12,10 +12,9 @@
             <el-submenu index="1">
                 <template slot="title">
                     <i class="el-icon-location"></i>
-                    <span>导航一</span>
+                    <span>Test Place</span>
                 </template>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
+                <el-menu-item index="1-1" @click="routerSkip('testVue')">test vue</el-menu-item>
             </el-submenu>
         </el-menu>
     </div>
@@ -23,15 +22,21 @@
 
 <script>
 export default {
-  methods: {
-    handleClose () {
-      console.log('')
-    },
+    methods: {
+        routerSkip (name) {
+            this.$router.push({
+                name
+            })
+        },
 
-    handleOpen () {
-      console.log('')
+        handleClose () {
+            console.log('')
+        },
+
+        handleOpen () {
+            console.log('')
+        }
     }
-  }
 }
 </script>
 
