@@ -7,10 +7,13 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import './vueConfig.js'
 
+// all common components
+import './views/components/index.js'
+
 Vue.use(ElementUI)
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

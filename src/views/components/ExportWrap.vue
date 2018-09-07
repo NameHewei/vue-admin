@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a @click="exportData">
+        <a @click.prevent="exportData">
             <el-button
                 :type="type"
             >
@@ -15,33 +15,39 @@ import { commonUtilFn } from '@/utils'
 
 export default {
     name: 'ExportWrap',
+
     props: {
         title: {
             type: String,
-            default: () => 'export data'
+            default: 'export data'
         },
+
         type: {
             type: String,
-            default: () => 'warning'
+            default: 'warning'
         },
+
         url: {
             type: String,
-            default: () => ''
+            default: ''
         },
+
         query: {
             type: Object,
             default: () => ({})
         }
     },
+
     data () {
         return { }
     },
+
     methods: {
-        exportData (e) {
-            e.preventDefault()
-            const { url, query } = this
-            const lenth = Object.keys(query).length
-            window.location.href = `/api${url}${lenth ? `?${commonUtilFn.formatToQueryString(query)}` : ''}`
+        exportData () {
+            const { url, query } = this,
+                lenth = Object.keys(query).length
+
+            window.location.href = `${url}${lenth ? `?${commonUtilFn.formatToQueryString(query)}` : ''}`
         }
     }
 }

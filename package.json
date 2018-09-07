@@ -33,7 +33,7 @@
         ],
         "rules": {
             "indent": ["error", 4],
-            "one-var": ["error", "never"]
+            "one-var": ["error", "always"]
         },
         "parserOptions": {
             "parser": "babel-eslint"

@@ -16,6 +16,13 @@
                 </template>
                 <el-menu-item index="1-1" @click="routerSkip('testVue')">test vue</el-menu-item>
             </el-submenu>
+            <el-submenu index="2">
+                <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span>all components</span>
+                </template>
+                <el-menu-item index="2-1" @click="routerSkip('allComponents')">components</el-menu-item>
+            </el-submenu>
         </el-menu>
     </div>
 </template>
