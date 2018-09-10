@@ -8,6 +8,7 @@
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
+        "axios": "^0.18.0",
         "element-ui": "^2.4.4",
         "vue": "^2.5.16",
         "vue-router": "^3.0.1",
@@ -32,8 +33,16 @@
             "@vue/standard"
         ],
         "rules": {
-            "indent": ["error", 4],
-            "one-var": ["error", "always"]
+            "indent": [
+                "error",
+                4
+            ],
+            "one-var": [
+                "error",
+                {
+                    "initialized": "consecutive"
+                }
+            ]
         },
         "parserOptions": {
             "parser": "babel-eslint"

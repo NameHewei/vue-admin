@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { commonUtilFn } from '@/utils'
+import { formatToQueryString } from '@/utils'
 
 export default {
     name: 'ExportWrap',
@@ -29,12 +29,14 @@ export default {
 
         url: {
             type: String,
-            default: ''
+            default: 'http://www.a.com'
         },
 
         query: {
             type: Object,
-            default: () => ({})
+            default: () => ({
+                p1: '23'
+            })
         }
     },
 
@@ -47,7 +49,7 @@ export default {
             const { url, query } = this,
                 lenth = Object.keys(query).length
 
-            window.location.href = `${url}${lenth ? `?${commonUtilFn.formatToQueryString(query)}` : ''}`
+            window.location.href = `${url}${lenth ? `?${formatToQueryString(query)}` : ''}`
         }
     }
 }

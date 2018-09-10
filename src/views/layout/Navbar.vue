@@ -22,6 +22,7 @@
                     <span>all components</span>
                 </template>
                 <el-menu-item index="2-1" @click="routerSkip('allComponents')">components</el-menu-item>
+                <el-menu-item index="2-2" @click="routerSkip('table')">table</el-menu-item>
             </el-submenu>
         </el-menu>
     </div>
