@@ -9,28 +9,28 @@
 
 <script>
 export default {
-  methods: {
-    routerSkip () {
-      this.$router.push({
-        path: '/'
-      })
-    },
+    methods: {
+        routerSkip () {
+            this.$router.push({
+                path: '/'
+            })
+        },
 
-    handleMenuClick (name) {
-      if (name === 'modifyPassword') {
-        this.$router.push({
-          name: 'modifyPassword'
-        })
-      }
-      if (name === 'logout') {
-        this.handleOut()
-      }
-    },
+        handleMenuClick (name) {
+            if (name === 'modifyPassword') {
+                this.$router.push({
+                    name: 'modifyPassword'
+                })
+            }
+            if (name === 'logout') {
+                this.handleOut()
+            }
+        },
 
-    handleOut () {
-      this.LogOut()
+        handleOut () {
+            this.LogOut()
+        }
     }
-  }
 }
 </script>
 

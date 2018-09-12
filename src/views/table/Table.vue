@@ -1,61 +1,102 @@
 <template>
     <div>
         <el-table
-        :data="tableData"
-        style="width: 100%">
-        <el-table-column
-            prop="date"
-            label="日期"
-            width="180">
-        </el-table-column>
-        <el-table-column
-            prop="name"
-            label="姓名"
-            width="180">
-        </el-table-column>
-        <el-table-column
-            prop="address"
-            label="地址">
-        </el-table-column>
+            :data="tableData"
+            style="width: 100%"
+            max-height="250"
+            border
+        >
+            <el-table-column
+                prop="date"
+                label="日期">
+            </el-table-column>
+            <el-table-column
+                prop="name"
+                label="姓名">
+            </el-table-column>
+            <el-table-column
+                prop="address"
+                label="地址">
+            </el-table-column>
+            <el-table-column
+                label="操作"
+            >
+                <template slot-scope="scope">
+                    <el-button
+                        @click.native.prevent="handleDeleteRow(scope.$index, tableData)"
+                        type="text"
+                        size="small">
+                        移除
+                    </el-button>
+                </template>
+            </el-table-column>
         </el-table>
-        <div class="block">
-        <span class="demonstration">页数较少时的效果</span>
+
         <el-pagination
-            layout="prev, pager, next"
-            :total="50">
+            background
+            layout="total, sizes, prev, pager, next, jumper"
+            class="custom-page"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[10, 20, 40]"
+            :page-size="10"
+            :total="400"
+        >
         </el-pagination>
-        </div>
-        <router-link to="/nav/echarts">eee</router-link>
     </div>
 </template>
 
 <script>
+import { getList } from '@/api/table/table'
+
 export default {
-  name: 'sss',
-  data () {
-    return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+    name: 'tableWrap',
+
+    data () {
+        return {
+            currentPage: 2,
+            tableData: [{
+                date: '2016-05-03',
+                name: '王小虎',
+                province: '上海',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }]
+        }
+    },
+
+    mounted () {
+        getList({
+            params: {
+                name: '123'
+            }
+        }).then((res) => {
+            console.log('success', res)
+        }).catch((err) => {
+            console.log(err)
+        })
+    },
+
+    methods: {
+        handleSizeChange (val) {
+            console.log(`每页 ${val} 条`)
+        },
+
+        handleCurrentChange (val) {
+            console.log(`当前页: ${val}`)
+        },
+
+        handleDeleteRow (index, rows) {
+            rows.splice(index, 1)
+        }
     }
-  }
 }
 </script>
 
 <style scoped>
-
+    .custom-page {
+        padding: 10px;
+        border: 1px solid #ebeef5;
+        border-top: 0;
+    }
 </style>

@@ -6,11 +6,7 @@ export default function (config) {
         domain = document.domain,
         baseConfig = {
             timeout: 2000,
-            headers: {'X-Custom-Header': 'hewitt'},
-            proxy: {
-                host: 'localhost',
-                port: 1112
-            }
+            headers: {'Authorization': 'hewitt'}
         }
 
     if (domain === 'localhost' || domain === LOCAL_IP) {

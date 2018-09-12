@@ -5,7 +5,7 @@ import Home from '@/views/layout/Home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
 import TestVue from '@/views/testVue/TestVue.vue'
 import AllComponents from '@/views/allComponents/AllComponents.vue'
-import TableWrap from '@/views/components/TableWrap.vue'
+import Table from '@/views/table/Table.vue'
 
 Vue.use(Router)
 
@@ -33,7 +33,7 @@ export default new Router({
                 {
                     path: 'table',
                     name: 'table',
-                    component: TableWrap
+                    component: Table
                 }
             ]
         }
