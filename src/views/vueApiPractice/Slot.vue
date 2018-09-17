@@ -1,10 +1,10 @@
 <template>
     <div>
-        <p>this is an example of a solt</p>
+        <p>child tag</p>
         <div class="div">
             <slot name="name"></slot>
         </div>
-        <p>footer</p>
+        <p>tag P, in child tag</p>
 
         <slot></slot>
     </div>
@@ -18,6 +18,6 @@ export default {
 
 <style scoped>
     .div {
-        color:powderblue;
+        color:rgb(7, 197, 108)
     }
 </style>

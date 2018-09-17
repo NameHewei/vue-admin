@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <h1 class="need">there is a deep selector >>> (alias:/deep/)</h1>
+            <h2 class="need">there is a deep selector >>> (alias:/deep/)</h2>
         </div>
     </div>
 </template>

@@ -3,7 +3,7 @@ $sideW: 200px;
 $footerH: 30px;
 $bg:#2d3a4b;
 $borderC: #897537;
-$bg: 'https://cdn.pixabay.com/photo/2016/11/30/15/00/orchard-1872997__340.jpg';
+$bg: 'http://attachments.gfan.net.cn/forum/attachments2/day_100527/10052723094e0996aa79cbb569.jpg';
 
 .main-layout{
     position: relative;
@@ -20,8 +20,8 @@ $bg: 'https://cdn.pixabay.com/photo/2016/11/30/15/00/orchard-1872997__340.jpg';
         position: absolute;
         width: 100%;
         height: 100%;
-        filter: blur(10px);
-        opacity: .2;
+        // filter: blur(10px);
+        // opacity: .2;
         background: url($bg) no-repeat center/cover;
     }
 

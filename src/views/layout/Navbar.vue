@@ -9,20 +9,23 @@
             @open="handleOpen"
             @close="handleClose"
         >
-            <el-submenu index="1">
+            <el-submenu
+                v-for="(item, index) in menu"
+                :key="index"
+                :index="`${index}`"
+            >
                 <template slot="title">
                     <i class="el-icon-location"></i>
-                    <span>Test Place</span>
+                    <span>{{ item.title }}</span>
                 </template>
-                <el-menu-item index="1-1" @click="routerSkip('testVue')">test vue</el-menu-item>
-            </el-submenu>
-            <el-submenu index="2">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>all components</span>
-                </template>
-                <el-menu-item index="2-1" @click="routerSkip('allComponents')">components</el-menu-item>
-                <el-menu-item index="2-2" @click="routerSkip('table')">table</el-menu-item>
+                <el-menu-item
+                    v-for="(_item, _index) in item.children"
+                    :key="_index"
+                    :index="`${index}-${_index}`"
+                    @click="routerSkip(_item.name)"
+                >
+                    {{ _item.title }}
+                </el-menu-item>
             </el-submenu>
         </el-menu>
     </div>
@@ -30,6 +33,21 @@
 
 <script>
 export default {
+    data () {
+        return {
+            menu: [
+                { title: 'Vue API Practice', children: [{title: 'prectice vue', name: 'practiceVue'}] },
+                { title: 'all components',
+                    children: [
+                        {title: 'components', name: 'allComponents'},
+                        {title: 'table', name: 'table'}
+                    ]
+                },
+                { title: 'ECharts', children: [{title: 'All-Charts', name: 'echarts'}] },
+                { title: 'Other', children: [{title: 'upload-img', name: 'uploadImg'}] }
+            ]
+        }
+    },
     methods: {
         routerSkip (name) {
             this.$router.push({

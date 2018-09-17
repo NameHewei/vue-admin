@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import Home from '@/views/layout/Home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
-import TestVue from '@/views/testVue/TestVue.vue'
+import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
 import AllComponents from '@/views/allComponents/AllComponents.vue'
 import Table from '@/views/table/Table.vue'
 
@@ -21,9 +21,9 @@ export default new Router({
                     component: Welcome
                 },
                 {
-                    path: 'test-vue',
-                    name: 'testVue',
-                    component: TestVue
+                    path: 'practice-vue',
+                    name: 'practiceVue',
+                    component: ApiPracticeList
                 },
                 {
                     path: 'all-component',

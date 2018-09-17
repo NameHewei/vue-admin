@@ -21,35 +21,35 @@
 </template>
 <script>
 export default {
-  data () {
-    return {
-      autoLogin: false,
-      formData: {
-        username: '',
-        password: ''
-      },
-      rules: {
-        username: [
-          { required: true, message: 'please enter username', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: 'please enter password', trigger: 'blur' }
-        ]
-      }
-    }
-  },
-  methods: {
-    submitForm () {
-      this.$refs.formLogin.validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
+    data () {
+        return {
+            autoLogin: false,
+            formData: {
+                username: '',
+                password: ''
+            },
+            rules: {
+                username: [
+                    { required: true, message: 'please enter username', trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, message: 'please enter password', trigger: 'blur' }
+                ]
+            }
         }
-      })
+    },
+    methods: {
+        submitForm () {
+            this.$refs.formLogin.validate((valid) => {
+                if (valid) {
+                    alert('submit!')
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
+        }
     }
-  }
 }
 </script>
 
