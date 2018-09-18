@@ -1,6 +1,15 @@
 <template>
     <div style="padding: 10px">
-        <input @input="inputChange"/>
+        <div>
+            child:{{ count }}
+        </div>
+        <el-button
+            @click="add"
+        >+1</el-button>
+
+        <div style="margin-top: 20px">
+            <input :value="name" @input="passByEmit"/>
+        </div>
     </div>
 </template>
 
@@ -10,12 +19,29 @@ export default {
         name: {
             type: String,
             default: 'no data'
+        },
+
+        count: {
+            type: Number,
+            default: 0
+        }
+    },
+
+    watch: {
+        name (v) {
+            this.name = v
         }
     },
 
     methods: {
-        inputChange (v) {
-            this.$emit('update:title', v.target.value)
+        passByEmit (v) {
+            this.$emit('updateName', v.target.value)
+        },
+
+        add () {
+            const a = this.count + 1
+            // this.count = a
+            this.$emit('update:count', a)
         }
     }
 }

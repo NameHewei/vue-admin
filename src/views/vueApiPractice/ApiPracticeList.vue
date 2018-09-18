@@ -11,10 +11,33 @@
 
         <h2>.sync modifier</h2>
         <div>{{ name }}</div>
+
+        <div>
+            parent: {{ count }}
+        </div>
         <ChildComponent
             :name="name"
-            @update:title="handleName"
+            @updateName="handleName"
+            :count.sync="count"
         ></ChildComponent>
+        <el-button
+            type="primary"
+            @click="changeCount"
+        >
+        改变父组件的count的值</el-button>
+        <el-button
+            type="primary"
+            @click="changeUpdate"
+        >
+        改变父组件的name值</el-button>
+
+        <div>
+            <h3>针对两种方式</h3>
+            <ul>
+                <li>方式1：父子组件是时刻也是必须保持一致的。 父可以改变子（数据）， 子也可以改变父（数据）</li>
+                <li>方式1：父组件的数据的修改取决于父组件的方法中是否会去修改数据， 但是父组件数据修改子组件必定修改</li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -32,13 +55,22 @@ export default {
 
     data () {
         return {
-            name: 'hew'
+            name: 'hew',
+            count: 10
         }
     },
 
     methods: {
         handleName (v) {
             this.name = v
+        },
+
+        changeUpdate () {
+            this.name = 'changed name'
+        },
+
+        changeCount () {
+            this.count++
         }
     }
 }
