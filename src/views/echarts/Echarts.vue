@@ -1,5 +1,16 @@
 <template>
     <div>
+        <div style="padding: 10px 0;background-color:#f2f2f2;">
+            安装与引用
+            <pre>
+                npm install echarts --save
+            </pre>
+            <pre>
+                Vue.prototype.$echarts = echarts
+                import echarts from 'echarts'
+            </pre>
+            <div><b>参考链接：<a href="http://echarts.baidu.com/tutorial.html#%E5%9C%A8%20webpack%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ECharts" target="_blank">echarts 官网</a></b></div>
+        </div>
         <div id="main" :style="{width: '300px', height: '300px'}"></div>
     </div>
 </template>
@@ -48,9 +59,5 @@ export default {
 </script>
 
 <style scoped type="text/scss" lang="scss">
-    p{
-        height:300px;
-        margin:10px;
-        background:#f5f5f5;
-    }
+
 </style>

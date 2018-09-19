@@ -44,7 +44,7 @@ export default {
                     ]
                 },
                 { title: 'ECharts', children: [{title: 'All-Charts', name: 'echarts'}] },
-                { title: 'Other', children: [{title: 'upload-img', name: 'uploadImg'}] }
+                { title: 'Other', children: [{title: 'no', name: 'no'}] }
             ]
         }
     },

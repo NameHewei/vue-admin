@@ -1,11 +1,12 @@
 <template>
-    <div style="padding: 10px">
+    <div style="padding: 10px;margin: 10px 0; background-color: rgba(150,150,150,.1)">
         <div>
             child:{{ count }}
         </div>
         <el-button
+            type="success"
             @click="add"
-        >+1</el-button>
+        >子组件+1</el-button>
 
         <div style="margin-top: 20px">
             <input :value="name" @input="passByEmit"/>
@@ -40,7 +41,6 @@ export default {
 
         add () {
             const a = this.count + 1
-            // this.count = a
             this.$emit('update:count', a)
         }
     }

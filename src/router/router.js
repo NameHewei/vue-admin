@@ -6,6 +6,7 @@ import Welcome from '@/views/welcome/Welcome.vue'
 import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
 import AllComponents from '@/views/allComponents/AllComponents.vue'
 import Table from '@/views/table/Table.vue'
+import Echarts from '@/views/echarts/Echarts'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
                     path: 'table',
                     name: 'table',
                     component: Table
+                },
+                {
+                    path: 'echarts',
+                    name: 'echarts',
+                    component: Echarts
                 }
             ]
         }

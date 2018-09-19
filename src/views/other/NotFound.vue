@@ -1,18 +1,18 @@
 <template>
     <div class="not-found">
-        <p>404</p>   
-        <p>该地址不存在</p>   
+        <p>404</p>
+        <p>该地址不存在</p>
     </div>
 </template>
 
 <script>
-    export default {
-        data(){
-            return {
+export default {
+    data () {
+        return {
 
-            }
         }
     }
+}
 </script>
 
 <style>
@@ -28,7 +28,7 @@
     }
     p:first-child{
         padding-top: 20px;
-        margin-bottom:20px; 
+        margin-bottom:20px;
         font-size: 20px;
     }
 </style>
