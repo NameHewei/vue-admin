@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { getNames } from '@/api/common/common.js'
 export default {
     data () {
         return {
@@ -14,7 +15,7 @@ export default {
     },
 
     mounted () {
-
+        getNames().then((res) => { console.log(res) }).catch((err) => { console.log(err) })
     },
 
     methods: {}
