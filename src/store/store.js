@@ -5,12 +5,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-
+        projectName: 'vueAdmin'
     },
-    mutations: {
 
+    mutations: {
+        changeProjectName () {
+
+        }
     },
     actions: {
+        Change () {
+            console.log(1)
+        }
+    },
+
+    modules: {
 
     }
 })

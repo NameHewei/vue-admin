@@ -36,7 +36,12 @@ export default {
     data () {
         return {
             menu: [
-                { title: 'Vue API Practice', children: [{title: 'prectice vue', name: 'practiceVue'}] },
+                { title: 'Vue API Practice',
+                    children: [
+                        {title: 'prectice vue', name: 'practiceVue'},
+                        {title: 'prectice vuex', name: 'practiceVuex'}
+                    ]
+                },
                 { title: 'all components',
                     children: [
                         {title: 'components', name: 'allComponents'},
