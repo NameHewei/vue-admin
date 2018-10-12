@@ -71,6 +71,7 @@ export default {
                 name: '123'
             }
         }).then((res) => {
+            this.tableData = res.data
             console.log('success', res)
         }).catch((err) => {
             console.log(err)

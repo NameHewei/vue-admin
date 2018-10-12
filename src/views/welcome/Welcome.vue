@@ -17,6 +17,7 @@ export default {
     mounted () {
         // this.name(1, 2)
         // getNames().then((res) => { console.log(res) }).catch((err) => { console.log(err) })
+
     },
 
     methods: {
