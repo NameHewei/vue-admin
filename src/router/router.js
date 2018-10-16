@@ -11,43 +11,48 @@ import Echarts from '@/views/echarts/Echarts'
 
 Vue.use(Router)
 
-export default new Router({
-    routes: [
+const staticRouter = [{
+    path: '/',
+    component: Home,
+    children: [
         {
-            path: '/',
-            component: Home,
-            children: [
-                {
-                    path: '',
-                    name: 'welcome',
-                    component: Welcome
-                },
-                {
-                    path: 'practice-vue',
-                    name: 'practiceVue',
-                    component: ApiPracticeList
-                },
-                {
-                    path: 'practice-vuex',
-                    name: 'practiceVuex',
-                    component: ApiVuex
-                },
-                {
-                    path: 'all-component',
-                    name: 'allComponents',
-                    component: AllComponents
-                },
-                {
-                    path: 'table',
-                    name: 'table',
-                    component: Table
-                },
-                {
-                    path: 'echarts',
-                    name: 'echarts',
-                    component: Echarts
-                }
-            ]
+            path: '',
+            name: 'welcome',
+            component: Welcome
+        },
+        {
+            path: 'practice-vue',
+            name: 'practiceVue',
+            component: ApiPracticeList
+        },
+        {
+            path: 'practice-vuex',
+            name: 'practiceVuex',
+            component: ApiVuex
+        },
+        {
+            path: 'all-component',
+            name: 'allComponents',
+            component: AllComponents
+        },
+        {
+            path: 'table',
+            name: 'table',
+            component: Table
+        },
+        {
+            path: 'Amap',
+            name: 'aMap',
+            component: Table
+        },
+        {
+            path: 'echarts',
+            name: 'echarts',
+            component: Echarts
         }
     ]
+}]
+
+export default new Router({
+    routes: staticRouter
 })
