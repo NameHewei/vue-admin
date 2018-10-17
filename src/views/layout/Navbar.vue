@@ -32,25 +32,12 @@
 </template>
 
 <script>
+import { menu } from '@/router/router'
+
 export default {
     data () {
         return {
-            menu: [
-                { title: 'Vue API Practice',
-                    children: [
-                        {title: 'prectice vue', name: 'practiceVue'},
-                        {title: 'prectice vuex', name: 'practiceVuex'}
-                    ]
-                },
-                { title: 'all components',
-                    children: [
-                        {title: 'components', name: 'allComponents'},
-                        {title: 'table', name: 'table'}
-                    ]
-                },
-                { title: 'ECharts', children: [{title: 'All-Charts', name: 'echarts'}] },
-                { title: 'Other', children: [{title: 'no', name: 'no'}] }
-            ]
+            menu
         }
     },
     methods: {
