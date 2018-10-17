@@ -4,7 +4,7 @@
             <div class='info'>
                 操作说明：用鼠标左键点击地图，选择区域，点击鼠标右键结束选择
             </div>
-            <button class="remove-area" id="removeArea">重绘</button>
+            <button class="remove-area" id="removeArea">清除</button>
             <div id="container" class="a-map-container"></div>
         </div>
     </div>
@@ -13,7 +13,9 @@
 <script>
 export default {
     data () {
-        return {}
+        return {
+            areaCount: 0
+        }
     },
 
     mounted () {
@@ -30,25 +32,29 @@ export default {
                 mouseTool = new AMap.MouseTool(map)
 
                 // 监听draw事件可获取画好的覆盖物
-            let overlays = []
+            var overlays = []
 
             function draw () {
                 mouseTool.polygon({
-                    fillColor: '#fb2a00',
-                    strokeColor: '#e62600'
+                    fillColor: '#54cdfd',
+                    strokeColor: '#10c4f9'
                 })
             }
 
-            mouseTool.on('draw', function (e) {
-                overlays.push(e.obj.getPath())
-                console.log('数据：', overlays)
+            mouseTool.on('draw', (e) => {
+                overlays.push(e.obj)
+                mouseTool.close()
+
+                console.log('数据：', overlays[0].getPath())
             })
 
             draw()
 
-            document.getElementById('removeArea').onclick = function () {
+            document.getElementById('removeArea').onclick = () => {
                 map.remove(overlays)
                 overlays = []
+                draw()
+                this.areaCount = 0
             }
         }
     }
@@ -60,7 +66,7 @@ export default {
         position: relative;
         width: 100%;
         height: 100%;
-        border: 1px solid rgb(133, 133, 133);
+        border: 2px solid rgb(230, 230, 230);
 
         .a-map-container{
             width: 100%;
@@ -77,7 +83,7 @@ export default {
             font-size: 14px;
             z-index: 2;
             color: #fff;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(2, 166, 231, 0.6);
         }
 
         .remove-area{

@@ -1,7 +1,6 @@
 $headerH: 55px;
 $sideW: 200px;
 $footerH: 30px;
-$bg:#2d3a4b;
 $borderC: #897537;
 $bg: 'https://images2.alphacoders.com/545/thumb-1920-54542.jpg';
 
@@ -13,7 +12,7 @@ $bg: 'https://images2.alphacoders.com/545/thumb-1920-54542.jpg';
         position: absolute;
         width: 100%;
         height: 100%;
-        background: url($bg) no-repeat center/cover; 
+        background:#2d3a4b url($bg) no-repeat center/cover; 
     }
 
     .mask-cover {
