@@ -1,7 +1,7 @@
 module.exports = {
     devServer: {
         compress: true,
-        port: 1800,
+        port: 7878,
 
         proxy: {
             '/api': {
@@ -9,5 +9,7 @@ module.exports = {
                 changeOrigin: true
             }
         }
-    }
+    },
+
+    lintOnSave: false
 }
