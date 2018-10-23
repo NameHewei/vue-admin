@@ -38,6 +38,11 @@
                 <li>方式2：父组件的数据的修改取决于父组件的方法中是否会去修改数据， 但是父组件数据修改子组件必定修改</li>
             </ul>
         </div>
+
+        <div>
+            <input v-model="input" placeholder="请输入内容"/>
+            <el-input v-model="input1"></el-input>
+        </div>
     </div>
 </template>
 
@@ -45,6 +50,7 @@
 import DeepSelector from './DeepSelector.vue'
 import Slot from './Slot.vue'
 import ChildComponent from './ChildComponent.vue'
+import TInput from './TInput.vue'
 
 export default {
     components: {
@@ -56,7 +62,37 @@ export default {
     data () {
         return {
             name: 'hew',
-            count: 10
+            count: 10,
+            input: '',
+            input1: ''
+        }
+    },
+
+    watch: {
+        input (v) {
+            v = v.toString()
+            console.log(v, v.length)
+            // this.$nextTick(() => {
+            if (v.length > 5) {
+                // setTimeout(() => {
+                this.input = 33335
+                // }, 0)
+                console.log('inner')
+            }
+            // })
+        },
+
+        input1 (v) {
+            v = v.toString()
+            console.log(v, v.length)
+            // this.$nextTick(() => {
+            if (v.length > 5) {
+                // setTimeout(() => {
+                this.input = 33335
+                // }, 0)
+                console.log('inner')
+            }
+            // })
         }
     },
 
