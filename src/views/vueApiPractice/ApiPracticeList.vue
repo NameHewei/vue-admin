@@ -39,6 +39,29 @@
             </ul>
         </div>
 
+        <div style="margin: 40px 0">
+            <h2>vue 不能检测到数组变动</h2>
+            <a href="https://cn.vuejs.org/v2/guide/list.html#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9" target="_blank">点击跳转 https://cn.vuejs.org/v2/guide/list.html</a>
+            <ul>
+                <li v-for="(i, index) in arrayList" :key="index">{{ i }}</li>
+            </ul>
+            <div style="margin:10px">
+                {{ Object.entries(someObject) }}
+            </div>
+            <el-button
+                type="primary"
+                @click="changeArrayList"
+            >
+                利用$set改变数组值
+            </el-button>
+            <el-button
+                type="primary"
+                @click="changeSomeObject"
+            >
+                给data中某个对象添加一个属性，并触发更新
+            </el-button>
+        </div>
+
         <div>
             <input v-model="input" placeholder="请输入内容"/>
             <el-input v-model="input1"></el-input>
@@ -65,6 +88,10 @@ export default {
         return {
             name: 'hew',
             count: 10,
+            arrayList: [1, 2, 3],
+            someObject: {
+                a: 1111
+            },
             input: '',
             input1: '',
             input2: ''
@@ -92,7 +119,7 @@ export default {
             if (v.length > 5) {
                 setTimeout(() => {
                     this.input1 = 33335
-                }, 1000)
+                }, 0)
                 console.log('inner')
             }
             // })
@@ -110,6 +137,19 @@ export default {
 
         changeCount () {
             this.count++
+        },
+
+        changeArrayList () {
+            this.$set(this.arrayList, 1, 250)
+        },
+
+        changeSomeObject () {
+            // this.$set(this.someObject, 'b', 250)
+            // 或下面方法
+            this.someObject = {
+                ...this.someObject,
+                b: 909090
+            }
         }
     }
 }
