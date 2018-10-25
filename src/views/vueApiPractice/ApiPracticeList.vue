@@ -42,6 +42,7 @@
         <div>
             <input v-model="input" placeholder="请输入内容"/>
             <el-input v-model="input1"></el-input>
+            <TInput :value="input2"></TInput>
         </div>
     </div>
 </template>
@@ -56,7 +57,8 @@ export default {
     components: {
         DeepSelector,
         TempSlot: Slot,
-        ChildComponent
+        ChildComponent,
+        TInput
     },
 
     data () {
@@ -64,7 +66,8 @@ export default {
             name: 'hew',
             count: 10,
             input: '',
-            input1: ''
+            input1: '',
+            input2: ''
         }
     },
 
@@ -87,9 +90,9 @@ export default {
             console.log(v, v.length)
             // this.$nextTick(() => {
             if (v.length > 5) {
-                // setTimeout(() => {
-                this.input = 33335
-                // }, 0)
+                setTimeout(() => {
+                    this.input1 = 33335
+                }, 1000)
                 console.log('inner')
             }
             // })
