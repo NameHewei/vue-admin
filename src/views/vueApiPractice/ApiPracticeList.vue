@@ -65,6 +65,7 @@
         <div>
             <input v-model="input" placeholder="请输入内容"/>
             <el-input v-model="input1"></el-input>
+            <TInput :value="input2"></TInput>
         </div>
     </div>
 </template>
@@ -79,7 +80,8 @@ export default {
     components: {
         DeepSelector,
         TempSlot: Slot,
-        ChildComponent
+        ChildComponent,
+        TInput
     },
 
     data () {
@@ -91,7 +93,8 @@ export default {
                 a: 1111
             },
             input: '',
-            input1: ''
+            input1: '',
+            input2: ''
         }
     },
 
