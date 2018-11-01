@@ -4,12 +4,20 @@
             <div class='info'>
                 操作说明：用鼠标左键点击地图，选择区域，点击鼠标右键结束选择
             </div>
-            <button class="start-edit" id="startEdit">编辑</button>
-            <button class="end-edit" id="endEdit">结束</button>
-
-            <button class="remove-area" id="removeArea">清除</button>
-            <button class="save-area" @click="handleSavePath">保存</button>
-            <div id="aMapContainer" class="a-map-container"></div>
+            <button
+                class="remove-area"
+                id="removeArea">清除</button>
+            <button
+                v-show="canEdit"
+                class="edit-area"
+                id="editArea"
+            >编辑</button>
+            <button
+                class="save-area"
+                id="saveArea">保存</button>
+            <div
+                id="aMapContainer"
+                class="a-map-container"></div>
         </div>
     </div>
 </template>
@@ -18,39 +26,38 @@
 export default {
     data () {
         return {
+            type: 'CREATE',
+            canEdit: false,
             path: []
         }
     },
 
     mounted () {
-        this.initialPolygon()
+        this.getArea()
     },
 
     methods: {
-        handleSavePath () {
-            const { path } = this
-            if (path.length > 1) {
-                this.$message.success('保存成功')
-                console.log(path)
+        getArea () {
+            if (this.path.length) {
+                this.initialPolygon()
+                this.type = 'EDIT'
+                this.canEdit = true
             } else {
-                this.$message.error('请先清除范围，重新设置范围后保存')
+                this.canEdit = false
+                this.setAMap()
             }
         },
 
         initialPolygon () {
             const map = new AMap.Map('aMapContainer', {
-                    center: [104.068074, 30.552835],
-                    zoom: 12
+                    zoom: 12,
+                    center: [113.246949, 23.122186]
                 }),
 
-                path = [
-                    [104.067602, 30.556743],
-                    [104.066593, 30.55374],
-                    [104.071078, 30.556281]
-                ],
+                { path } = this,
 
                 polygon = new AMap.Polygon({
-                    path: path,
+                    path,
                     isOutline: true,
                     borderWeight: 3,
                     strokeColor: '#10c4f9',
@@ -64,36 +71,40 @@ export default {
 
             polygon.setMap(map)
             // 缩放地图到合适的视野级别
-            map.setFitView([ polygon ])
-
-            const polyEditor = new AMap.PolyEditor(map, polygon)
-
-            polyEditor.on('end', function (event) {
-                console.log(event.target.getPath())
-                // event.target 即为编辑后的多边形对象
-            })
-
-            document.getElementById('startEdit').onclick = () => {
-                polyEditor.open()
-            }
-
-            document.getElementById('endEdit').onclick = () => {
-                polyEditor.close()
-            }
+            map.setFitView([polygon])
 
             document.getElementById('removeArea').onclick = () => {
                 map.remove(polygon)
 
+                this.path = []
+                this.canEdit = false
+
                 this.setAMap()
             }
+
+            // 编辑地图
+            const polyEditor = new AMap.PolyEditor(map, polygon)
+
+            document.getElementById('editArea').onclick = () => {
+                polyEditor.open()
+            }
+
+            document.getElementById('saveArea').onclick = () => {
+                polyEditor.close()
+                console.log(2)
+            }
+
+            polyEditor.on('end', (e) => {
+                this.path = e.target.getPath().map(v => ([v.lng, v.lat]))
+                this.handleSavePath()
+            })
         },
 
         setAMap () {
             const map = new AMap.Map('aMapContainer', {
-                    center: [104.068074, 30.552835],
+                    center: [113.246949, 23.122186],
                     zoom: 12
                 }),
-
                 mouseTool = new AMap.MouseTool(map)
 
             // 监听draw事件可获取画好的覆盖物
@@ -122,6 +133,22 @@ export default {
                 overlays = []
                 draw()
                 this.path = []
+            }
+
+            document.getElementById('saveArea').onclick = () => {
+                console.log(1)
+                this.handleSavePath()
+            }
+        },
+
+        handleSavePath () {
+            const { path } = this
+
+            if (path.length > 1) {
+                this.getArea()
+                this.$message.success('保存成功')
+            } else {
+                this.$message.error('设置范围')
             }
         }
     }
@@ -154,39 +181,41 @@ export default {
         }
 
         .remove-area {
-            right: 110px;
-            bottom: 30px;
+            left: 30px;
+            top: 30px;
+            width: 80px;
+            height: 80px;
+            border-radius:50%;
+            background-color: rgb(13, 112, 224);
         }
 
         .save-area {
             right: 30px;
             bottom: 30px;
+            width: 120px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: rgb(13, 112, 224);
         }
-
-        .start-edit{
-            right: 320px;
+        .edit-area{
+            right: 170px;
             bottom: 30px;
+            width: 120px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: rgb(13, 112, 224);
         }
 
-        .end-edit{
-            right: 240px;
-            bottom: 30px;
-        }
-
-        .remove-area, .save-area, .start-edit, .end-edit{
+        .remove-area, .save-area, .edit-area{
             position: absolute;
-            padding: 5px 8px;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
+            padding: 0;
             border: 0;
-            box-shadow: 2px 4px 2px 0px rgb(104, 104, 104);
+            box-shadow: 2px 2px 2px 0px rgb(104, 104, 104);
             font-size: 16px;
             z-index: 2;
             color: #fff;
             letter-spacing: 2px;
             text-indent: 4px;
-            background-color: rgb(84, 205, 253);
             cursor: pointer;
             outline: none;
         }
