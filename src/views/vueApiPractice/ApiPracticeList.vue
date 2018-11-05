@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div id="move"></div>
         <h2>deep selector</h2>
         <DeepSelector class="parent"></DeepSelector>
 
@@ -98,6 +99,45 @@ export default {
         }
     },
 
+    mounted () {
+        document.body.addEventListener('mousemove', function (e) {
+            document.getElementById('move').setAttribute('style', `left:${e.clientX}px;top:${e.clientY}px`)
+            console.log(e.clientX)
+        }, false)
+
+        function throttle (func, wait, options) {
+            var context, args, result
+            var timeout = null, previous = 0
+
+            if (!options) options = {}
+            var later = function () {
+                previous = options.leading === false ? 0 : Date.now()
+                timeout = null
+                result = func.apply(context, args)
+                if (!timeout) context = args = null
+            }
+            return function () {
+                var now = Date.now()
+                if (!previous && options.leading === false) previous = now
+                var remaining = wait - (now - previous)
+                context = this
+                args = arguments
+                if (remaining <= 0 || remaining > wait) {
+                    if (timeout) {
+                        clearTimeout(timeout)
+                        timeout = null
+                    }
+                    previous = now
+                    result = func.apply(context, args)
+                    if (!timeout) context = args = null
+                } else if (!timeout && options.trailing !== false) {
+                    timeout = setTimeout(later, remaining)
+                }
+                return result
+            }
+        };
+    },
+
     watch: {
         input (v) {
             v = v.toString()
@@ -156,6 +196,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    #move{
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        background-color: red;
+    }
     h2{
         padding: 6px;
         border-left: solid 2px rgb(214, 214, 214);
