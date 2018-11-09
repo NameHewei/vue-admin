@@ -1,7 +1,15 @@
 <template>
     <div>
         <div>
-            <h2 class="need">there is a deep selector >>> (alias:/deep/)</h2>
+            <h2 class="need">深度作用选择器 >>> (alias:/deep/)</h2>
+            <pre>
+                .parent /deep/ .need {
+                    color: rgb(7, 197, 108)
+                }
+                .parent >>> .need {
+                    color: rgb(7, 197, 108)
+                }
+            </pre>
         </div>
     </div>
 </template>

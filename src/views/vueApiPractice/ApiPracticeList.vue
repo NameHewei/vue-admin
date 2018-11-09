@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div id="move"></div>
-        <h2>deep selector</h2>
+        <!-- <div id="move"></div> -->
+        <h2>深度作用选择器</h2>
         <DeepSelector class="parent"></DeepSelector>
 
         <h2 class="sticky">slot</h2>
         <TempSlot>
-            <em slot="name">text in em tag </em> <br/>
+            <em slot="name">在em标签中的文字 </em> <br/>
              default text :this is the text in Slot tag
         </TempSlot>
 
@@ -100,10 +100,10 @@ export default {
     },
 
     mounted () {
-        document.body.addEventListener('mousemove', function (e) {
-            document.getElementById('move').setAttribute('style', `left:${e.clientX}px;top:${e.clientY}px`)
-            console.log(e.clientX)
-        }, false)
+        // document.body.addEventListener('mousemove', function (e) {
+        //     document.getElementById('move').setAttribute('style', `left:${e.clientX}px;top:${e.clientY}px`)
+        //     console.log(e.clientX)
+        // }, false)
 
         function throttle (func, wait, options) {
             var context, args, result
