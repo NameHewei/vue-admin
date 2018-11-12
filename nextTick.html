@@ -20,13 +20,33 @@
 
         });
 
-
         var article = document.getElementById('i12')
 
         obs.observe(article, { attributes: true, childList: true, subtree: true });
 
         article.innerHTML = '123'
     </script>
-</body>
 
+<script>
+    // let a = {
+
+    //     valueOf(){
+    //         return 'you are'
+    //     },
+    //     toString(){
+    //         return 'SB'
+    //     },
+    //     [Symbol.toPrimitive](){
+    //         return 9 //只能返回Number String
+    //     }
+    // }
+    // // console.log(a+a.toString())
+    // console.log(1 * '9')
+    var a = {n: 1};
+var b = a;
+a.x = a = {n: 2};
+alert(a.x); //  undefined
+alert(b.x); //  [object, Object]
+</script>
+</body>
 </html>
