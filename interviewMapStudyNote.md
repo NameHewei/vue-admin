@@ -26,7 +26,7 @@ typeof a // object
 ## 类型转换
 - 条件判断时，除了undefined,null,NaN,'',0,-0,false其它值都转换为true
 
-对象转基本类型
+## 对象转基本类型
 - 先调valueOf()然后调toString(),且都可以被重写
 ```js
 let a = {
@@ -51,13 +51,86 @@ console.log(a+a.toString())
 - 赋值运算符是右结合性的
 A = B = C = D  等价于 A = (B = (C = D))
 
+先计算左边的表达式（计算的值为内存中的地址），再计算右边的表达式，然后再将右边返回的值赋值给左边返回的对应的地址
+
 - 加法中，其中一个是字符串，另一个也会转为字符串，其它运算，只要其中一方是数字，就会都转为数字
 
 - 加法运算会触发三种类型转换：
   转换为原始值，转换为数字（ + 'b' 等于NaN），转换为字符串
 
 变量,基本数据类型在栈,对象在堆.
-[https://juejin.im/post/5a61ab6a51882573385fcebc](https://juejin.im/post/5a61ab6a51882573385fcebc)
+[事例查看，已解决](https://juejin.im/post/5a61ab6a51882573385fcebc)
+
+## 比较运算
+UTF-8 就是在互联网上使用最广的一种 Unicode 的实现方式
+
+JavaScript语言采用Unicode字符集，但是只支持一种编码方法，UCS-2
+
+charCodeAt(): 返回0到65535之间的整数
+
+Unicode前128个编码单元等于ascii值
+
+英文数字，按照ASCII码比较
+
+中文是按照Unicode编码比较的
+
+# 原型
+
+[未完](https://github.com/KieSun/Blog/issues/2)
+
+## new
+自己实现new（未完成）
+
+发生以下四个步过程：
+
+- 新生成了一个对象
+- 链接到原型
+- 绑定 this
+- 返回新对象
+
+优先级：new Foo() 的优先级大于 new Foo，前者是函数，后者是对象
+
+## this
+指向调用函数前的对象
+
+- 优先级：有函数调用的会覆盖指向window的，用new创建的优先级最高
+
+- 箭头函数没有this，它的 this 只取决于他外面的第一个不是箭头函数的函数的 this
+
+# 执行上下文
+变量提升的过程中，相同的函数会覆盖上一个函数，并且函数优先于变量提升
+
+# 闭包
+一个函数X返回另一个函数Y，且Y使用了X的变量，Y就被称为闭包，X已经出了调用栈，Y能调用X的变量原因是X的变量此时已存贮在堆上，JS引擎通过逃逸分析哪些变量
+需要存贮在堆上，哪些需要存贮在栈上。
+
+```js
+for ( let i=1; i<=5; i++) {
+	setTimeout( function timer() {
+		console.log(i);
+	}, i*1000 );
+}
+
+// 原因是let有个块级作用域，每一次循环都新声明了一个i；引擎内部会记住上一轮循环的值，初始化本轮的变量i时，就在上一轮循环的基础上进行计算
+// 而var是声明被提升到全局
+// for循环还有一个特别之处，就是设置循环变量的那部分是一个父作用域，而循环体内部是一个单独的子作用域
+```
+
+# 深浅拷贝
+## 浅拷贝
+- Object.assign 
+- 展开运算符 ...
+
+## 深拷贝
+- JSON.parse(JSON.stringify(object)) ：会忽略undefined，不能解决循环引用， 不能序列化函数
+- lodash
+- MessageChannel
+
+
+# 模块化
+- ES6
+- CommonJs 是 Node 独有的规范
+- AMD 是由 RequireJS 提出的
 
 
 # 事件
