@@ -1,6 +1,8 @@
 <template>
     <div>
+        <div id="get">I have a dream</div>
         欢迎
+        <!-- <img src="http://localhost:2500/api/names/?name=d" alt="no"> -->
     </div>
 </template>
 

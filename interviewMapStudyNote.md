@@ -309,6 +309,23 @@ DNS预解析：
 
 代码注入的一种
 分为三种：反射型，存储行，DOM-base
+```js
+var a = document.createElement('script')
+a.innerText = 'alert(1)'
+document.getElementById('ss').append(a)
+```
+
+## CSRF
+钓鱼网站中加入如下代码，链接为一个get请求，
+```
+<img src="http://localhost:2500/api/names/?name=hew" alt="no">
+```
+防范
+- Get 请求不对数据进行修改
+- 不让第三方网站访问到用户 Cookie
+- 阻止第三方网站请求接口
+- 请求时附带验证信息，比如验证码或者 token
+
 
 框架知识
 angluar
