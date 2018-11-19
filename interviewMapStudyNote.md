@@ -326,6 +326,19 @@ document.getElementById('ss').append(a)
 - 阻止第三方网站请求接口
 - 请求时附带验证信息，比如验证码或者 token
 
+## 密码安全
+密码加盐，只能保证用户真实密码不会泄露，对于暴力访问破解，可以使用验证码拖延时间，或是限制访问次数
+
+采用crypto包处理
+```js
+import CryptoJS from 'crypto-js'
+CryptoJS.MD5('123').toString()
+CryptoJS.SHA1('123').toString() // 注意方法名的大小写
+
+```
+
+- MD5 信息摘要算法（Message-Digest Algorithm）：把一个任意长度的字节串变换成一定长的十六进制数字串
+- SHA 安全哈希算法（Secure Hash Algorithm）
 
 框架知识
 angluar

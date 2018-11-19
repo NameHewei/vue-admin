@@ -16,14 +16,21 @@
                 </el-form>
             </el-col>
         </el-row>
-        <a href="/static">3434433434</a>
+        <a href="/static"></a>
+        <div style="color: #fff; text-align: center">
+            {{ MD5SHA1 }}
+        </div>
     </div>
 </template>
+
 <script>
+import CryptoJS from 'crypto-js'
+
 export default {
     data () {
         return {
             autoLogin: false,
+            MD5SHA1: '',
             formData: {
                 username: '',
                 password: ''
@@ -38,6 +45,21 @@ export default {
             }
         }
     },
+
+    created () {
+        console.log('sha1')
+    },
+
+    watch: {
+        'formData.password' (v) {
+            if (v) {
+                this.MD5SHA1 = CryptoJS.SHA1(CryptoJS.MD5(v).toString()).toString()
+            } else {
+                this.MD5SHA1 = ''
+            }
+        }
+    },
+
     methods: {
         submitForm () {
             this.$refs.formLogin.validate((valid) => {

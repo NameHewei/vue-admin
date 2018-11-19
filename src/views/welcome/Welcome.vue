@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 // import { getNames } from '@/api/common/common.js'
 export default {
     data () {
@@ -20,7 +21,7 @@ export default {
         // this.name(1, 2)
         // getNames().then((res) => { console.log(res) }).catch((err) => { console.log(err) })
         try {
-            throw new Error('Hello', 'someFile.js', 10)
+            // throw new Error('Hello', 'someFile.js', 10)
         } catch (e) {
             // console.log(e instanceof ReferenceError) // true
             // console.log(e.message) // "Hello"
