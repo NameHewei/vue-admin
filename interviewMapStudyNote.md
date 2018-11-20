@@ -329,7 +329,7 @@ document.getElementById('ss').append(a)
 ## 密码安全
 密码加盐，只能保证用户真实密码不会泄露，对于暴力访问破解，可以使用验证码拖延时间，或是限制访问次数
 
-采用crypto包处理
+采用crypto包 处理
 ```js
 import CryptoJS from 'crypto-js'
 CryptoJS.MD5('123').toString()
