@@ -14,30 +14,25 @@
     </div>
 
     <script>
-        let onWatch = (obj, setBind, getLogger) => {
-            let handler = {
-                get(target, property, receiver) {
-                    getLogger(target, property)
-                    return Reflect.get(target, property, receiver);
+        const watch = (target) => {
+            const handler = {
+                get(_target,key){
+                    console.log(`get:${key}`);
+                    return Reflect.get(_target, key)
                 },
-                set(target, property, value, receiver) {
-                    setBind(value);
-                    return Reflect.set(target, property, value);
+                set(_target,key,value){
+                    console.log(`set:${key}-${value}`);
+                    Reflect.set(_target,key,value)
                 }
-            };
-            return new Proxy(obj, handler);
-        };
+            }
+            return new Proxy(target, handler)
+        }
 
-        let obj = { a: 1 }
-        let value
-        let p = onWatch(obj, (v) => {
-            value = v
-        }, (target, property) => {
-            console.log(`Get '${property}' = ${target[property]}`);
-        })
-        p.a = 2 // bind `value` to `2`
-        p.a // -> Get 'a' = 2
-        console.log('value',value);
+        const obj = {}
+        const newObj = watch(obj)
+        newObj.name = 12
+        console.log(newObj.name)
+
     </script>
 </body>
 

@@ -1,12 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>单路由实现</title>
+    <style>
+        .hash a {
+            display: inline-block;
+            padding: 5px 8px;
+            margin: 10px 10px 10px 0;
+            font-size: 15px;
+            text-decoration: none;
+            border: 0;
+            cursor: pointer;
+            color: #fff;
+            background-color: rgb(109, 197, 248);
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div class="hash">
+        <div>hash 路由</div>
+        <a href="#/one">hash 1</a> <a href="/two##">hash 2</a> <a href="#/three">hash 3</a> <a onclick="hashRoute.skip('other')">other</a>
+        <div id="hashContent">
+
+        </div>
+    </div>
+    <div class="history">
+        <div>history 路由</div>
+        <div>
+            <button>页面1</button>
+            <button>页面2</button>
+            <button>页面3</button>
+        </div>
+    </div>
+
+    <script>
+        const router = (key) => {
+            const commandObj = {
+                one: 'page one',
+                two: 'page two',
+                three: 'page three'
+            }
+
+            const re = commandObj[key]
+
+            return re ? re : 'page not find'
+        }
+
+        class HashRoute {
+            setRoute() {
+                const hashRoute = location.hash ? location.hash.slice(2) : 'one'
+                document.getElementById('hashContent').innerHTML =  router(hashRoute)
+            }
+
+            skip(path) {
+                window.location.hash= `#/${path}`
+            }
+
+            init() {
+                window.addEventListener('hashchange', this.setRoute)
+                window.addEventListener('DOMContentLoaded', this.setRoute)
+            }
+        }
+
+        const hashRoute = new HashRoute()
+
+        hashRoute.init()
+
+    </script>
 </body>
+
 </html>
