@@ -18,23 +18,39 @@
             color: #fff;
             background-color: rgb(109, 197, 248);
         }
+        .title{
+            margin: 10px 0;
+            padding: 5px 8px;
+            border-left: rgb(168, 168, 168) solid 2px;
+            background-color: rgb(230, 230, 230);
+        }
+        .hash div:last-child{
+            padding: 6px;
+            min-height: 100px;
+            background-color: rgb(243, 243, 243);
+        }
+
+        .history{
+            margin: 10px 0;
+        }
     </style>
 </head>
 
 <body>
     <div class="hash">
-        <div>hash 路由</div>
-        <a href="#/one">hash 1</a> <a href="/two##">hash 2</a> <a href="#/three">hash 3</a> <a onclick="hashRoute.skip('other')">other</a>
+        <div class="title">hash 路由</div>
+        <a href="#/one">hash 1</a> <a href="#/two">hash 2</a> <a href="#/three">hash 3</a> <a onclick="hashRoute.skip('other')">other</a>
         <div id="hashContent">
 
         </div>
     </div>
     <div class="history">
-        <div>history 路由</div>
+        <div class="title">history 路由</div>
         <div>
-            <button>页面1</button>
-            <button>页面2</button>
-            <button>页面3</button>
+            <button onclick="">history page 1</button>
+            <button onclick="">history page 1</button>
+            <button onclick="">history page 1</button>
+            <button onclick="">history page 1</button>
         </div>
     </div>
 
@@ -49,6 +65,10 @@
             const re = commandObj[key]
 
             return re ? re : 'page not find'
+        }
+
+        function hashRouteSkip(){
+            
         }
 
         class HashRoute {

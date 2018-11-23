@@ -13,25 +13,39 @@
         proxy
     </div>
 
-    <script>
-        const watch = (target) => {
-            const handler = {
-                get(_target,key){
-                    console.log(`get:${key}`);
-                    return Reflect.get(_target, key)
-                },
-                set(_target,key,value){
-                    console.log(`set:${key}-${value}`);
-                    Reflect.set(_target,key,value)
-                }
-            }
-            return new Proxy(target, handler)
-        }
+    <div id = 's'></div>
 
-        const obj = {}
-        const newObj = watch(obj)
-        newObj.name = 12
-        console.log(newObj.name)
+    <button onclick="cl()">dddd</button>
+
+    <script>
+        document.getElementById('s').innerHTML = Math.random()
+        function cl(params) {
+            window.location.reload();
+                alert(12333);
+            setTimeout(() => {
+                window.location.href = window.location.href;
+            }, 0);
+        }
+        console.log(/((^[1-9]\d*)|^0)([.]\d{1,8})?$/.test('1.0'));
+        console.log(/^\d+([.]\d+)?$/.test('0.72.'));
+        // const watch = (target) => {
+        //     const handler = {
+        //         get(_target,key){
+        //             console.log(`get:${key}`);
+        //             return Reflect.get(_target, key)
+        //         },
+        //         set(_target,key,value){
+        //             console.log(`set:${key}-${value}`);
+        //             Reflect.set(_target,key,value)
+        //         }
+        //     }
+        //     return new Proxy(target, handler)
+        // }
+
+        // const obj = {}
+        // const newObj = watch(obj)
+        // newObj.name = 12
+        // console.log(newObj.name)
 
     </script>
 </body>
