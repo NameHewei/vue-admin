@@ -272,6 +272,74 @@ DOMContentLoaded 事件触发代表初始的 HTML 被完全加载和解析
 - css查找避免深度过深（找到符合匹配规则的节点就加入结果集；直到根元素html都没有匹配，则不再遍历这条路径，从下一个最右边的规则开始）。css查询规则是从最右边开始。
 - 将频繁运行的动画变为图层，图层能够阻止该节点回流影响别的元素。比如对于 video 标签
 
+# 性能
+## 网络相关
+DNS预解析： 
+```
+<link rel="dns-prefetch" href="//delai.me">  
+```
+1. 对静态资源域名需要手动做dns prefetching
+2. 对js里会发起的跳转需要手动做dns prefetching
+3. 不用对超链接做,浏览器会自动做
+4. 对重定向跳转的新域名做手动dns prefetching
+
+最优方法：通过js初始化一个iframe异步加载一个页面，而这个页面里包含本站所有的需要手动dns prefetching的域名
+
+## 缓存
+### 强缓存
+两种方式：
+- Expires：Wed, 22 Oct 2018 08:41:00 GMT 改时间后过期
+- Cache-Control： max-age=30 30s后过期，HTTP/1.1 优先级高于Expire
+
+通过配置web服务器的方式，让web服务器在响应资源的时候统一添加Expires和Cache-Control Header。
+
+### 协商缓存
+如果缓存过期了，我们就可以使用协商缓存来解决问题。协商缓存需要请求，如果缓存有效会返回 304。
+
+### 使用 HTTP / 2.0
+### 预加载
+
+```js
+<link rel="preload" href="http://example.com">
+```
+....等[https://yuchengkai.cn/docs/zh/frontend/performance.html#cdn](https://yuchengkai.cn/docs/zh/frontend/performance.html#cdn)
+
+# 安全
+## XSS(cross-site scripting) 
+
+代码注入的一种
+分为三种：反射型，存储行，DOM-base
+```js
+var a = document.createElement('script')
+a.innerText = 'alert(1)'
+document.getElementById('ss').append(a)
+```
+
+## CSRF
+钓鱼网站中加入如下代码，链接为一个get请求，
+```
+<img src="http://localhost:2500/api/names/?name=hew" alt="no">
+```
+防范
+- Get 请求不对数据进行修改
+- 不让第三方网站访问到用户 Cookie
+- 阻止第三方网站请求接口
+- 请求时附带验证信息，比如验证码或者 token
+
+## 密码安全
+密码加盐，只能保证用户真实密码不会泄露，对于暴力访问破解，可以使用验证码拖延时间，或是限制访问次数
+
+采用crypto包 处理
+```js
+import CryptoJS from 'crypto-js'
+CryptoJS.MD5('123').toString()
+CryptoJS.SHA1('123').toString() // 注意方法名的大小写
+
+```
+
+- MD5 信息摘要算法（Message-Digest Algorithm）：把一个任意长度的字节串变换成一定长的十六进制数字串
+- SHA 安全哈希算法（Secure Hash Algorithm）
+
 框架知识
 angluar
 - 脏数据检测

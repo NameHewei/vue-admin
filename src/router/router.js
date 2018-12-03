@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Login from '@/views/login/Login.vue'
 import Home from '@/views/layout/Home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
 import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
@@ -105,6 +106,12 @@ const menuRouter = [
                 },
                 ...tempChildren
             ]
+        },
+        {
+            title: 'login',
+            path: '/login',
+            name: 'login',
+            component: Login
         }]
     }
 
