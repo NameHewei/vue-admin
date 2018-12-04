@@ -5,3 +5,14 @@ export function getNames () {
         url: '/api/names/'
     })
 }
+
+export function uploadFile (data) {
+    return request({
+        url: '/api/names/',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        data
+    })
+}
