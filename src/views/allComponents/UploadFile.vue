@@ -9,7 +9,7 @@ import { uploadFile } from '@/api/common/common'
 export default {
     data () {
         return {
-            file: null
+            fileName: ''
         }
     },
 

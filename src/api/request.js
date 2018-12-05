@@ -14,6 +14,8 @@ const httpService = axios.create({
 httpService.interceptors.request.use((cfg) => {
     console.log('req', cfg)
     const { method } = cfg
+    cfg.withCredentials = false
+    cfg.baseURL = 'http://localhost:2500'
     cfg.method = method || 'GET'
     return cfg
 }, (error) => {
