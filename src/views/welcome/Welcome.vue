@@ -7,7 +7,6 @@
 </template>
 
 <script>
-
 // import { getNames } from '@/api/common/common.js'
 export default {
     data () {
