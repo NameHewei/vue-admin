@@ -8,11 +8,13 @@ import { Message } from 'element-ui'
 const httpService = axios.create({
     withCredentials: true,
     timeout: 2000,
-    headers: {'Authorization': 'hewitt'}
+    headers: { 'Authorization': 'hewitt' }
 })
 
 httpService.interceptors.request.use((cfg) => {
     console.log('req', cfg)
+    const { method } = cfg
+    cfg.method = method || 'GET'
     return cfg
 }, (error) => {
     console.log(error)

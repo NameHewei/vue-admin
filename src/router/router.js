@@ -6,10 +6,14 @@ import Home from '@/views/layout/Home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
 import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
 import ApiVuex from '@/views/vueApiPractice/Vuex.vue'
+
 import AllComponents from '@/views/allComponents/AllComponents.vue'
 import Table from '@/views/table/Table.vue'
+
 import Echarts from '@/views/echarts/Echarts'
 import AMap from '@/views/echarts/AMap'
+
+const UploadFile = () => import('@/views/allComponents/UploadFile.vue')
 
 Vue.use(Router)
 
@@ -32,7 +36,7 @@ const menuRouter = [
             ]
         },
         {
-            title: 'all components',
+            title: '常用组件',
             children: [
                 {
                     title: 'components',
@@ -45,6 +49,12 @@ const menuRouter = [
                     path: 'table',
                     name: 'table',
                     component: Table
+                },
+                {
+                    title: 'axios 上传文件',
+                    path: 'upload-file',
+                    name: 'uploadFile',
+                    component: UploadFile
                 }
             ]
         },
