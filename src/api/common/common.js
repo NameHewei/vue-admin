@@ -6,13 +6,13 @@ export function getNames () {
     })
 }
 
-export function uploadFile (data) {
+export function reqUploadFile (data) {
     return request({
-        url: '/api/names/',
+        url: '/api/upload/',
         method: 'POST',
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
+        // headers: {
+        //     'Content-Type': 'multipart/form-data'
+        // },
         data
     })
 }
