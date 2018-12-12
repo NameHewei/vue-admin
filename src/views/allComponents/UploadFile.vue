@@ -24,7 +24,7 @@ export default {
 
         upload () {
             const formData = new FormData()
-            formData.append('file', 123)
+            formData.append('file', this.file)
             reqUploadFile(formData)
         }
     }
