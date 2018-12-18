@@ -28,7 +28,11 @@ export default {
         return {
             type: 'CREATE',
             canEdit: false,
-            path: []
+            path: [
+                [116.403322, 39.920255],
+                [116.410703, 39.897555],
+                [116.402292, 39.892353]
+            ]
         }
     },
 

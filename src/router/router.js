@@ -10,10 +10,11 @@ import ApiVuex from '@/views/vueApiPractice/Vuex.vue'
 import AllComponents from '@/views/allComponents/AllComponents.vue'
 import Table from '@/views/table/Table.vue'
 
-import Echarts from '@/views/echarts/Echarts'
-import AMap from '@/views/echarts/AMap'
+const Echarts = () => import('@/views/thirdPartService/Echarts'),
+    AMap = () => import('@/views/thirdPartService/AMap'),
+    WyIm = () => import('@/views/thirdPartService/WyIm'),
 
-const UploadFile = () => import('@/views/allComponents/UploadFile.vue')
+    UploadFile = () => import('@/views/allComponents/UploadFile.vue')
 
 Vue.use(Router)
 
@@ -59,24 +60,25 @@ const menuRouter = [
             ]
         },
         {
-            title: 'ECharts',
+            title: '第三方服务',
             children: [
                 {
                     title: 'All-Charts',
                     path: 'echarts',
                     name: 'echarts',
                     component: Echarts
-                }
-            ]
-        },
-        {
-            title: 'AMap',
-            children: [
+                },
                 {
                     title: 'AMap',
                     path: 'a-map',
                     name: 'aMap',
                     component: AMap
+                },
+                {
+                    title: '网易IM',
+                    path: 'wy-im',
+                    name: 'wyIm',
+                    component: WyIm
                 }
             ]
         },
