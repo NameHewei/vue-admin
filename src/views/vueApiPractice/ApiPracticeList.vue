@@ -186,23 +186,12 @@ export default {
             // })
         },
 
-        selectValue: function () {
+        selectValue () {
+            // console.log(document.getElementById('inputFile'))
+            // document.getElementById('inputFile').dispatchEvent(new Event('click'))
+
             console.log('watch')
-            // this.$refs.inputFile.click()
-            // document.getElementById('inputFile').click()
-
-            function doClick (n) {
-                var e = document.createEvent('MouseEvents')  
-                e.initEvent('mousedown', true, false)  
-                n.dispatchEvent(e, true) 
-                e = document.createEvent('MouseEvents')  
-                e.initEvent('mouseup', true, false)  
-                n.dispatchEvent(e, true)
-                console.log('doClick')
-            }
-
-            // do the click
-            doClick(document.getElementById('inputFile'))
+            this.$refs.inputFile.click()
         }
     },
 
@@ -233,8 +222,9 @@ export default {
         },
 
         handleSelectChange (v) {
-            console.log('onchange')
-            // this.$refs.inputFile.click()
+            // console.log('onchange')
+            // console.log(document.getElementById('inputFile'))
+            // document.getElementById('inputFile').click()
         }
     }
 }

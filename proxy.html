@@ -9,43 +9,22 @@
 </head>
 
 <body>
-    <div>
-        proxy
-    </div>
 
-    <div id = 's'></div>
-
-    <button onclick="cl()">dddd</button>
-
+    <a href="">12333</a>
     <script>
-        document.getElementById('s').innerHTML = Math.random()
-        function cl(params) {
-            window.location.reload();
-                alert(12333);
-            setTimeout(() => {
-                window.location.href = window.location.href;
-            }, 0);
-        }
-        console.log(/((^[1-9]\d*)|^0)([.]\d{1,8})?$/.test('1.0'));
-        console.log(/^\d+([.]\d+)?$/.test('0.72.'));
-        // const watch = (target) => {
-        //     const handler = {
-        //         get(_target,key){
-        //             console.log(`get:${key}`);
-        //             return Reflect.get(_target, key)
-        //         },
-        //         set(_target,key,value){
-        //             console.log(`set:${key}-${value}`);
-        //             Reflect.set(_target,key,value)
-        //         }
-        //     }
-        //     return new Proxy(target, handler)
-        // }
+       var simulateClick = function (elem) {
+	    // Create our event (with options)
+        var evt = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window
+        });
+        // If cancelled, don't dispatch our event
+        var canceled = elem.dispatchEvent(evt);
+    };
 
-        // const obj = {}
-        // const newObj = watch(obj)
-        // newObj.name = 12
-        // console.log(newObj.name)
+    var someLink = document.querySelector('a');
+    // simulateClick(someLink);
 
     </script>
 </body>
