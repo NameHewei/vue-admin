@@ -1,5 +1,23 @@
 <template>
     <div>
+        <div>
+            <h2>HTMLElement.click()</h2>
+            <div style="padding: 10px 0;">
+                1.在onchange中有效
+                2.在watch中无效
+            </div>
+            <el-select v-model="selectValue" @change="handleSelectChange" placeholder="请选择">
+                <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+            </el-select>
+            <input type="file" ref="inputFile" id="inputFile">
+            <span>{{ selectValue }}</span>
+        </div>
+
         <!-- <div id="move"></div> -->
         <h2>深度作用选择器</h2>
         <DeepSelector class="parent"></DeepSelector>
@@ -87,6 +105,14 @@ export default {
 
     data () {
         return {
+            options: [{
+                value: '选项1',
+                label: '黄金糕'
+            }, {
+                value: '选项2',
+                label: '双皮奶'
+            } ],
+            selectValue: '',
             name: 'hew',
             count: 10,
             arrayList: [1, 2, 3],
@@ -100,11 +126,6 @@ export default {
     },
 
     mounted () {
-        // document.body.addEventListener('mousemove', function (e) {
-        //     document.getElementById('move').setAttribute('style', `left:${e.clientX}px;top:${e.clientY}px`)
-        //     console.log(e.clientX)
-        // }, false)
-
         function throttle (func, wait, options) {
             var context, args, result
             var timeout = null, previous = 0
@@ -163,6 +184,25 @@ export default {
                 console.log('inner')
             }
             // })
+        },
+
+        selectValue: function () {
+            console.log('watch')
+            // this.$refs.inputFile.click()
+            // document.getElementById('inputFile').click()
+
+            function doClick (n) {
+                var e = document.createEvent('MouseEvents')  
+                e.initEvent('mousedown', true, false)  
+                n.dispatchEvent(e, true) 
+                e = document.createEvent('MouseEvents')  
+                e.initEvent('mouseup', true, false)  
+                n.dispatchEvent(e, true)
+                console.log('doClick')
+            }
+
+            // do the click
+            doClick(document.getElementById('inputFile'))
         }
     },
 
@@ -190,6 +230,11 @@ export default {
                 ...this.someObject,
                 b: 909090
             }
+        },
+
+        handleSelectChange (v) {
+            console.log('onchange')
+            // this.$refs.inputFile.click()
         }
     }
 }
