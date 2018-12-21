@@ -191,7 +191,7 @@ export default {
             // document.getElementById('inputFile').dispatchEvent(new Event('click'))
 
             console.log('watch')
-            this.$refs.inputFile.click()
+            // document.getElementById('inputFile').click()
         }
     },
 
@@ -224,7 +224,7 @@ export default {
         handleSelectChange (v) {
             // console.log('onchange')
             // console.log(document.getElementById('inputFile'))
-            // document.getElementById('inputFile').click()
+            document.getElementById('inputFile').click()
         }
     }
 }
