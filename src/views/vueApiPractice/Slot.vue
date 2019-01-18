@@ -5,7 +5,8 @@
             <slot name="name"></slot>
         </div>
         <p>tag P, in child tag</p>
-
+        <hr>
+        <p>默认插槽</p>
         <slot></slot>
     </div>
 </template>

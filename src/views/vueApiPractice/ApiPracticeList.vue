@@ -24,7 +24,7 @@
 
         <h2 class="sticky">slot</h2>
         <TempSlot>
-            <em slot="name">在em标签中的文字 </em> <br/>
+            <em slot="name">在em标签中的文字 具名插槽 </em> <br/>
              default text :this is the text in Slot tag
         </TempSlot>
 
