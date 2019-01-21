@@ -18,6 +18,11 @@ const Echarts = () => import('@/views/thirdPartService/Echarts'),
 
 Vue.use(Router)
 
+/**
+ * @desc 说明
+ * 1.只支持两级菜单路由
+ */
+
 const menuRouter = [
         {
             title: 'Vue API Practice',

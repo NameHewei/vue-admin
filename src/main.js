@@ -11,7 +11,11 @@ import './vueConfig.js'
 // all common components
 import './views/components/index.js'
 
+// 引入路由守卫，判断权限
+import './navigationGuard'
+
 Vue.prototype.$echarts = echarts
+Vue.prototype.$message = ElementUI.Message
 
 Vue.use(ElementUI)
 

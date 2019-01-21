@@ -47,7 +47,6 @@ export default {
     },
 
     created () {
-        console.log('sha1')
     },
 
     watch: {

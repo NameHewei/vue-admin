@@ -1,5 +1,9 @@
 import Vue from 'vue'
 
+/**
+ * 这是webpack提供的方法
+ */
+
 function capitalizeFirstLetter (string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
