@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import { menu } from '@/router/router'
+// import { menu } from '@/router/router'
 
 export default {
     data () {
         return {
-            menu
+            // menu
         }
     },
     methods: {

@@ -3,18 +3,18 @@ import store from './store/store'
 
 router.beforeEach(async (to, from, next) => {
     console.log(to.path)
-
-    try {
-        await store.dispatch('user/actionSetUserInfo')
-        await store.dispatch('permistion/actionSetUserInfo')
-        const userInfo = store.state.user
-
-        console.log('navigationquard', userInfo)
-    } catch (error) {
+    if (to.path === '/login') {
+        // 该函数中必须要执行next()
         next()
-        console.error('beforeEach catch error:', error)
-    }
+    } else {
+        try {
+            await store.dispatch('user/actionSetUserInfo')
+            const userInfo = store.state.user
 
-    // 该函数中必须要执行next()
-    next()
+            console.log('navigationquard', userInfo)
+        } catch (error) {
+            next({ path: '/login' })
+            console.error('beforeEach catch error:', error)
+        }
+    }
 })

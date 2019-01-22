@@ -6,14 +6,14 @@ export default {
     state: {
         name: '',
         age: null,
-        permissionCode: []
+        roles: []
     },
 
     mutations: {
-        setUserInfo (state, { name, age, permissionCode }) {
+        setUserInfo (state, { name, age, roles: roles = [] }) {
             state.name = name
             state.age = age
-            state.permissionCode = permissionCode
+            state.roles = [...roles]
         }
     },
 
