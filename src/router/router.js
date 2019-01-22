@@ -20,10 +20,10 @@ Vue.use(Router)
 
 /**
  * @desc 说明
- * 1.只支持两级菜单路由
+ * 1. 只支持两级菜单
  */
 
-const menuRouter = [
+const routers = [
         {
             title: 'Vue API Practice',
             children: [
@@ -114,19 +114,8 @@ const menuRouter = [
         })
 
         return [{
-            path: '/',
-            component: Home,
-            children: [
-                {
-                    path: '',
-                    component: Welcome
-                },
-                ...tempChildren
-            ]
-        },
-        {
             title: 'login',
-            path: '/login',
+            path: '/',
             name: 'login',
             component: Login
         }]

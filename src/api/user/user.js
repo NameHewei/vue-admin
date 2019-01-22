@@ -6,3 +6,7 @@ export function reqUserInfo () {
         age: 10
     }
 }
+
+export function reqPermissionCode () {
+    return ['001001', '002001']
+}

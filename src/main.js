@@ -6,10 +6,10 @@ import ElementUI from 'element-ui'
 import echarts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import './vueConfig.js'
-
 // all common components
 import './views/components/index.js'
+
+import './vueConfig.js'
 
 // 引入路由守卫，判断权限
 import './navigationGuard'

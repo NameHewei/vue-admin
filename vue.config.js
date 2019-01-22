@@ -11,7 +11,8 @@ module.exports = {
         }
     },
 
-    baseUrl: './', // 修改打包后的地址
+    // 修改打包后的地址
+    baseUrl: './',
 
     lintOnSave: false
 }

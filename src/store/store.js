@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import user from './modules/user/user'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,12 +16,12 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        Change () {
+        change () {
             console.log(1)
         }
     },
 
     modules: {
-
+        user
     }
 })
