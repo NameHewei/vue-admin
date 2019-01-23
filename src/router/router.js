@@ -31,8 +31,7 @@ const
     // 路由表
     routers = [
         {
-            title: 'Vue API Practice',
-            icon: 'el-icon-location',
+            meta: { title: 'Vue API Practice', icon: 'el-icon-location' },
             children: [
                 { title: 'practice vue', path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { roles: ['ADMIN'] } },
                 { title: 'prectice vuex', path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex }
@@ -105,7 +104,7 @@ const
 //     ]
 // },
 
-export const perrmiteRouters = function (role) {
+export const permiteRouters = function (role) {
 
 }
 

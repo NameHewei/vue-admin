@@ -20,6 +20,7 @@ export default {
     actions: {
         async actionSetUserInfo ({ commit }) {
             const userInfo = await reqUserInfo()
+
             commit('setUserInfo', { ...userInfo })
         }
     }
