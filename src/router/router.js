@@ -4,11 +4,13 @@ import Router from 'vue-router'
 import Login from '@/views/login/Login.vue'
 import Home from '@/views/layout/Home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
-import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
-import ApiVuex from '@/views/vueApiPractice/Vuex.vue'
 
 import AllComponents from '@/views/allComponents/AllComponents.vue'
 import Table from '@/views/table/Table.vue'
+import Entrance from '@/views/vueApiPractice/Entrance.vue'
+
+import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
+import ApiVuex from '@/views/vueApiPractice/Vuex.vue'
 
 const
     Echarts = () => import('@/views/thirdPartService/Echarts'),
@@ -25,18 +27,44 @@ Vue.use(Router)
 const
     // 基础路由
     baseRouter = [
-        { title: 'login', path: '/login', name: 'login', component: Login }
+        { path: '/',
+            name: 'root',
+            component: Home,
+            children: [
+                {
+                    path: '',
+                    component: Welcome
+                },
+                {
+                    path: 'practice',
+                    component: Entrance,
+                    meta: { title: 'Vue API Practice', icon: 'el-icon-location', showInMenu: true },
+                    children: [
+                        { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN'], showInMenu: true } },
+                        { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'prectice vuex', showInMenu: true } }
+                    ]
+                }
+            ]
+        },
+        { path: '/login', name: 'login', component: Login }
     ],
 
     // 路由表
-    routers = [
+    routerTable = [
         {
-            meta: { title: 'Vue API Practice', icon: 'el-icon-location' },
+            path: 'practice',
+            name: 'practice',
+            component: Entrance,
+            meta: { title: 'Vue API Practice', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN', 'STUDENT'] },
             children: [
-                { title: 'practice vue', path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { roles: ['ADMIN'] } },
-                { title: 'prectice vuex', path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex }
+                { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
+                { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'prectice vuex', showInMenu: true, roles: ['STUDENT'] } }
             ]
-        },
+        }
+    ],
+
+    routers = [
+
         {
             title: '常用组件',
             children: [
@@ -104,8 +132,33 @@ const
 //     ]
 // },
 
-export const permiteRouters = function (role) {
+export const permitRouters = function (roles) {
 
+}
+
+export const permitMenu = function (currentAccountRoles) {
+    return routerTable.map(async ({ name, meta: { roles, title, icon }, children }) => {
+        let tempMenu = null
+
+        // 判断当前模块是否有权限
+        if (currentAccountRoles.some(v => (roles.includes(v)))) {
+            children.forEach(({ name: _name, meta: { roles: _roles, title: _title } }) => {
+                if (currentAccountRoles.some(v => (_roles.includes(v)))) {
+                    tempMenu = {
+                        title,
+                        icon,
+                        name,
+                        children: {
+                            _title,
+                            _name
+                        }
+                    }
+                }
+            })
+        }
+
+        return tempMenu
+    })
 }
 
 export default new Router({

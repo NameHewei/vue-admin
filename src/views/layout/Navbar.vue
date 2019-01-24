@@ -32,14 +32,24 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 // import { menu } from '@/router/router'
 
 export default {
     data () {
         return {
-            // menu
+            menu: []
         }
     },
+
+    created () {
+        console.log(this.roles)
+    },
+
+    computed: {
+        ...mapState('user', ['roles'])
+    },
+
     methods: {
         routerSkip (name) {
             this.$router.push({
