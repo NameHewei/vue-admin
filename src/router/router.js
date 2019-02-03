@@ -28,7 +28,6 @@ const
     // 基础路由
     baseRouter = [
         { path: '/',
-            name: 'root',
             component: Home,
             children: [
                 {
@@ -137,28 +136,34 @@ export const permitRouters = function (roles) {
 }
 
 export const permitMenu = function (currentAccountRoles) {
-    return routerTable.map(async ({ name, meta: { roles, title, icon }, children }) => {
-        let tempMenu = null
+    const tempMenu = []
+    console.time('start')
+
+    routerTable.forEach(async ({ name, meta: { roles, title, icon }, children }) => {
+        const tempChildren = []
 
         // 判断当前模块是否有权限
         if (currentAccountRoles.some(v => (roles.includes(v)))) {
             children.forEach(({ name: _name, meta: { roles: _roles, title: _title } }) => {
                 if (currentAccountRoles.some(v => (_roles.includes(v)))) {
-                    tempMenu = {
-                        title,
-                        icon,
-                        name,
-                        children: {
-                            _title,
-                            _name
-                        }
-                    }
+                    tempChildren.push({
+
+                        title: _title,
+                        name: _name
+
+                    })
                 }
             })
         }
-
-        return tempMenu
+        tempMenu.push({
+            title,
+            icon,
+            name,
+            children: tempChildren
+        })
     })
+    console.timeEnd('start')
+    return tempMenu
 }
 
 export default new Router({

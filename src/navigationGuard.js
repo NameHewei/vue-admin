@@ -1,4 +1,4 @@
-import router, { permiteRouters } from './router/router'
+import router, { permitRouters } from './router/router'
 import store from './store/store'
 
 router.beforeEach(async (to, from, next) => {
