@@ -33,7 +33,7 @@
 
 <script>
 import { mapState } from 'vuex'
-// import { menu } from '@/router/router'
+import { permitMenu } from '@/router/router'
 
 export default {
     data () {
@@ -43,7 +43,7 @@ export default {
     },
 
     created () {
-        console.log(this.roles)
+        this.menu = permitMenu(this.roles)
     },
 
     computed: {
