@@ -137,9 +137,8 @@ export const permitRouters = function (roles) {
 
 export const permitMenu = function (currentAccountRoles) {
     const tempMenu = []
-    console.time('start')
 
-    routerTable.forEach(async ({ name, meta: { roles, title, icon }, children }) => {
+    routerTable.forEach(({ name, meta: { roles, title, icon }, children }) => {
         const tempChildren = []
 
         // 判断当前模块是否有权限
@@ -162,7 +161,7 @@ export const permitMenu = function (currentAccountRoles) {
             children: tempChildren
         })
     })
-    console.timeEnd('start')
+
     return tempMenu
 }
 

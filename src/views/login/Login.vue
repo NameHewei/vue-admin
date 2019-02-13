@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import CryptoJS from 'crypto-js'
 
 export default {
@@ -60,15 +61,20 @@ export default {
     },
 
     methods: {
+        ...mapActions('user', ['actionSetUserInfo']),
         submitForm () {
-            this.$refs.formLogin.validate((valid) => {
-                if (valid) {
-                    alert('submit!')
-                } else {
-                    console.log('error submit!!')
-                    return false
-                }
+            this.actionSetUserInfo()
+            this.$router.push({
+                path: '/'
             })
+            // this.$refs.formLogin.validate((valid) => {
+            //     if (valid) {
+            //         alert('submit!')
+            //     } else {
+            //         console.log('error submit!!')
+            //         return false
+            //     }
+            // })
         }
     }
 }
