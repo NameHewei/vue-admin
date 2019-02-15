@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>pull load</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1, user-scalable=no">
+    <style>
+        #box {
+            height: 300px;
+            overflow: auto;
+            background-color: rgb(116, 238, 181);
+        }
+
+        ul {}
+
+        li {
+            height: 35px;
+            background-color: rgb(240, 207, 118);
+            border-bottom: 1px solid #fff;
+        }
+
+        #bottomNotice {
+            display: none;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='box'>
+        <ul id="ul">
+                <li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li>
+                <li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li>
+                <li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li>
+                <li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>12</li><li>22232</li>
+        </ul>
+        <div id="bottomNotice">加载中...</div>
+    </div>
+    <script>
+        document.body.addEventListener('scroll', function() {
+            console.log(909);
+        })
+        // var box = document.getElementById('box');
+        // var time = 300, clearT= '', loading=false;
+
+        // box.addEventListener('scroll', function() {
+        //     clearTimeout(clearT)
+        //     clearT = setTimeout(function() {
+        //         if(box.scrollHeight - box.scrollTop < box.clientHeight + 10){
+        //             if(!loading){
+        //                 document.getElementById('bottomNotice').setAttribute('style', 'display:block')
+        //                 loading = true
+        //                 box.scrollTop = box.scrollHeight - box.clientHeight - 10
+        //                 add()
+        //             }
+        //         }
+        //     }, 300)
+        // })
+
+        function add() {
+            setTimeout(() => {
+                for (let i = 0; i < 10; i++) {
+                    var li= document.createElement('li');
+                    li.innerHTML = Math.random();
+                    document.getElementById('ul').appendChild(li)
+                }
+                loading = false
+                document.getElementById('bottomNotice').setAttribute('style', 'display:none')
+            }, 2000);
+                         
+        }
+
+        var methods = {
+    // 初始化绑定事件
+    initBindEvent: function() {
+        $('#tags').on('click', 'span,em',this.handleTagChange)
+        $('#earnGasolineBtn').on('click', this.openEarnGasoline)
+    },
+
+    // 操作标签切换
+    handleTagChange: function(event) {
+        $('.r-choose').removeClass();
+        $(event.target).addClass('r-choose');
+        $('#listContent').html('');
+
+        var newType = parseInt($(event.target).attr('data')), currentType = store.tagType;
+
+        if (newType != currentType) {
+            store.tagType = newType;
+            store.pageNum = 1;
+            store.pageSize = 20;
+            methods.getList();
+        }
+
+    },
+
+    getGasolineExpire: function () {
+        api.reqGasolineExpire(function(res) {
+            var data = res.data;
+            $('#gasolineAmount').html(data.gasoline_amount)
+            if(data.show_notice) {
+                $('.expire-notice').html(data.expire_amount + 'ml汽油将在2018-02-12过期').show()
+            }
+        })
+    },
+
+    // 获取列表数据
+    getList: function() {
+        var tagType = store.tagType, pageNum = store.pageNum, pageSize = store.pageSize;
+
+        var prefixSymbol = function(n) {
+            if(n > 0) n = '+' + n
+            return  n
+        }
+        
+        api.reqDetailList({
+            in_or_out: tagType,
+            page_num: pageNum,
+            page_size: pageSize
+        }, function(res) {
+            store.count = res.data.count;
+
+            var liStr = '', data = res.data.results; 
+            for (var i = 0; i < data.length; i++) {
+                liStr += '<li>'+'<div class="i-l-f"><span>'+ data[i].name +'</span><em>' + prefixSymbol(data[i].amount) + '</em></div><div class="i-l-s"><i>'+ TOOLS.formatTime(data[i].create_time) +'</i></div></li>';
+            }
+            
+            var htmlStr = '<ul id="infoList" class="info-list">' + liStr + '</ul>';
+            $('#listContent').append(htmlStr) 
+
+            if(pageNum * pageSize >= store.count) {
+                document.getElementById('loadingNotice').setAttribute('style', 'display:none')
+            } else {
+                document.getElementById('loadingNotice').setAttribute('style', 'display:block')
+            }
+        })
+    },
+
+    // 上拉加载
+    pullUpLoad: function() {
+        var scrollEle = document.getElementById('main');
+        var time = 300, clearT= '';
+
+        scrollEle.addEventListener('scroll', function() {
+            clearTimeout(clearT)
+            clearT = setTimeout(function() {
+                console.log(window.scrollY,scrollEle.scrollHeight , scrollEle.scrollTop , scrollEle.clientHeight);
+                if(scrollEle.scrollHeight - scrollEle.scrollTop < scrollEle.clientHeight + 10){
+                    var c = store.count, n = store.pageNum,s= store.pageSize
+                    if(n*s < c) {
+                        store.pageNum = n +1
+                        methods.getList();
+                    }
+                }
+            }, 300)
+        })
+    },
+
+    // 打开转汽油页面
+    openEarnGasoline: function() {
+        APP_API.jumpToAppPage('earnGasoline')
+    }
+}
+
+    </script>
+</body>
+
+</html>
