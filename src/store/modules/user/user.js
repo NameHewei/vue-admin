@@ -21,6 +21,8 @@ export default {
         async actionSetUserInfo ({ commit }) {
             const userInfo = await reqUserInfo()
 
+            document.cookie = 'token=hewei'
+
             commit('setUserInfo', { ...userInfo })
         }
     }

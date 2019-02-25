@@ -2,7 +2,6 @@ import router, { permitRouters } from './router/router'
 import store from './store/store'
 
 router.beforeEach(async (to, from, next) => {
-    console.log('to path', to.path)
     if (to.path === '/login') {
         // 如果是进入登录页面不需要进行校验
         next()
@@ -15,7 +14,6 @@ router.beforeEach(async (to, from, next) => {
                 router.addRoutes(permitRouters(store.state.user.roles))
 
                 next({ ...to, replace: true })
-                // console.log('navigationGuard', userInfo)
             } catch (error) {
                 next({ path: '/login' })
                 console.error('beforeEach catch error:', error)
