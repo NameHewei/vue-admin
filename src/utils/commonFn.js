@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie'
+
 export function formatToQueryString (obj) {
     // format the object as a queryString
     const temp = [],
@@ -35,5 +37,15 @@ export function formatTime (dateString, type) {
         return commandObj[type]()
     } else {
         return ''
+    }
+}
+
+export const cookieMethods = {
+    get () {
+        Cookies.get('a')
+    },
+
+    set (name, value) {
+        Cookies.set(name, value)
     }
 }
