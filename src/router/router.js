@@ -16,7 +16,8 @@ const
     Echarts = () => import('@/views/thirdPartService/Echarts'),
     AMap = () => import('@/views/thirdPartService/AMap'),
     WyIm = () => import('@/views/thirdPartService/WyIm'),
-    UploadFile = () => import('@/views/allComponents/UploadFile.vue')
+    UploadFile = () => import('@/views/allComponents/UploadFile.vue'),
+    Jsx = () => import('@/views/vueApiPractice/jsx/Jsx.vue')
 
 Vue.use(Router)
 
@@ -27,25 +28,8 @@ Vue.use(Router)
 const
     // 基础路由
     baseRouter = [
-        { path: '/',
-            component: Home,
-            children: [
-                {
-                    path: '',
-                    component: Welcome
-                },
-                {
-                    path: 'practice',
-                    component: Entrance,
-                    meta: { title: 'Vue API Practice', icon: 'el-icon-location', showInMenu: true },
-                    children: [
-                        { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN'], showInMenu: true } },
-                        { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'prectice vuex', showInMenu: true } }
-                    ]
-                }
-            ]
-        },
-        { path: '/login', name: 'login', component: Login }
+        { path: '/login', name: 'login', component: Login },
+        { path: '*', component: Echarts }
     ],
 
     // 路由表
@@ -54,38 +38,42 @@ const
             path: 'practice',
             name: 'practice',
             component: Entrance,
-            meta: { title: 'Vue API Practice', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN', 'STUDENT'] },
+            meta: { title: 'Vue API 练习', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN', 'STUDENT'] },
             children: [
                 { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
-                { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'prectice vuex', showInMenu: true, roles: ['STUDENT'] } }
-            ]
-        }
-    ],
-
-    routers = [
-        {
-            title: '常用组件',
-            children: [
-                { title: 'components', path: 'all-component', name: 'allComponents', component: AllComponents },
-                { title: 'table', path: 'table', name: 'table', component: Table },
-                { title: 'axios 上传文件', path: 'upload-file', name: 'uploadFile', component: UploadFile }
+                { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'practice vuex', showInMenu: true, roles: ['STUDENT'] } },
+                { path: 'vue-jsx', name: 'vue-jsx', component: Jsx, meta: { title: 'vue jsx', showInMenu: true, roles: ['ADMIN'] } }
             ]
         },
         {
-            title: '第三方服务',
+            path: 'frequently-use-component',
+            name: 'frequentlyUseComponent',
+            component: Entrance,
+            meta: { title: '常用组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN', 'STUDENT'] },
             children: [
-                { title: 'All-Charts', path: 'echarts', name: 'echarts', component: Echarts },
-                { title: 'AMap', path: 'a-map', name: 'aMap', component: AMap },
-                { title: '网易IM', path: 'wy-im', name: 'wyIm', component: WyIm }
-            ]
-        },
-        {
-            title: 'Other',
-            children: [
-                { title: 'no', name: 'no', path: 'echarts', component: Echarts }
+                { path: 'all-component', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
+                { path: 'table', name: 'table', component: Table, meta: { title: 'table', roles: ['ADMIN'] } },
+                { path: 'upload-file', name: 'uploadFile', component: UploadFile, meta: { title: 'axios 上传文件', roles: ['ADMIN'] } }
             ]
         }
     ]
+
+    // routers = [
+    //     {
+    //         title: '第三方服务',
+    //         children: [
+    //             { title: 'All-Charts', path: 'echarts', name: 'echarts', component: Echarts },
+    //             { title: 'AMap', path: 'a-map', name: 'aMap', component: AMap },
+    //             { title: '网易IM', path: 'wy-im', name: 'wyIm', component: WyIm }
+    //         ]
+    //     },
+    //     {
+    //         title: 'Other',
+    //         children: [
+    //             { title: 'no', name: 'no', path: 'echarts', component: Echarts }
+    //         ]
+    //     }
+    // ]
 
 // router = () => {
 //     const tempChildren = []
@@ -130,25 +118,41 @@ const
 //     ]
 // },
 
-export const permitRouters = function (roles) {
+export const permitRouters = function (currentAccountRoles) {
+    const tempRoute = []
+    routerTable.forEach(({ name, path, component, meta, children }) => {
+        const tempChildren = []
+        // 判断当前模块是否有权限
+        if (currentAccountRoles.some(v => (meta.roles.includes(v)))) {
+            children.forEach(item => {
+                if (currentAccountRoles.some(v => (item.meta.roles.includes(v)))) {
+                    tempChildren.push(item)
+                }
+            })
+        }
+        tempRoute.push({
+            path,
+            name,
+            meta,
+            component,
+            children: tempChildren
+        })
+    })
 
+    return [{ path: '/', component: Home, children: [{ path: '', component: Welcome }, ...tempRoute] }]
 }
 
 export const permitMenu = function (currentAccountRoles) {
     const tempMenu = []
-
-    routerTable.forEach(({ name, meta: { roles, title, icon }, children }) => {
+    routerTable.forEach(({ name, meta: { roles, title, icon, showInMenu }, children }) => {
         const tempChildren = []
-
-        // 判断当前模块是否有权限
-        if (currentAccountRoles.some(v => (roles.includes(v)))) {
-            children.forEach(({ name: _name, meta: { roles: _roles, title: _title } }) => {
-                if (currentAccountRoles.some(v => (_roles.includes(v)))) {
+        // 判断当前模块是否需要显示和有权限
+        if (showInMenu && currentAccountRoles.some(v => (roles.includes(v)))) {
+            children.forEach(({ name: _name, meta: { roles: _roles, title: _title, showInMenu: _showInMenu } }) => {
+                if (_showInMenu && currentAccountRoles.some(v => (_roles.includes(v)))) {
                     tempChildren.push({
-
                         title: _title,
                         name: _name
-
                     })
                 }
             })

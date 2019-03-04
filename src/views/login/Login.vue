@@ -47,8 +47,7 @@ export default {
         }
     },
 
-    created () {
-    },
+    created () {},
 
     watch: {
         'formData.password' (v) {
