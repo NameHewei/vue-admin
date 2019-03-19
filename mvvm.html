@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>双向绑定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <script>
+        const vue = new Vue({
+            data: {
+                name: 'hew',
+                obj: {
+                    score: 90
+                }
+            },
+
+            created() {
+                console.log(this.obj);
+            }
+        })
+
+        const testObj = {
+            name: 'hew',
+            score: {
+                chinese: 123,
+                math: 234
+            }
+        }
+
+        const defineProp = function(obj, key, value) {
+            // 递归对象，直到value是值类型
+            observe(value)
+
+            const dep = new Dep()
+
+            Object.defineProperty(obj, key, {
+                get: function() {
+                    console.log('get',key);
+                    Dep.target && dep.addDep(Dep.target)
+                    return value
+                },
+                set: function(newVal) {
+                    if(newVal !== val) {
+                        console.log('set新值', key, newVal);
+                        val = newVal
+                        // 通知所有订阅者
+                        dep.notify()
+                    }
+
+                }
+            })
+        }
+
+        const observe = function(obj) {
+            if(!obj || typeof obj !== 'object') return
+
+            Object.keys(obj).forEach(function(key) {
+                defineProp(obj, key, obj[key])
+            })
+        }
+
+        observe(testObj)
+
+        console.log(testObj.score.math = 99);
+
+        function Dep() {
+            this.subs = []
+        }
+        Dep.prototype.addSub = function(sub) {
+            this.subs.push(sub)
+        }
+        Dep.prototype.notify = function(sub) {
+            this.subs.forEach((sub) => {
+                sub.update()
+            })
+        }
+
+        function Watcher(vm, exp, cb) {
+            this.vm = vm
+            this.exp = exp
+            this.cb = cb
+            this.value = this.get()
+        }
+
+        Watcher.prototype = {
+            update: function() {
+                this.run()
+            },
+            run: function() {
+                var value = this.get()
+                var oldValue = this.value
+                if (value !== oldValue) {
+                    this.value = value
+                    this.cb,call(this.vm, value, oldValue)
+                }
+            },
+            get: function() {
+                Dep.target = this
+                // 触发对象的get监听，将上面赋值给targe的this 加入到subs
+                var value = this.vm[exp]
+                // 加入完后就删除
+                Dep.target = null
+                return value
+            }
+        }
+
+        function Compile(el) {
+            this.$el = this.isElementNode(el) ? el : document.querySelector(el)
+            if(this.$el) {
+                this.$fragment = this.node2fragment(this.$el)
+                this.init()
+                this.$el.appendChild(this.$fragment)
+            }
+        }
+        Compile.prototype = {
+            init: function() {
+                this.compileElement(this.$fragment)
+            },
+            node2fragment: function(el) {
+                return 1
+            },
+            compileElement: function() {},
+            compile: function(node) {}
+        }
+
+        var compileUtil = {
+            text: function(node, vm, exp) {
+                this.bind(node, vm, exp, 'text');
+            },
+            
+        }
+    </script>
+</body>
+</html>
