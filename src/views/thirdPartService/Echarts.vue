@@ -12,6 +12,9 @@
             <div><b>参考链接：<a href="http://echarts.baidu.com/tutorial.html#%E5%9C%A8%20webpack%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ECharts" target="_blank">echarts 官网</a></b></div>
         </div>
         <div id="main" :style="{width: '300px', height: '300px'}"></div>
+        <div>
+            <el-button @click="handleRouteSkip">跳转</el-button>
+        </div>
     </div>
 </template>
 
@@ -21,7 +24,7 @@ export default {
         return {}
     },
     mounted () {
-        var myChart = this.$echarts.init(document.getElementById('main'), null, {renderer: 'svg'})
+        var myChart = this.$echarts.init(document.getElementById('main'), null, { renderer: 'svg' })
         // 绘制图表
         myChart.setOption({
             title: {
@@ -52,6 +55,12 @@ export default {
                 errorFn: (err) => {
                     console.log(err)
                 }
+            })
+        },
+
+        handleRouteSkip () {
+            this.$router.push({
+                name: 'financial'
             })
         }
     }
