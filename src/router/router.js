@@ -14,6 +14,7 @@ import ApiVuex from '@/views/vueApiPractice/Vuex.vue'
 
 const
     Echarts = () => import('@/views/thirdPartService/Echarts'),
+    Financial = () => import('@/views/thirdPartService/Financial'),
     AMap = () => import('@/views/thirdPartService/AMap'),
     WyIm = () => import('@/views/thirdPartService/WyIm'),
     UploadFile = () => import('@/views/allComponents/UploadFile.vue'),
@@ -49,74 +50,26 @@ const
             path: 'frequently-use-component',
             name: 'frequentlyUseComponent',
             component: Entrance,
-            meta: { title: '常用组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN', 'STUDENT'] },
+            meta: { title: '常用组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
             children: [
-                { path: 'all-component', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
+                { path: 'all-component', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN'], showInMenu: true } },
                 { path: 'table', name: 'table', component: Table, meta: { title: 'table', roles: ['ADMIN'] } },
                 { path: 'upload-file', name: 'uploadFile', component: UploadFile, meta: { title: 'axios 上传文件', roles: ['ADMIN'] } }
             ]
+        },
+        {
+            path: 'frequently-use-component',
+            name: 'frequentlyUseComponent',
+            component: Entrance,
+            meta: { title: '第三方服务', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
+            children: [
+                { path: 'echarts', name: 'echarts', component: Echarts, meta: { title: '所有图表', roles: ['ADMIN'], showInMenu: true } },
+                { path: 'financial', name: 'financial', component: Financial, meta: { roles: ['ADMIN'] } },
+                { path: 'a-map', name: 'aMap', component: AMap, meta: { title: '高德地图', roles: ['ADMIN'], showInMenu: true } },
+                { path: 'wy-im', name: 'wyIm', component: WyIm, meta: { title: '网易IM', roles: ['ADMIN'], showInMenu: true } }
+            ]
         }
     ]
-
-    // routers = [
-    //     {
-    //         title: '第三方服务',
-    //         children: [
-    //             { title: 'All-Charts', path: 'echarts', name: 'echarts', component: Echarts },
-    //             { title: 'AMap', path: 'a-map', name: 'aMap', component: AMap },
-    //             { title: '网易IM', path: 'wy-im', name: 'wyIm', component: WyIm }
-    //         ]
-    //     },
-    //     {
-    //         title: 'Other',
-    //         children: [
-    //             { title: 'no', name: 'no', path: 'echarts', component: Echarts }
-    //         ]
-    //     }
-    // ]
-
-// router = () => {
-//     const tempChildren = []
-
-//     menuRouter.forEach(({ children }) => {
-//         children.forEach(({ path, name, component }) => {
-//             tempChildren.push({
-//                 path,
-//                 name,
-//                 component
-//             })
-//         })
-//     })
-
-//     return [{
-//         title: 'login',
-//         path: '/',
-//         name: 'login',
-//         component: Login
-//     }]
-// }
-
-// export const perrmiteRouters = menuRouter.map(({ title, children }) => {
-//     return {
-//         title,
-//         children: children.map(v => ({
-//             title: v.title,
-//             name: v.name
-//         }))
-//     }
-// })
-
-// {
-//     path: '/',
-//     component: Home,
-//     children: [
-//         {
-//             path: '',
-//             component: Welcome
-//         },
-//         ...tempChildren
-//     ]
-// },
 
 export const permitRouters = function (currentAccountRoles) {
     const tempRoute = []
