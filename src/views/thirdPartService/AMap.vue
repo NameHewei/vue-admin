@@ -37,10 +37,43 @@ export default {
     },
 
     mounted () {
-        this.getArea()
+        /**
+         * 打点
+         */
+        this.setMark()
+
+        /**
+         * 画区域
+         */
+        // this.getArea()
     },
 
     methods: {
+        setMark () {
+            const map = new AMap.Map('aMapContainer', {
+                zoom: 12
+            })
+            // 设置地图中心点
+            map.setCenter([104.073975, 30.641741])
+
+            const icon = new AMap.Icon({
+                    // 图标尺寸
+                    size: new AMap.Size(40, 50),
+                    // Icon的图像
+                    image: './logo.png',
+                    // 图像相对展示区域的偏移量，适于雪碧图等
+                    imageOffset: new AMap.Pixel(0, 0),
+                    // 根据所设置的大小拉伸或压缩图片
+                    imageSize: new AMap.Size(40, 50)
+                }),
+                marker = new AMap.Marker({
+                    icon: icon,
+                    position: [104.073975, 30.641741],
+                    offset: new AMap.Pixel(0, 0)
+                })
+            marker.setMap(map)
+        },
+
         getArea () {
             if (this.path.length) {
                 this.initialPolygon()
