@@ -8,6 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 <body>
+    <p class="a" v-model="123">Observe 监听器 监听属性变化并通知订阅者</p>
+    <p>Watch 订阅者 收到属性变化，更新视图</p>
+    <p>compile 解析器 解析指令，初始化模板，绑定订阅者 </p>
+    <div id="app">{{ name }}</div>
     <script>
         const vue = new Vue({
             data: {
@@ -38,14 +42,16 @@
 
             Object.defineProperty(obj, key, {
                 get: function() {
-                    console.log('get',key);
-                    Dep.target && dep.addDep(Dep.target)
+                    console.log('监听',key);
+                    if(Dep.target) {
+                        dep.addSub(Dep.target)
+                    }
                     return value
                 },
                 set: function(newVal) {
-                    if(newVal !== val) {
+                    if(newVal !== value) {
                         console.log('set新值', key, newVal);
-                        val = newVal
+                        value = newVal
                         // 通知所有订阅者
                         dep.notify()
                     }
@@ -62,9 +68,8 @@
             })
         }
 
-        observe(testObj)
+        // observe(testObj)
 
-        console.log(testObj.score.math = 99);
 
         function Dep() {
             this.subs = []
@@ -73,65 +78,188 @@
             this.subs.push(sub)
         }
         Dep.prototype.notify = function(sub) {
-            this.subs.forEach((sub) => {
+            this.subs.forEach(sub => {
                 sub.update()
             })
         }
+        Dep.target = null
 
-        function Watcher(vm, exp, cb) {
+        // observe(testObj)
+        // testObj.name = 'hewei'
+
+        function Watcher(vm, prop, callback) {
             this.vm = vm
-            this.exp = exp
-            this.cb = cb
+            this.prop = prop
+            this.callback = callback
             this.value = this.get()
         }
 
         Watcher.prototype = {
             update: function() {
-                this.run()
-            },
-            run: function() {
-                var value = this.get()
-                var oldValue = this.value
+                const value = this.vm.$data[this.prop]
+                const oldValue = this.value
                 if (value !== oldValue) {
                     this.value = value
-                    this.cb,call(this.vm, value, oldValue)
+                    this.callback(value)
                 }
             },
             get: function() {
+                // 存贮订阅器
                 Dep.target = this
                 // 触发对象的get监听，将上面赋值给targe的this 加入到subs
-                var value = this.vm[exp]
+                var value = this.vm.$data[this.prop]
                 // 加入完后就删除
                 Dep.target = null
                 return value
             }
         }
 
-        function Compile(el) {
-            this.$el = this.isElementNode(el) ? el : document.querySelector(el)
-            if(this.$el) {
-                this.$fragment = this.node2fragment(this.$el)
-                this.init()
-                this.$el.appendChild(this.$fragment)
-            }
+        function Mvue(options, prop) {
+            this.$options = options
+            this.$data = options.data
+            this.$prop = prop
+            this.$el = document.querySelector(options.el)
+            this.init()
+        }
+        Mvue.prototype.init = function() {
+            observe(this.$data)
+            this.$el.textContent = this.$data[this.$prop]
+            new Watcher(this, this.$prop, value => {
+                this.$el.textContent = value
+            })
+        }
+
+        function Compile(vm) {
+           this.vm = vm
+           this.el = vm.$el
+           this.fragment = null
+           this.init()
         }
         Compile.prototype = {
             init: function() {
-                this.compileElement(this.$fragment)
+                this.fragment = this.nodeFragment(this.el)
+                
             },
-            node2fragment: function(el) {
-                return 1
+            nodeFragment: function() {
+                const fragment = document.createDocumentFragment()
+                let child = el.firstChild
+
+                while(child) {
+                    fragment.appendChild(child)
+                    child = el.firstChild
+                }
+
+                return fragment
             },
-            compileElement: function() {},
-            compile: function(node) {}
+
+            compileNode: function(fragment) {
+                let childNodes = fragment.childNodes;
+                [...childNodes].forEach(node =>{
+                    if(this.isElementNode(node)) {
+                        this.compile(node)
+                    }
+
+                    // 匹配{{}}
+                    let reg = /\{\{(.*)\}\}/
+                    // 获取节点的文本内容
+                    let text = node.textContent
+
+                    // 判断文本内容是否有{{}}
+                    if(reg.test(text)) {
+                        let prop = reg.exec(text)[1]
+                        this.compileText(node, prop)
+                    }
+
+                    // length 为0 表示没有子元素并且没有文本
+                    if(node.childNodes && node.childNodes.length) {
+                        // 递归编译子子节点
+                        this.compileNode(node)
+                    }
+                })
+            },
+
+            compile: function() {
+                // 获取属性
+                let nodeAttrs = node.attributes;
+                [...nodeAttrs].forEach(attr => {
+                    // 这里有疑惑
+                    let name = attr.name
+
+                    if(this.isDirective(name)) {
+                        let value = attr.value
+                        if (name === 'v-model') {
+                            this.compileModel(node, value)
+                        }
+                    }
+                })
+            },
+
+            compileModel: function(node, prop) {
+                let val = this.vm.$data[prop]
+                this.updateModel(node, val)
+
+                new Watcher(this.vm, prop, value => {
+                    this.updateModel(node, value)
+                })
+
+                node.addEventListener('input', event => {
+                    let newValue = event.target.value
+                    if (val === newValue) return
+                    this.vm.$data[prop] = newValue
+                })
+            },
+
+            compileText: function(node, prop) {
+                let text = this.vm.$data[prop]
+                this.updateView(node, text)
+
+                new Watcher(this.vm, prop, (value) => {
+                    this.updateView(node, value)
+                })
+            },
+
+            isDirective: function (text) {
+                return /v-/.test(text)
+            },
+
+            isElementNode: function(node) {
+                // 元素节点返回1 文本节点(元素或属性中的文字)3 属性节点2(被废弃)
+                return node.nodeType === 1
+            },
+
+            isTextNode: function(node) {
+                return node.nodeType === 3
+            },
+
+            updateModel: function(node, value) {
+                // 这里有疑问
+                node.value = value || ''
+            },
+
+            updateView: function(node, value) {
+                node.textContent = value || ''
+            }
         }
 
         var compileUtil = {
             text: function(node, vm, exp) {
                 this.bind(node, vm, exp, 'text');
-            },
-            
+            }
         }
+
+        // const vm = new Mvue({
+        //     el: '#app',
+        //     data: {
+        //         name: '完全没问题，看起来是不是很酷'
+        //     }
+        // }, 'name')
+
+        const vm = new Mvue({
+            el: "#app",
+            data: {
+                name: "完全没问题，看起来是不是很酷！"
+            }
+        });
     </script>
 </body>
 </html>
