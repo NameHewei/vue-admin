@@ -58,8 +58,8 @@ const
             ]
         },
         {
-            path: 'frequently-use-component',
-            name: 'frequentlyUseComponent',
+            path: 'third-part',
+            name: 'thirdPart',
             component: Entrance,
             meta: { title: '第三方服务', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
             children: [

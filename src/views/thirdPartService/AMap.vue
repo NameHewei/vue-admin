@@ -38,6 +38,11 @@ export default {
 
     mounted () {
         /**
+         * 根据经纬度获取地址
+         */
+        this.getAddress()
+
+        /**
          * 打点
          */
         this.setMark()
@@ -49,6 +54,21 @@ export default {
     },
 
     methods: {
+        getAddress () {
+            /**
+             * 注意先添加plugin AMap.Geocoder
+             */
+            const geoCoder = new AMap.Geocoder({})
+            geoCoder.getAddress([104.065715, 30.65756], function (status, result) {
+                if (status === 'complete' && result.regeocode) {
+                    alert(result.regeocode.formattedAddress)
+                } else {
+                    alert('获取地址发生错误')
+                    console.log(result)
+                }
+            })
+        },
+
         setMark () {
             const map = new AMap.Map('aMapContainer', {
                 zoom: 12
