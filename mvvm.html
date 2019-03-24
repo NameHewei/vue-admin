@@ -5,37 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>双向绑定</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script>/ -->
 </head>
 <body>
     <p class="a" v-model="123">Observe 监听器 监听属性变化并通知订阅者</p>
     <p>Watch 订阅者 收到属性变化，更新视图</p>
     <p>compile 解析器 解析指令，初始化模板，绑定订阅者 </p>
-    <div id="app">{{ name }}</div>
-    <script>
-        const vue = new Vue({
-            data: {
-                name: 'hew',
-                obj: {
-                    score: 90
-                }
-            },
+    <div id="fc">
+        <span>1</span>
+        <p>2</p>
+    </div>
+    <h2>222</h2>
+    <div id="get">
 
-            created() {
-                console.log(this.obj);
+    </div>
+    <div id="app">
+        <h1>{{ name }}</h1>
+        <h3>{{ name }}</h3>
+    </div>
+    <input type="text" v-model="name">
+    <script>
+        (function() {
+            var a = document.getElementById('fc')
+            const fragment = document.createDocumentFragment()
+            var k = []
+            for (let i = 0; i < 5; i++) {
+                k.push(a.firstChild)
+                document.getElementById('get').appendChild(a.firstChild)
             }
-        })
+
+        })()
+
+        // const vue = new Vue({
+        //     data: {
+        //         name: 'hew',
+        //         obj: {
+        //             score: 90
+        //         }
+        //     },
+
+        //     created() {
+        //         console.log(this.obj);
+        //     }
+        // })
 
         const testObj = {
             name: 'hew',
             score: {
                 chinese: 123,
-                math: 234
+                math: 234,
+                project: {
+                    case: 'pass'
+                }
             }
         }
 
+        Object.defineProperty(testObj, 'score', {
+            get: function() {
+                return 'project'
+            }
+        })
+
         const defineProp = function(obj, key, value) {
-            // 递归对象，直到value是值类型
             observe(value)
 
             const dep = new Dep()
@@ -68,9 +99,6 @@
             })
         }
 
-        // observe(testObj)
-
-
         function Dep() {
             this.subs = []
         }
@@ -84,9 +112,6 @@
         }
         Dep.target = null
 
-        // observe(testObj)
-        // testObj.name = 'hewei'
-
         function Watcher(vm, prop, callback) {
             this.vm = vm
             this.prop = prop
@@ -96,7 +121,7 @@
 
         Watcher.prototype = {
             update: function() {
-                const value = this.vm.$data[this.prop]
+                const value = this.vm._data[this.prop]
                 const oldValue = this.value
                 if (value !== oldValue) {
                     this.value = value
@@ -107,46 +132,35 @@
                 // 存贮订阅器
                 Dep.target = this
                 // 触发对象的get监听，将上面赋值给targe的this 加入到subs
-                var value = this.vm.$data[this.prop]
+                var value = this.vm._data[this.prop]
                 // 加入完后就删除
                 Dep.target = null
                 return value
             }
         }
 
-        function Mvue(options, prop) {
-            this.$options = options
-            this.$data = options.data
-            this.$prop = prop
-            this.$el = document.querySelector(options.el)
-            this.init()
-        }
-        Mvue.prototype.init = function() {
-            observe(this.$data)
-            this.$el.textContent = this.$data[this.$prop]
-            new Watcher(this, this.$prop, value => {
-                this.$el.textContent = value
-            })
-        }
-
         function Compile(vm) {
            this.vm = vm
-           this.el = vm.$el
+           this.el = vm._el
            this.fragment = null
            this.init()
         }
         Compile.prototype = {
             init: function() {
-                this.fragment = this.nodeFragment(this.el)
-                
+                this.fragment = this.createFragment(this.el)
+                console.log(this.fragment);
+                this.compileNode(this.fragment)
+                this.el.appendChild(this.fragment)
             },
-            nodeFragment: function() {
-                const fragment = document.createDocumentFragment()
-                let child = el.firstChild
 
+            // 根据真实的DOM节点，创建文档片段
+            createFragment: function() {
+                const fragment = document.createDocumentFragment()
+                let child = this.el.firstChild
                 while(child) {
+                    // 将节点加入到文档片段中后，该节点会被从原来的位置删除，相当于移动节点位置
                     fragment.appendChild(child)
-                    child = el.firstChild
+                    child = this.el.firstChild
                 }
 
                 return fragment
@@ -155,6 +169,7 @@
             compileNode: function(fragment) {
                 let childNodes = fragment.childNodes;
                 [...childNodes].forEach(node =>{
+                    console.log(node.nodeName);
                     if(this.isElementNode(node)) {
                         this.compile(node)
                     }
@@ -166,7 +181,7 @@
 
                     // 判断文本内容是否有{{}}
                     if(reg.test(text)) {
-                        let prop = reg.exec(text)[1]
+                        let prop = reg.exec(text)[1].trimStart().trimEnd()
                         this.compileText(node, prop)
                     }
 
@@ -178,7 +193,7 @@
                 })
             },
 
-            compile: function() {
+            compile: function(node) {
                 // 获取属性
                 let nodeAttrs = node.attributes;
                 [...nodeAttrs].forEach(attr => {
@@ -195,7 +210,7 @@
             },
 
             compileModel: function(node, prop) {
-                let val = this.vm.$data[prop]
+                let val = this.vm._data[prop]
                 this.updateModel(node, val)
 
                 new Watcher(this.vm, prop, value => {
@@ -205,12 +220,12 @@
                 node.addEventListener('input', event => {
                     let newValue = event.target.value
                     if (val === newValue) return
-                    this.vm.$data[prop] = newValue
+                    this.vm._data[prop] = newValue
                 })
             },
 
             compileText: function(node, prop) {
-                let text = this.vm.$data[prop]
+                let text = this.vm._data[prop]
                 this.updateView(node, text)
 
                 new Watcher(this.vm, prop, (value) => {
@@ -247,19 +262,52 @@
             }
         }
 
-        // const vm = new Mvue({
-        //     el: '#app',
-        //     data: {
-        //         name: '完全没问题，看起来是不是很酷'
-        //     }
-        // }, 'name')
+        function MVue(options) {
+            // 暂时不知道为什么要保存options
+            this._options = options
+            this._data = this._options.data
+            // 不清楚为什么要prop
+            // this._prop = prop
+            this._el = document.querySelector(this._options.el)
 
-        const vm = new Mvue({
-            el: "#app",
-            data: {
-                name: "完全没问题，看起来是不是很酷！"
-            }
-        });
+            // 将  _data 中的属性代理到外层的vm上,这里只代理了_data的第一层属性
+            Object.keys(this._data).forEach(key => {
+                this.proxyData(key)
+            })
+            this.init()
+        }
+        MVue.prototype.init = function() {
+            // 开始递归监听对象的所有属性，直到属性值为值类型
+            observe(this._data)
+            new Compile(this)
+        }
+        MVue.prototype.proxyData = function(key) {
+            Object.defineProperty(this, key, {
+                get: function() {
+                    console.log('MVue get');
+                    return this._data[key]
+                },
+                set: function (value) {
+                    this._data[key] = value
+                }
+            })
+        }
+
+        let vm
+        try{
+            vm = new MVue({
+                el: "#app",
+                data: {
+                    name: "初始data name",
+                    score: {
+                        number: 90
+                    }
+                }
+            });
+        } catch(error) {
+            console.error(error)
+        }
+
     </script>
 </body>
 </html>

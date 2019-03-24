@@ -1,5 +1,26 @@
 <template>
     <div id="main">
+        <div>
+            <div class="tit">每日添加</div>
+            <div class="handle_part">
+                <div class="h_item">
+                    <el-select v-model="product" placeholder="please select">
+                        <el-option
+                            v-for="item in productsSelect"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="h_item">
+                    <el-input v-model="change" placeholder="money"></el-input>
+                </div>
+                <div class="h_item">
+                    <el-button type="primary"  @click="handleSubmit">submit</el-button>
+                </div>
+            </div>
+        </div>
         <div id="cateGory"></div>
         <div id="piePart">
             <div class="tit">总计</div>
@@ -9,7 +30,19 @@
 </template>
 
 <script>
+import { isNumber } from '@/utils/validate'
+
 export default {
+    data () {
+        return {
+            productsSelect: [
+                { key: 'yue', value: 'y' }, { key: '天', value: 'w' }
+            ],
+            product: '',
+            change: ''
+        }
+    },
+
     created () {
         this.getList()
     },
@@ -47,7 +80,7 @@ export default {
             },
 
             initAndSetOptionn = ({ key, title, xData, data }) => {
-                this.$echarts.init(document.getElementById(key), null, { renderer: 'svg' }).setOption(
+                this.$eCharts.init(document.getElementById(key), null, { renderer: 'svg' }).setOption(
                     {
                         title: {
                             text: decodeURIComponent(title)
@@ -92,7 +125,7 @@ export default {
         },
 
         initPie () {
-            this.$echarts.init(document.getElementById('pie')).setOption({
+            this.$eCharts.init(document.getElementById('pie')).setOption({
                 series: [
                     {
                         name: '访问来源',
@@ -108,12 +141,27 @@ export default {
                     }
                 ]
             })
+        },
+
+        handleSubmit () {
+            const { product, change } = this
+            if (!product) {
+                this.$message.error('please select')
+            }
+            if (!isNumber(change)) {
+                this.$message.error('please enter number')
+            }
+
+            console.log(product, change)
         }
     }
 }
 </script>
 
 <style>
+    .handle_part{
+        padding: 30px 0;
+    }
     .tit{
         height: 30px;
         line-height: 30px;
@@ -126,8 +174,11 @@ export default {
         width: 100%;
     }
     #pie {
-        width: 600px;
-        height: 600px;
-        background-color: pink;
+        width: 400px;
+        height: 400px;
+    }
+    .h_item{
+        display: inline-block;
+        margin-right: 10px;
     }
 </style>
