@@ -24,7 +24,7 @@ export default {
         return {}
     },
     mounted () {
-        var myChart = this.$echarts.init(document.getElementById('main'), null, { renderer: 'svg' })
+        var myChart = this.$eCharts.init(document.getElementById('main'), null, { renderer: 'svg' })
         // 绘制图表
         myChart.setOption({
             title: {
