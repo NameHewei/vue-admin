@@ -1,5 +1,31 @@
 import request from '@/api/request'
 
+export function reqUpdateProduct () {
+
+}
+
+export function reqCompany () {
+    return new Promise(function (resolve) {
+        resolve({
+            code: 200,
+            results: [{
+                id: 1001,
+                name: 'ali',
+                total: 22222
+            }, {
+                id: 1002,
+                name: 'weChat',
+                total: 12000
+            }, {
+                id: 1003,
+                name: 'tt',
+                total: 10000
+            }],
+            msg: 'success'
+        })
+    })
+}
+
 export function reqList () {
     // return request({
     //     url: '/api/products/'
@@ -21,19 +47,6 @@ export function reqList () {
                     { total: 888, date: '2019-03-05' }
                 ]
             }],
-            msg: 'success'
-        })
-    })
-}
-
-export function reqTotal () {
-    // return request({
-    //     url: '/api/products/'
-    // })
-    return new Promise(function (resolve, reject) {
-        resolve({
-            code: 200,
-            results: {},
             msg: 'success'
         })
     })
