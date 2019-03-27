@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { formatToQueryString } from '@/utils'
+import { formatToQueryString } from '@/utils/commonFn'
 
 export default {
     name: 'ExportWrap',
