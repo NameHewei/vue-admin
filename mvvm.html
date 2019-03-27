@@ -5,88 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>双向绑定</title>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script>/ -->
 </head>
 <body>
     <p class="a" v-model="123">Observe 监听器 监听属性变化并通知订阅者</p>
     <p>Watch 订阅者 收到属性变化，更新视图</p>
     <p>compile 解析器 解析指令，初始化模板，绑定订阅者 </p>
-    <div id="fc">
-        <span>1</span>
-        <p>2</p>
-    </div>
-    <h2>222</h2>
-    <div id="get">
 
-    </div>
     <div id="app">
-        <h1>{{ name }}</h1>
-        <h3>{{ name }}</h3>
+        <div><span>姓名：</span> <span>{{ name }}</span></div>
+        <div style="margin:5px 0"><span>学号：</span> <span>{{ number }}</span></div>
+        <div style="margin:5px 0">
+            姓名：<input type="text" v-model="name">
+        </div>
+        <div>
+            学号：<input type="text" v-model="number">
+        </div>
+
+        <div>
+            <button>v-method</button>
+        </div>
     </div>
-    <input type="text" v-model="name">
     <script>
+
+
+
         (function() {
-            var a = document.getElementById('fc')
-            const fragment = document.createDocumentFragment()
-            var k = []
-            for (let i = 0; i < 5; i++) {
-                k.push(a.firstChild)
-                document.getElementById('get').appendChild(a.firstChild)
+            var a = {s:9, h:9}
+            var af = function(n) {
+                var s = Math.random()
+                console.log('-----', s);
+                Object.defineProperty(a, 's', {
+                    get: function() {
+                        console.log('=====',s);
+                    }
+                })
             }
-
+           
+            af()
+            af()
+            a.s
         })()
-
-        // const vue = new Vue({
-        //     data: {
-        //         name: 'hew',
-        //         obj: {
-        //             score: 90
-        //         }
-        //     },
-
-        //     created() {
-        //         console.log(this.obj);
-        //     }
-        // })
-
-        const testObj = {
-            name: 'hew',
-            score: {
-                chinese: 123,
-                math: 234,
-                project: {
-                    case: 'pass'
-                }
-            }
-        }
-
-        Object.defineProperty(testObj, 'score', {
-            get: function() {
-                return 'project'
-            }
-        })
 
         const defineProp = function(obj, key, value) {
             observe(value)
 
+            /*
+            * 每一个不同属性创建一个独有的dep
+            */
             const dep = new Dep()
-
             Object.defineProperty(obj, key, {
                 get: function() {
-                    console.log('监听',key);
+                    /*
+                    * 只在创建Watcher时调用
+                    */
                     if(Dep.target) {
                         dep.addSub(Dep.target)
                     }
                     return value
                 },
                 set: function(newVal) {
+
                     if(newVal !== value) {
-                        console.log('set新值', key, newVal);
+                        /*
+                        * 这里的赋值操作，是以便于get  方法中返回value,因为都是赋值后马上就会调用get方法
+                        */
                         value = newVal
                         // 通知所有订阅者
                         dep.notify()
+                        console.log(1111, key,dep);
                     }
-
                 }
             })
         }
@@ -99,13 +86,14 @@
             })
         }
 
-        function Dep() {
+        function Dep(n) {
+            this.n = n
             this.subs = []
         }
         Dep.prototype.addSub = function(sub) {
             this.subs.push(sub)
         }
-        Dep.prototype.notify = function(sub) {
+        Dep.prototype.notify = function() {
             this.subs.forEach(sub => {
                 sub.update()
             })
@@ -116,7 +104,7 @@
             this.vm = vm
             this.prop = prop
             this.callback = callback
-            this.value = this.get()
+            this.value = this.pushWatcher()
         }
 
         Watcher.prototype = {
@@ -128,10 +116,10 @@
                     this.callback(value)
                 }
             },
-            get: function() {
+            pushWatcher: function() {
                 // 存贮订阅器
                 Dep.target = this
-                // 触发对象的get监听，将上面赋值给targe的this 加入到subs
+                // 触发对象的get监听，将上面赋值给 target 的this 加入到subs
                 var value = this.vm._data[this.prop]
                 // 加入完后就删除
                 Dep.target = null
@@ -148,8 +136,9 @@
         Compile.prototype = {
             init: function() {
                 this.fragment = this.createFragment(this.el)
-                console.log(this.fragment);
                 this.compileNode(this.fragment)
+
+                // 当代码片段中的内容编译完了之后，插入DOM中
                 this.el.appendChild(this.fragment)
             },
 
@@ -169,70 +158,74 @@
             compileNode: function(fragment) {
                 let childNodes = fragment.childNodes;
                 [...childNodes].forEach(node =>{
-                    console.log(node.nodeName);
                     if(this.isElementNode(node)) {
-                        this.compile(node)
+                        this.compileElementNode(node)
                     }
 
-                    // 匹配{{}}
                     let reg = /\{\{(.*)\}\}/
-                    // 获取节点的文本内容
+                    // 获取节点下的所有文本内容
                     let text = node.textContent
 
-                    // 判断文本内容是否有{{}}
-                    if(reg.test(text)) {
+                    // 判断是否已是纯文本节点，且文本内容是否有{{}}
+                    if(this.isTextNode(node) && reg.test(text)) {
                         let prop = reg.exec(text)[1].trimStart().trimEnd()
                         this.compileText(node, prop)
                     }
 
-                    // length 为0 表示没有子元素并且没有文本
                     if(node.childNodes && node.childNodes.length) {
-                        // 递归编译子子节点
+                        // 递归编译子节点
                         this.compileNode(node)
                     }
                 })
             },
 
-            compile: function(node) {
-                // 获取属性
-                let nodeAttrs = node.attributes;
+            compileElementNode: function(element) {
+                // 获取属性，只有元素节点有如下方法
+                let nodeAttrs = element.attributes;
                 [...nodeAttrs].forEach(attr => {
-                    // 这里有疑惑
                     let name = attr.name
 
                     if(this.isDirective(name)) {
-                        let value = attr.value
+                        /*
+                        * v-model 放在可接受input事件的标签上
+                        */
                         if (name === 'v-model') {
-                            this.compileModel(node, value)
+                            /*
+                            * 获取到的value 即为需要绑定的data
+                            */
+                            let prop = attr.value
+                            this.compileModel(element, prop)
                         }
                     }
                 })
             },
 
-            compileModel: function(node, prop) {
+            compileModel: function(element, prop) {
                 let val = this.vm._data[prop]
-                this.updateModel(node, val)
-
+                this.updateModel(element, val)
                 new Watcher(this.vm, prop, value => {
-                    this.updateModel(node, value)
+                    this.updateModel(element, value)
                 })
 
-                node.addEventListener('input', event => {
+                element.addEventListener('input', event => {
                     let newValue = event.target.value
                     if (val === newValue) return
                     this.vm._data[prop] = newValue
                 })
             },
 
-            compileText: function(node, prop) {
+            compileText: function(textNode, prop) {
                 let text = this.vm._data[prop]
-                this.updateView(node, text)
+                this.updateView(textNode, text)
 
                 new Watcher(this.vm, prop, (value) => {
-                    this.updateView(node, value)
+                    this.updateView(textNode, value)
                 })
             },
 
+            /*
+            * 判断属性是否为指令
+            */
             isDirective: function (text) {
                 return /v-/.test(text)
             },
@@ -246,13 +239,12 @@
                 return node.nodeType === 3
             },
 
-            updateModel: function(node, value) {
-                // 这里有疑问
-                node.value = value || ''
+            updateModel: function(element, value) {
+                element.value = value || ''
             },
 
-            updateView: function(node, value) {
-                node.textContent = value || ''
+            updateView: function(textNode, value) {
+                textNode.textContent = value || ''
             }
         }
 
@@ -284,7 +276,6 @@
         MVue.prototype.proxyData = function(key) {
             Object.defineProperty(this, key, {
                 get: function() {
-                    console.log('MVue get');
                     return this._data[key]
                 },
                 set: function (value) {
@@ -296,11 +287,17 @@
         let vm
         try{
             vm = new MVue({
-                el: "#app",
+                el: '#app',
                 data: {
-                    name: "初始data name",
+                    name: '初始 name',
+                    number: '初始 number',
                     score: {
-                        number: 90
+                        math: 90
+                    }
+                },
+                methods:{
+                    initData: function() {
+
                     }
                 }
             });
