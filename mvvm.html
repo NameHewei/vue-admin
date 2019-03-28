@@ -70,9 +70,10 @@
                         * 这里的赋值操作，是以便于get  方法中返回value,因为都是赋值后马上就会调用get方法
                         */
                         value = newVal
-                        // 通知所有订阅者
+                        /*
+                        * 通知监听的属性的所有订阅者
+                        */
                         dep.notify()
-                        console.log(1111, key,dep);
                     }
                 }
             })
@@ -86,8 +87,7 @@
             })
         }
 
-        function Dep(n) {
-            this.n = n
+        function Dep() {
             this.subs = []
         }
         Dep.prototype.addSub = function(sub) {
@@ -248,18 +248,8 @@
             }
         }
 
-        var compileUtil = {
-            text: function(node, vm, exp) {
-                this.bind(node, vm, exp, 'text');
-            }
-        }
-
-        function MVue(options) {
-            // 暂时不知道为什么要保存options
-            this._options = options
-            this._data = this._options.data
-            // 不清楚为什么要prop
-            // this._prop = prop
+        function FakeVue(options) {
+            this._data = options.data
             this._el = document.querySelector(this._options.el)
 
             // 将  _data 中的属性代理到外层的vm上,这里只代理了_data的第一层属性
@@ -268,12 +258,12 @@
             })
             this.init()
         }
-        MVue.prototype.init = function() {
+        FakeVue.prototype.init = function() {
             // 开始递归监听对象的所有属性，直到属性值为值类型
             observe(this._data)
             new Compile(this)
         }
-        MVue.prototype.proxyData = function(key) {
+        FakeVue.prototype.proxyData = function(key) {
             Object.defineProperty(this, key, {
                 get: function() {
                     return this._data[key]
@@ -284,9 +274,8 @@
             })
         }
 
-        let vm
         try{
-            vm = new MVue({
+            let vm = new FakeVue({
                 el: '#app',
                 data: {
                     name: '初始 name',
