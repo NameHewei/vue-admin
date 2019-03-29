@@ -13,8 +13,17 @@
                 id="editArea"
             >编辑</button>
             <button
+                class="get_address"
+                id="getAddress"
+            >经纬度转地址</button>
+            <button
+                class="set_mark"
+                id="setMark"
+            >自定义图标打点</button>
+            <button
                 class="save-area"
-                id="saveArea">保存</button>
+                id="saveArea"
+            >保存</button>
             <div
                 id="aMapContainer"
                 class="a-map-container"></div>
@@ -26,6 +35,7 @@
 export default {
     data () {
         return {
+            map: null,
             type: 'CREATE',
             canEdit: false,
             path: [
@@ -37,31 +47,43 @@ export default {
     },
 
     mounted () {
-        /**
-         * 根据经纬度获取地址
-         */
-        this.getAddress()
+        const map = new AMap.Map('aMapContainer', {
+            zoom: 12
+        })
 
-        /**
-         * 打点
-         */
-        this.setMark()
-
-        /**
-         * 画区域
-         */
+        this.map = map
         // this.getArea()
+        document.getElementById('setMark').addEventListener('click', () => {
+            this.setMark()
+        })
+
+        document.getElementById('getAddress').addEventListener('click', () => {
+            this.getAddress()
+        })
     },
 
     methods: {
+        /**
+        * 其他坐标转高德坐标
+        * api https://lbs.amap.com/api/javascript-api/guide/transform/convertfrom
+         */
+        convertFrom () {
+            var gps = [116.3, 39.9]
+            AMap.convertFrom(gps, 'gps', function (status, result) {
+                if (result.info === 'ok') {
+                    console.log(result.locations) // Array.<LngLat>
+                }
+            })
+        },
+        /**
+        * 根据经纬度获取地址
+        * 注意先添加plugin AMap.Geocoder
+        */
         getAddress () {
-            /**
-             * 注意先添加plugin AMap.Geocoder
-             */
             const geoCoder = new AMap.Geocoder({})
             geoCoder.getAddress([104.065715, 30.65756], function (status, result) {
                 if (status === 'complete' && result.regeocode) {
-                    alert(result.regeocode.formattedAddress)
+                    alert(`得到的地址是：${result.regeocode.formattedAddress}`)
                 } else {
                     alert('获取地址发生错误')
                     console.log(result)
@@ -69,31 +91,38 @@ export default {
             })
         },
 
+        /**
+         * 打点
+         */
         setMark () {
-            const map = new AMap.Map('aMapContainer', {
-                zoom: 12
-            })
             // 设置地图中心点
-            map.setCenter([104.073975, 30.641741])
+            this.map.setCenter([104.0689, 30.554876])
 
+            /**
+             * api https://lbs.amap.com/api/javascript-api/reference/overlay/#icon
+             * */
             const icon = new AMap.Icon({
                     // 图标尺寸
-                    size: new AMap.Size(40, 50),
+                    size: new AMap.Size(40, 40),
                     // Icon的图像
-                    image: './logo.png',
+                    image: '/img/car.png',
                     // 图像相对展示区域的偏移量，适于雪碧图等
                     imageOffset: new AMap.Pixel(0, 0),
                     // 根据所设置的大小拉伸或压缩图片
-                    imageSize: new AMap.Size(40, 50)
+                    imageSize: new AMap.Size(40, 40)
                 }),
                 marker = new AMap.Marker({
                     icon: icon,
-                    position: [104.073975, 30.641741],
-                    offset: new AMap.Pixel(0, 0)
+                    position: [104.0689, 30.554876],
+                    // 偏移的位置，这只为图标size的一半较好
+                    offset: new AMap.Pixel(-20, -20)
                 })
-            marker.setMap(map)
+            marker.setMap(this.map)
         },
 
+        /**
+         * 画区域
+         */
         getArea () {
             if (this.path.length) {
                 this.initialPolygon()
@@ -246,10 +275,26 @@ export default {
             background-color: rgb(13, 112, 224);
         }
 
-        .save-area {
+        .save-area{
             right: 30px;
             bottom: 30px;
             width: 120px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: rgb(13, 112, 224);
+        }
+        .get_address{
+            right: 370px;
+            bottom: 30px;
+            width: 160px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: rgb(13, 112, 224);
+        }
+        .set_mark{
+            right: 180px;
+            bottom: 30px;
+            width: 160px;
             height: 40px;
             border-radius: 4px;
             background-color: rgb(13, 112, 224);
@@ -263,7 +308,7 @@ export default {
             background-color: rgb(13, 112, 224);
         }
 
-        .remove-area, .save-area, .edit-area{
+        .remove-area, .save-area, .edit-area, .set_mark, .get_address{
             position: absolute;
             padding: 0;
             border: 0;
