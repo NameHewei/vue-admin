@@ -13,7 +13,7 @@
         </div>
         <div id="main" :style="{width: '300px', height: '300px'}"></div>
         <div>
-            <el-button @click="handleRouteSkip">跳转</el-button>
+            <el-button @click="handleRouteSkip">Financial</el-button>
         </div>
     </div>
 </template>

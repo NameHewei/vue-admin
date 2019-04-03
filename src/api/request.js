@@ -11,8 +11,10 @@ const httpService = axios.create({
     headers: { 'Authorization': 'hewitt' }
 })
 
+/**
+ * queryString 放入cfg.params中 body 中的参数放入cfg.data中
+ */
 httpService.interceptors.request.use((cfg) => {
-    console.log('req', cfg)
     const { method } = cfg
     cfg.method = method || 'GET'
     return cfg
@@ -23,7 +25,6 @@ httpService.interceptors.request.use((cfg) => {
 
 httpService.interceptors.response.use((res) => {
     const { config, data } = res
-    console.log('res', res)
 
     if (config.showSuccessMsg) {
         Message({
@@ -33,7 +34,7 @@ httpService.interceptors.response.use((res) => {
         })
     }
 
-    if (data.code !== 1) {
+    if (data.code !== 200) {
         Message({
             message: data.msg,
             type: 'error',

@@ -12,39 +12,29 @@
     <p>compile 解析器 解析指令，初始化模板，绑定订阅者 </p>
 
     <div id="app">
-        <div><span>姓名：</span> <span>{{ name }}</span></div>
-        <div style="margin:5px 0"><span>学号：</span> <span>{{ number }}</span></div>
-        <div style="margin:5px 0">
-            姓名：<input type="text" v-model="name">
-        </div>
-        <div>
-            学号：<input type="text" v-model="number">
-        </div>
+        <!-- <div><span>姓名：</span> <span>{{ name }}</span></div>
+        <div style="margin:5px 0"><span>学号：</span> <span>{{ number }}</span></div> -->
+        <!-- <div style="margin:5px 0"><span>成绩(数学)：</span> <span>{{ score.math }}</span></div> -->
+        <div style="margin:5px 0"> 姓名：<input type="text" v-model="name"></div>
+        <!-- <div>学号：<input type="text" v-model="number"></div> -->
+        
+        <div style="margin:5px 0"><span>描述：</span> <span>{{ getStudent }}</span></div>
+
 
         <div>
-            <button>v-method</button>
+            <button v-on:click="setData">v-method</button>
         </div>
     </div>
     <script>
+        // https://blog.seosiwei.com/detail/35
+
+        let arr = [];
+        const arrayPrototype = Array.prototype
+        const arrayMethod = Object.create(arrayPrototype)
+
+        console.log([]);
 
 
-
-        (function() {
-            var a = {s:9, h:9}
-            var af = function(n) {
-                var s = Math.random()
-                console.log('-----', s);
-                Object.defineProperty(a, 's', {
-                    get: function() {
-                        console.log('=====',s);
-                    }
-                })
-            }
-           
-            af()
-            af()
-            a.s
-        })()
 
         const defineProp = function(obj, key, value) {
             observe(value)
@@ -59,7 +49,7 @@
                     * 只在创建Watcher时调用
                     */
                     if(Dep.target) {
-                        dep.addSub(Dep.target)
+                        dep.targetAddDep()
                     }
                     return value
                 },
@@ -87,13 +77,19 @@
             })
         }
 
+        let UUID = 0
         function Dep() {
+            this.id = UUID++
             this.subs = []
         }
         Dep.prototype.addSub = function(sub) {
             this.subs.push(sub)
         }
+        Dep.prototype.targetAddDep = function() {
+            Dep.target.addDep(this)
+        }
         Dep.prototype.notify = function() {
+            console.log(this.subs);
             this.subs.forEach(sub => {
                 sub.update()
             })
@@ -104,23 +100,30 @@
             this.vm = vm
             this.prop = prop
             this.callback = callback
+            this.depId = {}
             this.value = this.pushWatcher()
         }
 
         Watcher.prototype = {
             update: function() {
-                const value = this.vm._data[this.prop]
+                const value = this.vm[this.prop]
                 const oldValue = this.value
                 if (value !== oldValue) {
                     this.value = value
                     this.callback(value)
                 }
             },
+            addDep: function(dep) {
+                if(!this.depId.hasOwnProperty(dep.id)) {
+                    dep.addSub(this)
+                    this.depId[dep.id] = dep
+                }
+            },
             pushWatcher: function() {
                 // 存贮订阅器
                 Dep.target = this
                 // 触发对象的get监听，将上面赋值给 target 的this 加入到subs
-                var value = this.vm._data[this.prop]
+                var value = this.vm[this.prop]
                 // 加入完后就删除
                 Dep.target = null
                 return value
@@ -128,28 +131,29 @@
         }
 
         function Compile(vm) {
-           this.vm = vm
-           this.el = vm._el
+           this._vm = vm
+           this._el = vm._el
+           this.methods = vm._methods
            this.fragment = null
            this.init()
         }
         Compile.prototype = {
             init: function() {
-                this.fragment = this.createFragment(this.el)
+                this.fragment = this.createFragment(this._el)
                 this.compileNode(this.fragment)
 
                 // 当代码片段中的内容编译完了之后，插入DOM中
-                this.el.appendChild(this.fragment)
+                this._el.appendChild(this.fragment)
             },
 
             // 根据真实的DOM节点，创建文档片段
             createFragment: function() {
                 const fragment = document.createDocumentFragment()
-                let child = this.el.firstChild
+                let child = this._el.firstChild
                 while(child) {
                     // 将节点加入到文档片段中后，该节点会被从原来的位置删除，相当于移动节点位置
                     fragment.appendChild(child)
-                    child = this.el.firstChild
+                    child = this._el.firstChild
                 }
 
                 return fragment
@@ -168,7 +172,7 @@
 
                     // 判断是否已是纯文本节点，且文本内容是否有{{}}
                     if(this.isTextNode(node) && reg.test(text)) {
-                        let prop = reg.exec(text)[1].trimStart().trimEnd()
+                        let prop = reg.exec(text)[1].trim()
                         this.compileText(node, prop)
                     }
 
@@ -189,38 +193,58 @@
                         /*
                         * v-model 放在可接受input事件的标签上
                         */
+                        let prop = attr.value
                         if (name === 'v-model') {
                             /*
                             * 获取到的value 即为需要绑定的data
                             */
-                            let prop = attr.value
                             this.compileModel(element, prop)
+                        } else if(this.isEvent(name)) {
+                            /*
+                            * 绑定事件
+                            */
+                           this.bindEvent(element, name, prop)
                         }
                     }
                 })
             },
 
             compileModel: function(element, prop) {
-                let val = this.vm._data[prop]
-                this.updateModel(element, val)
-                new Watcher(this.vm, prop, value => {
-                    this.updateModel(element, value)
+                let val = this._vm[prop]
+                this.updateElementValue(element, val)
+                new Watcher(this._vm, prop, value => {
+                    this.updateElementValue(element, value)
                 })
 
                 element.addEventListener('input', event => {
                     let newValue = event.target.value
                     if (val === newValue) return
-                    this.vm._data[prop] = newValue
+                    this._vm[prop] = newValue
                 })
             },
 
             compileText: function(textNode, prop) {
-                let text = this.vm._data[prop]
-                this.updateView(textNode, text)
+                let text = ''
+                if(/\./.test(prop)) {
+                    var props = prop.split('.')
+                    text = this._vm[props[0]][props[1]]
+                } else {
+                    text = this._vm[prop]
+                }
 
-                new Watcher(this.vm, prop, (value) => {
-                    this.updateView(textNode, value)
+                this.updateText(textNode, text)
+
+                console.log(text);
+
+                new Watcher(this._vm, prop, (value) => {
+                    this.updateText(textNode, value)
                 })
+            },
+
+            bindEvent: function(element, name, prop) {
+                var eventType = name.split(':')[1]
+                var fn = this._vm._methods[prop]
+                element.addEventListener(eventType, fn.bind(this._vm))
             },
 
             /*
@@ -228,6 +252,10 @@
             */
             isDirective: function (text) {
                 return /v-/.test(text)
+            },
+
+            isEvent: function(text) {
+                return /v-on/.test(text)
             },
 
             isElementNode: function(node) {
@@ -239,31 +267,34 @@
                 return node.nodeType === 3
             },
 
-            updateModel: function(element, value) {
+            updateElementValue: function(element, value) {
                 element.value = value || ''
             },
 
-            updateView: function(textNode, value) {
+            updateText: function(textNode, value) {
                 textNode.textContent = value || ''
             }
         }
 
         function FakeVue(options) {
             this._data = options.data
-            this._el = document.querySelector(this._options.el)
+            this._methods = options.methods
+            this._computed= options.computed
+            this._el = document.querySelector(options.el)
 
             // 将  _data 中的属性代理到外层的vm上,这里只代理了_data的第一层属性
             Object.keys(this._data).forEach(key => {
-                this.proxyData(key)
+                this._proxyData(key)
             })
-            this.init()
+            this._initComputed()
+            this._init()
         }
-        FakeVue.prototype.init = function() {
+        FakeVue.prototype._init = function() {
             // 开始递归监听对象的所有属性，直到属性值为值类型
             observe(this._data)
             new Compile(this)
         }
-        FakeVue.prototype.proxyData = function(key) {
+        FakeVue.prototype._proxyData = function(key) {
             Object.defineProperty(this, key, {
                 get: function() {
                     return this._data[key]
@@ -271,6 +302,15 @@
                 set: function (value) {
                     this._data[key] = value
                 }
+            })
+        }
+        FakeVue.prototype._initComputed = function() {
+            const computed = this._computed
+            Object.keys(computed).forEach((v) => {
+                Object.defineProperty(this, v, {
+                    get: computed[v],
+                    set: function (value) {}
+                })
             })
         }
 
@@ -284,9 +324,16 @@
                         math: 90
                     }
                 },
-                methods:{
-                    initData: function() {
 
+                computed: {
+                    getStudent: function() {
+                        return `${this.name}得分${this.number}`
+                    }
+                },
+
+                methods:{
+                    setData: function() {
+                        console.log(this.name);
                     }
                 }
             });
