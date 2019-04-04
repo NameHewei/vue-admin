@@ -245,14 +245,12 @@ export default {
     .draw-area{
         position: relative;
         width: 100%;
-        height: 100%;
         border: 2px solid rgb(230, 230, 230);
 
         .a-map-container{
             width: 100%;
-            height: 800PX;
+            height: 100%;
             color: rgb(248, 50, 50)
-
         }
 
         .info{

@@ -24,34 +24,34 @@
         <div id="line"></div>
         <div id="piePart">
             <div class="tit">总计</div>
+            <div id="totalValue"></div>
             <div id="pie"></div>
         </div>
     </div>
 </template>
 
 <script>
-import { reqList, reqCompany } from '@/api/thirdService/thirdService'
+import { reqCompany, reqProducts, reqCompanyChange, reqUpdateProduct } from '@/api/thirdService/thirdService'
 import { isNumber } from '@/utils/validate'
 
 export default {
     data () {
         return {
-            productsSelect: [
-                { key: 'yue', value: 'y' }, { key: '天', value: 'w' }
-            ],
+            productsSelect: [],
+            company: [],
             product: '',
             change: ''
         }
     },
 
     created () {
-        this.getList()
+        this.getProducts()
         this.getCompanyData()
     },
 
     methods: {
-        async getList () {
-            const res = await reqList()
+        async getCompa () {
+            const res = await reqCompanyChange()
 
             console.log(res)
             this.initCompanyProduct(res.results)
@@ -59,7 +59,23 @@ export default {
 
         getCompanyData () {
             reqCompany().then((res) => {
+                console.log(res)
                 this.createPie(res.results)
+
+                res.results.forEach(v => {
+
+                })
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+
+        getProducts () {
+            reqProducts().then((res) => {
+                console.log(res)
+                this.productsSelect = res.results.map(v => ({
+                    label: v.name, value: v.id
+                }))
             }).catch((error) => {
                 console.log(error)
             })
@@ -131,79 +147,46 @@ export default {
          * 创建饼图
          */
         createPie (data) {
-            const formatData = data.map(value => ({
-                name: value.name,
-                value: value.total
-            }))
-            formatData.sort((a, b) => (a.value - b.value))
+            let totalValue = 0
+            const formatData = data.map(value => {
+                totalValue += value.total
+                return {
+                    name: value.name,
+                    value: value.total
+                }
+            })
 
-            const min = formatData[0].value, max = formatData[formatData.length - 1].value
-
-            console.log(min, max, formatData)
+            document.getElementById('totalValue').innerHTML = totalValue
 
             this.$eCharts.init(document.getElementById('pie')).setOption({
-                backgroundColor: '#2c343c',
+                backgroundColor: '#ebf5ff',
 
                 title: {
                     text: 'Asset Statistic',
+                    padding: [20, 0, 50, 0],
                     left: 'center',
-                    top: 20,
                     textStyle: {
-                        color: '#ccc'
+                        color: '#214365'
                     }
                 },
-
                 tooltip: {
                     trigger: 'item',
                     formatter: '{a} <br/>{b} : {c} ({d}%)'
                 },
-
-                visualMap: {
-                    show: false,
-                    color: 'pink',
-                    min: min,
-                    max: max,
-                    inRange: {
-                        color: '#ff0000'
-                    }
-                },
                 series: [
                     {
-                        name: 'Asset Rate',
+                        name: 'Asset',
                         type: 'pie',
-                        radius: '55%',
+                        radius: '65%',
                         center: ['50%', '50%'],
+                        selectedMode: 'single',
                         data: formatData,
-                        roseType: 'radius',
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    color: 'rgba(255, 255, 255,1)'
-                                }
-                            }
-                        },
-                        labelLine: {
-                            normal: {
-                                lineStyle: {
-                                    color: 'rgba(255, 255, 255, 0.6)'
-                                },
-                                smooth: 0.2,
-                                length: 10,
-                                length2: 20
-                            }
-                        },
                         itemStyle: {
-                            normal: {
-                                color: '#c23531',
-                                shadowBlur: 200,
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
                                 shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
-                        },
-
-                        animationType: 'scale',
-                        animationEasing: 'elasticOut',
-                        animationDelay: function (idx) {
-                            return Math.random() * 200
                         }
                     }
                 ]
@@ -220,6 +203,12 @@ export default {
             }
 
             console.log(product, change)
+            reqUpdateProduct({
+                data: {
+                    product,
+                    change: parseFloat(change)
+                }
+            })
         }
     }
 }
@@ -240,6 +229,11 @@ export default {
     .charts{
         height: 300px;
         width: 100%;
+    }
+    #totalValue{
+        padding-top: 20px;
+        color: red;
+        font-weight: 700;
     }
     #pie {
         width: 100%;
