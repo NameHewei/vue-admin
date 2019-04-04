@@ -7,81 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>generator</title>
     <style>
+
     </style>
 </head>
 
 <body>
+
     <script>
-        function* generatorTest() {
-            console.log('第一个yield之前的语句');
-            yield 'yield 1'
-            yield 'yield 3: 在表达式中要加括号' + (yield 'yield 2: in expression')
+    
 
-            return 'return'
-        }
-
-        const gt = generatorTest()
-        console.log(gt);
-        // 遍历器对象
-
-        /*
-        * 第一次调用是从函数头部开始执行，如果没有yield，也需要执行一次next才会执行这些语句
-        */
-        console.log(gt.next());
-        // 第一个yield之前的语句
-        // {value: "yield 1", done: false}
-
-        console.log(gt.next());
-        // {value: "yield 2: in expression", done: false}
-
-        console.log(gt.next());
-        // {value: "yield 3: 在表达式中要加括号undefined", done: false}
-        // 上面出现undefined的原因是next没有加参数
-
-        console.log(gt.next());
-        // {value: "return", done: true}
-
-        console.log(gt.next());
-        // {value: "undefined", done: true}
-
-
-        function* generatorForOf(){
-            yield 1;
-            yield 2;
-            return 3;
-        }
-
-        /*
-        * for of 可以遍历Generator生成的Interator对象
-        * 这里不能再遍历 gt 因为它已执行完毕
-        * 不会遍历return的值
-        */
-        for (let item of generatorForOf()) {
-            console.log('for of :', item);
-        }
-
-        /*
-        * 给原生对象添加iterator, 让其可以被for of 遍历
-        */
-        function* objectAddIterator(obj) {
-            const props = Reflect.ownKeys(obj)
-
-            for (const key of props) {
-                yield [key, obj[key]]
-            }
-        }
-
-        const nativeObj = {
-            a: 12,
-            b: 34,
-            [Symbol('symbol c')]: 3
-        }
-
-        console.log(9090, nativeObj[Symbol.iterator]);
-
-        for (const [key, value] of objectAddIterator(nativeObj)) {
-            console.log(typeof key === 'symbol' ? key.description : key, value);
-        }
 
     </script>
 </body>
