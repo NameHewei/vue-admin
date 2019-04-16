@@ -18,7 +18,8 @@ const
     AMap = () => import('@/views/thirdPartService/AMap'),
     WyIm = () => import('@/views/thirdPartService/WyIm'),
     UploadFile = () => import('@/views/allComponents/UploadFile.vue'),
-    Jsx = () => import('@/views/vueApiPractice/jsx/Jsx.vue')
+    Jsx = () => import('@/views/vueApiPractice/jsx/Jsx.vue'),
+    Mixin = () => import('@/views/vueApiPractice/mixin/Mixin.vue')
 
 Vue.use(Router)
 
@@ -43,7 +44,8 @@ const
             children: [
                 { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
                 { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'practice vuex', showInMenu: true, roles: ['STUDENT'] } },
-                { path: 'vue-jsx', name: 'vue-jsx', component: Jsx, meta: { title: 'vue jsx', showInMenu: true, roles: ['ADMIN'] } }
+                { path: 'vue-jsx', name: 'vue-jsx', component: Jsx, meta: { title: 'vue jsx', showInMenu: true, roles: ['ADMIN'] } },
+                { path: 'mixin', name: 'mixin', component: Mixin, meta: { title: 'mixin', showInMenu: true, roles: ['ADMIN'] } }
             ]
         },
         {

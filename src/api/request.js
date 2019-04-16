@@ -1,3 +1,4 @@
+import uuidV1 from 'uuid/v1'
 import axios from 'axios'
 import { Message } from 'element-ui'
 
@@ -16,6 +17,8 @@ const httpService = axios.create({
  */
 httpService.interceptors.request.use((cfg) => {
     const { method } = cfg
+    console.log(cfg)
+    cfg.headers.uuid = uuidV1().replace(/-/g, '')
     cfg.method = method || 'GET'
     return cfg
 }, (error) => {
