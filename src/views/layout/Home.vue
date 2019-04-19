@@ -16,7 +16,6 @@
                 <footer class="layout-footer">
                     copyright © {{ new Date().getFullYear() }} <a href="https://github.com/NameHewei" target="_blank">NameHewei@github</a>
                 </footer>
-                <ExportWrap/>
             </div>
         </div>
     </div>
