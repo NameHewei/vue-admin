@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mouse move</title>
+
+    <style>
+        .main{
+            position: relative;
+            height: 500px;
+            width: 1800px;
+            background-color: pink;
+        }
+        .icon{
+            position: absolute;
+            height: 100px;
+            width: 100px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="icon"></div>
+    </div>
+
+    <script>
+        const main = document.querySelector('.main');
+        const icon = document.querySelector('.icon');
+        let move = false, left=0, topV=0;
+
+        main.addEventListener('mousemove', function(e) {
+            if(move) {
+                icon.setAttribute('style', `left:${e.clientX - left}px;top:${e.clientY - topV}px`)
+            }
+        })
+        icon.addEventListener('mousedown', function(e) {
+            move = true
+            left= e.clientX;
+            topV = e.clientY;
+            console.log(left, topV)
+        })
+        icon.addEventListener('mouseup', function() {
+            move = false
+        })
+
+    </script>
+</body>
+</html>
