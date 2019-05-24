@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import AMap from 'AMap'
+
 export default {
     data () {
         return {
