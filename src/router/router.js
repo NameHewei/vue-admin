@@ -12,6 +12,11 @@ import Entrance from '@/views/vueApiPractice/Entrance.vue'
 import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
 import ApiVuex from '@/views/vueApiPractice/Vuex.vue'
 
+import Page1 from '@/views/testRouter/Page1'
+import Page2 from '@/views/testRouter/Page2'
+import Page3 from '@/views/testRouter/Page3'
+import Page4 from '@/views/testRouter/Page4'
+
 const
     Echarts = () => import('@/views/thirdPartService/Echarts'),
     Financial = () => import('@/views/thirdPartService/Financial'),
@@ -69,6 +74,18 @@ const
                 { path: 'financial', name: 'financial', component: Financial, meta: { roles: ['ADMIN'] } },
                 { path: 'a-map', name: 'aMap', component: AMap, meta: { title: '高德地图', roles: ['ADMIN'], showInMenu: true } },
                 { path: 'wy-im', name: 'wyIm', component: WyIm, meta: { title: '网易IM', roles: ['ADMIN'], showInMenu: true } }
+            ]
+        },
+        {
+            path: 'test-vue-router',
+            name: 'testVueRouter',
+            component: Entrance,
+            meta: { title: '测试路由replace', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
+            children: [
+                { path: 'p1', name: 'page1', component: Page1, meta: { title: 'page1', roles: ['ADMIN'], showInMenu: true } },
+                { path: 'p2', name: 'page2', component: Page2, meta: { title: 'page2', roles: ['ADMIN'], showInMenu: true } },
+                { path: 'p3', name: 'page3', component: Page3, meta: { title: 'page3', roles: ['ADMIN'], showInMenu: true } },
+                { path: 'p4', name: 'page4', component: Page4, meta: { title: 'page4', roles: ['ADMIN'], showInMenu: true } }
             ]
         }
     ]
