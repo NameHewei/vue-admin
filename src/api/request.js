@@ -3,7 +3,8 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 
 /**
- * @desc 返回的数据结构 { code: '自定义状态码', data: '结果', msg: '结果描述' }
+ * @des 所有与业务相关的参数，直接以对象的形式传入；请求方式与url在api模块中添加
+ * @des 返回的数据结构 { code: '自定义状态码', data: '结果', msg: '结果描述' }
  */
 
 const httpService = axios.create({
@@ -12,14 +13,30 @@ const httpService = axios.create({
     headers: { 'Authorization': 'hewitt' }
 })
 
-/**
- * queryString 放入cfg.params中 body 中的参数放入cfg.data中
- */
 httpService.interceptors.request.use((cfg) => {
-    const { method } = cfg
-    console.log(cfg)
+    const
+        { url, method, params } = cfg,
+        tempData = { ...params }
+
     cfg.headers.uuid = uuidV1().replace(/-/g, '')
-    cfg.method = method || 'GET'
+
+    /**
+     * @des 处理url中带参数（例：/xx/:id/xx/ -> /xx/123/xx/）
+     */
+    if (/:/.test(url)) {
+        const urlParam = /\/:([^/]+)\//.exec(url)[1]
+        cfg.url = url.replace(`:${urlParam}`, tempData[urlParam])
+        delete cfg.params[urlParam]
+    }
+
+    /**
+     * @des 处理不同请求方式
+     */
+    if (method !== 'get') {
+        cfg.method = method
+        cfg.data = tempData
+        delete cfg.params
+    }
     return cfg
 }, (error) => {
     console.log(error)
