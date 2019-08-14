@@ -7,7 +7,9 @@ module.exports = {
         "plugin:vue/essential",
         "@vue/standard"
     ],
-        "rules": {
+    "rules": {
+        // 允许使用console
+        "no-console": "off",
         "indent": [
             "error",
             4
