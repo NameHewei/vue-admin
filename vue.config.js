@@ -11,6 +11,12 @@ module.exports = {
         }
     },
 
+    configureWebpack: {
+        externals: {
+            AMap: 'AMap'
+        }
+    },
+
     // 修改打包后的地址
     baseUrl: './',
 

@@ -1,6 +1,22 @@
 <template>
     <div>
         <div>
+            <h2>v-for 和 v-if </h2>
+            <pre>
+                forArray: [
+                    { name: 'hew', judge: true },
+                    { name: 'other', judge: false }
+                ]
+            </pre>
+            <div>
+                需要v-for 和 v-if 一起作用于同一个元素时，请使用 computer 或methods 过滤，不使用v-if
+            </div>
+            <div>
+                <ul>
+                    <li v-for="(vItem, index) in filterForArray" :key="index">{{ vItem.name }}</li>
+                </ul>
+            </div>
+
             <h2>HTMLElement.click()</h2>
             <div style="padding: 10px 0;">
                 1.在onchange中有效
@@ -121,7 +137,12 @@ export default {
             },
             input: '',
             input1: '',
-            input2: ''
+            input2: '',
+
+            forArray: [
+                { name: 'hew', judge: true },
+                { name: 'other', judge: false }
+            ]
         }
     },
 
@@ -157,6 +178,12 @@ export default {
                 return result
             }
         };
+    },
+
+    computed: {
+        filterForArray () {
+            return this.forArray.filter(v => v.judge)
+        }
     },
 
     watch: {
