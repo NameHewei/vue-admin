@@ -24,7 +24,7 @@ httpService.interceptors.request.use((cfg) => {
      * @des 处理url中带参数（例：/xx/:id/xx/ -> /xx/123/xx/）
      */
     if (/:/.test(url)) {
-        const urlParam = /\/:([^/]+)\//.exec(url)[1]
+        const urlParam = /\/:([^/]+)(?:\/|$)/.exec(url)[1]
         cfg.url = url.replace(`:${urlParam}`, tempData[urlParam])
         delete cfg.params[urlParam]
     }
@@ -37,6 +37,14 @@ httpService.interceptors.request.use((cfg) => {
         cfg.data = tempData
         delete cfg.params
     }
+
+    /**
+     * @des 如果没有配置反向代理，可直接加地址
+     */
+    if (/localhost/.test(window.location.host)) {
+        cfg.baseURL = 'http://xxx.xx:8080/'
+    }
+
     return cfg
 }, (error) => {
     console.log(error)
