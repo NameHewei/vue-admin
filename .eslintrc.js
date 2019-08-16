@@ -8,6 +8,11 @@ module.exports = {
         "@vue/standard"
     ],
     "rules": {
+<<<<<<< HEAD
+        // 允许使用console
+        "no-console": "off",
+=======
+>>>>>>> b6229c826b2a6bebd216fc265a8796b9567b949f
         "indent": [
             "error",
             4
