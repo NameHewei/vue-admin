@@ -17,6 +17,14 @@ import Page2 from '@/views/testRouter/Page2'
 import Page3 from '@/views/testRouter/Page3'
 import Page4 from '@/views/testRouter/Page4'
 
+/**
+ * @des 练习keep-alive
+ */
+import TsKeepAlive from '@/views/vueApiPractice/keepAlive/TsKeepAlive.vue'
+import Start from '@/views/vueApiPractice/keepAlive/Start.vue'
+import KaEdit from '@/views/vueApiPractice/keepAlive/KaEdit.vue'
+import KaCreate from '@/views/vueApiPractice/keepAlive/KaCreate.vue'
+
 const
     Echarts = () => import('@/views/thirdPartService/Echarts'),
     Financial = () => import('@/views/thirdPartService/Financial'),
@@ -50,7 +58,19 @@ const
                 { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
                 { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'practice vuex', showInMenu: true, roles: ['STUDENT'] } },
                 { path: 'vue-jsx', name: 'vue-jsx', component: Jsx, meta: { title: 'vue jsx', showInMenu: true, roles: ['ADMIN'] } },
-                { path: 'mixin', name: 'mixin', component: Mixin, meta: { title: 'mixin', showInMenu: true, roles: ['ADMIN'] } }
+                { path: 'mixin', name: 'mixin', component: Mixin, meta: { title: 'mixin', showInMenu: true, roles: ['ADMIN'] } },
+                
+                { 
+                    path: 'ts-keep-alive', 
+                    name: 'tsKeepAlive',
+                    component: TsKeepAlive, 
+                    meta: { title: '测试keep-alives', showInMenu: true, roles: ['ADMIN'] },
+                    children: [
+                        { path: 'start', name: 'kaStart', component: Start, },
+                        { path: 'edit', name: 'kaEdit', component: KaEdit, },
+                        { path: 'create', name: 'kaCreate', component: KaCreate, }
+                    ]
+                },
             ]
         },
         {
@@ -90,6 +110,9 @@ const
         }
     ]
 
+/**
+ * @des 根据权限生成路由 
+ */
 export const permitRouters = function (currentAccountRoles) {
     const tempRoute = []
     routerTable.forEach(({ name, path, component, meta, children }) => {
@@ -114,6 +137,9 @@ export const permitRouters = function (currentAccountRoles) {
     return [{ path: '/', component: Home, children: [{ path: '', component: Welcome }, ...tempRoute] }]
 }
 
+/**
+ * @des 根据权限生成菜单
+ */
 export const permitMenu = function (currentAccountRoles) {
     const tempMenu = []
     routerTable.forEach(({ name, meta: { roles, title, icon, showInMenu }, children }) => {
