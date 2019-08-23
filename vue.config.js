@@ -21,5 +21,11 @@ module.exports = {
     baseUrl: './',
 
     // 是否每次保存时 lint 代码，错误输出为编译警告
-    lintOnSave: false
+    lintOnSave: false,
+
+    pages: {
+        index: {
+            title: '这是配置的标题'
+        }
+    }
 }

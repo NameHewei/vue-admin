@@ -25,6 +25,12 @@
             next()
         },
 
+        activated() {
+            /**
+             * @des 这里更新表格数据等
+             */
+        },
+
         methods: {
             handleJump(name) {
                 this.$router.push({
