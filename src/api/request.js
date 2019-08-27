@@ -1,5 +1,6 @@
 import uuidV1 from 'uuid/v1'
 import axios from 'axios'
+// import router from '../router/router'
 import { Message } from 'element-ui'
 
 /**
@@ -41,6 +42,7 @@ httpService.interceptors.request.use((cfg) => {
     /**
      * @des 如果没有配置反向代理，可直接加地址
      */
+    console.log('NODE_ENV', process.env.NODE_ENV)
     if (/localhost/.test(window.location.host)) {
         cfg.baseURL = 'http://xxx.xx:8080/'
     }
@@ -69,6 +71,13 @@ httpService.interceptors.response.use((res) => {
             duration: 2000
         })
     }
+
+    /**
+     * @des 未登录跳转到登录,依据后端返回的数据形式，也可能在错误捕获中使用
+     */
+    // if (0) {
+    //     router.push({ path: '/login' })
+    // }
 
     return res.data
 }, (error) => {

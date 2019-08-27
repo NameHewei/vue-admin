@@ -17,6 +17,8 @@ import Page2 from '@/views/testRouter/Page2'
 import Page3 from '@/views/testRouter/Page3'
 import Page4 from '@/views/testRouter/Page4'
 
+import TreeWrap from '@/views/element/TreeWrap.vue'
+
 /**
  * @des 练习keep-alive
  */
@@ -106,6 +108,15 @@ const
                 { path: 'p2', name: 'page2', component: Page2, meta: { title: 'page2', roles: ['ADMIN'], showInMenu: true } },
                 { path: 'p3', name: 'page3', component: Page3, meta: { title: 'page3', roles: ['ADMIN'], showInMenu: true } },
                 { path: 'p4', name: 'page4', component: Page4, meta: { title: 'page4', roles: ['ADMIN'], showInMenu: true } }
+            ]
+        },
+        {
+            path: 'element',
+            name: 'eleComponents',
+            component: Entrance,
+            meta: { title: 'elementUI组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
+            children: [
+                { path: 'tree', name: 'tree', component: TreeWrap, meta: { title: 'tree', roles: ['ADMIN'], showInMenu: true } }
             ]
         }
     ]
