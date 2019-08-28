@@ -4,6 +4,12 @@
             <div class='info'>
                 操作说明：用鼠标左键点击地图，选择区域，点击鼠标右键结束选择
             </div>
+            <div class='lon-lat-notice'>
+                点击地图获取经纬度
+            </div>
+            <div class="search">
+                <b>搜索地址：</b><input type="text" id="address">
+            </div>
             <button
                 class="remove-area"
                 id="removeArea">清除</button>
@@ -64,9 +70,37 @@ export default {
         })
 
         this.getCurrentPosition()
+
+        /**
+         * @des 点击地图获取经纬度
+         */
+        map.on('click', (e) => {
+            alert(`点击点：${e.lnglat.getLng()}-${e.lnglat.getLat()}`)
+        })
+
+        this.searchLocation()
     },
 
     methods: {
+        /**
+         * @des 搜索地址并定位
+         */
+        searchLocation () {
+            const autoOptions = {
+                    input: 'address'
+                },
+                auto = new AMap.Autocomplete(autoOptions),
+                placeSearch = new AMap.PlaceSearch({
+                    map: this.map
+                })
+            // 构造地点查询类
+            // 注册监听，当选中某条记录时会触发
+            AMap.event.addListener(auto, 'select', (e) => {
+                placeSearch.setCity(e.poi.adcode)
+                placeSearch.search(e.poi.name) // 关键字查询查询
+            })
+        },
+
         /**
         * 其他坐标转高德坐标
         * api https://lbs.amap.com/api/javascript-api/guide/transform/convertfrom
@@ -301,6 +335,30 @@ export default {
             z-index: 2;
             color: #fff;
             background-color: rgba(2, 166, 231, 0.8);
+        }
+        .lon-lat-notice{
+            position: absolute;
+            padding: 6px 15px;
+            right: 0;
+            top: 50px;
+            font-size: 14px;
+            z-index: 2;
+            color: #fff;
+            background-color: rgba(158, 158, 158, 0.8);
+        }
+        .search {
+            position: absolute;
+            padding: 6px 15px;
+            right: 0;
+            top: 100px;
+            font-size: 14px;
+            z-index: 2;
+            color: #fff;
+            background-color: rgba(155, 155, 155, 0.8);
+            input{
+                border-radius: 2px;
+                border: 1px solid rgb(211, 211, 211);
+            }
         }
 
         .remove-area {

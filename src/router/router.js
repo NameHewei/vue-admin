@@ -61,18 +61,18 @@ const
                 { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'practice vuex', showInMenu: true, roles: ['STUDENT'] } },
                 { path: 'vue-jsx', name: 'vue-jsx', component: Jsx, meta: { title: 'vue jsx', showInMenu: true, roles: ['ADMIN'] } },
                 { path: 'mixin', name: 'mixin', component: Mixin, meta: { title: 'mixin', showInMenu: true, roles: ['ADMIN'] } },
-                
-                { 
-                    path: 'ts-keep-alive', 
+
+                {
+                    path: 'ts-keep-alive',
                     name: 'tsKeepAlive',
-                    component: TsKeepAlive, 
+                    component: TsKeepAlive,
                     meta: { title: '测试keep-alives', showInMenu: true, roles: ['ADMIN'] },
                     children: [
-                        { path: 'start', name: 'kaStart', component: Start, },
-                        { path: 'edit', name: 'kaEdit', component: KaEdit, },
-                        { path: 'create', name: 'kaCreate', component: KaCreate, }
+                        { path: 'start', name: 'kaStart', component: Start },
+                        { path: 'edit', name: 'kaEdit', component: KaEdit },
+                        { path: 'create', name: 'kaCreate', component: KaCreate }
                     ]
-                },
+                }
             ]
         },
         {
@@ -122,7 +122,7 @@ const
     ]
 
 /**
- * @des 根据权限生成路由 
+ * @des 根据权限生成路由
  */
 export const permitRouters = function (currentAccountRoles) {
     const tempRoute = []
