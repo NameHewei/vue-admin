@@ -17,6 +17,34 @@
                         :value="option.key"
                     ></el-option>
                 </el-select>
+                <el-date-picker
+                    v-else-if="item.type === 'date'"
+                    v-model="formData[item.key]"
+                    type="date"
+                    placeholder="选择日期">
+                </el-date-picker>
+                <el-date-picker
+                    v-else-if="item.type === 'dateTime'"
+                    v-model="formData[item.key]"
+                    type="datetime"
+                    placeholder="选择日期时间">
+                </el-date-picker>
+                <el-date-picker
+                    v-else-if="item.type === 'dateTimeRange'"
+                    v-model="formData[item.key]"
+                    type="datetimerange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+                </el-date-picker>
+                <el-date-picker
+                    v-else-if="item.type === 'dateRange'"
+                    v-model="formData[item.key]"
+                    type="daterange"
+                    range-separator="-"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+                </el-date-picker>
             </el-form-item>
         </el-form>
         <div class="part-btn">
@@ -67,6 +95,7 @@ export default {
             const { searchOptions } = this, data = {}
             searchOptions.forEach(({ key }) => {
                 data[key] = ''
+                if (/Range/.test(key)) this.width = 500
             })
             this.formData = data
         },

@@ -26,4 +26,8 @@ module.exports = {
       }
     ]
   },
+  // 允许一些全局的变量，如在html中引入的高德地图全局变量
+  globals: {
+    AMap: true
+  }
 }

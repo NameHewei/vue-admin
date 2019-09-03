@@ -47,10 +47,10 @@ export default {
                         label: '三级 10',
                         children: [{
                             id: 11,
-                            label: '四级级 11',
+                            label: '四级级 11'
                         }, {
                             id: 12,
-                            label: '四级级 12',
+                            label: '四级级 12'
                         }]
                     }]
                 }]
@@ -75,7 +75,7 @@ export default {
                     label: '二级 8'
                 }]
             }],
-            initIds: [1,4,10,3,7, 11],
+            initIds: [1, 4, 10, 3, 7, 11],
             sureInit: [],
             checkedAll: false,
             checked: [],
@@ -85,14 +85,14 @@ export default {
         }
     },
 
-    mounted() {
+    mounted () {
         this.initData()
     },
 
     methods: {
         initData () {
-            const { initIds } = this
-            const tempArr = [],
+            const { initIds } = this,
+                tempArr = [],
                 sureInit = [],
                 filterTree = (arr) => {
                     arr.forEach(v => {
@@ -109,7 +109,7 @@ export default {
             filterTree(this.treeData)
 
             this.ids = tempArr
-            this.sureInit = sureInit 
+            this.sureInit = sureInit
             this.checked = initIds
             this.$refs.elTree.setCheckedKeys(sureInit)
         },

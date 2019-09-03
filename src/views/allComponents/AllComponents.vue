@@ -16,32 +16,40 @@
             <h3>表格组件</h3>
             <TableWrap></TableWrap>
         </div>
+        <div class="part">
+            <h3>树组件</h3>
+            <TreeWrap></TreeWrap>
+        </div>
     </div>
 </template>
 
 <script>
 import Search from './search/Search.vue'
 import TableWrap from './table/TableWrap.vue'
+import TreeWrap from './tree/TreeWrap.vue'
 
 export default {
     name: 'AllComponents',
     components: {
         Search,
-        TableWrap
+        TableWrap,
+        TreeWrap
     },
 
     data () {
         return {
             searchOptions: [
-                {
-                    type: 'input', key: 'name', label: '用户名'
-                },
+                { type: 'input', key: 'name', label: '文本框' },
                 {
                     type: 'select',
                     key: 'status',
-                    label: '状态',
+                    label: '下拉选择',
                     options: [{ key: 'yes', value: '是' }, { key: 'no', value: '否' }]
-                }
+                },
+                { type: 'date', key: 'date', label: '日期' },
+                { type: 'dateTime', key: 'dateTime', label: '日期带时间' },
+                { type: 'dateRange', key: 'dateRange', label: '日期范围' },
+                { type: 'dateTimeRange', key: 'dateTimeRange', label: '日期范围' }
             ]
 
         }
