@@ -26,7 +26,7 @@ import KaEdit from '@/views/vueApiPractice/keepAlive/KaEdit.vue'
 import KaCreate from '@/views/vueApiPractice/keepAlive/KaCreate.vue'
 
 const
-    Echarts = () => import('@/views/thirdPartService/Echarts'),
+    Echarts = () => import('@/views/thirdPartService/chart/Echarts'),
     Financial = () => import('@/views/thirdPartService/Financial'),
     AMap = () => import('@/views/thirdPartService/AMap'),
     WyIm = () => import('@/views/thirdPartService/WyIm'),
@@ -90,7 +90,7 @@ const
             component: Entrance,
             meta: { title: '第三方服务', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
             children: [
-                { path: 'echarts', name: 'echarts', component: Echarts, meta: { title: '所有图表', roles: ['ADMIN'], showInMenu: true } },
+                { path: 'echarts', name: 'echarts', component: Echarts, meta: { title: '图表', roles: ['ADMIN'], showInMenu: true } },
                 { path: 'financial', name: 'financial', component: Financial, meta: { roles: ['ADMIN'] } },
                 { path: 'a-map', name: 'aMap', component: AMap, meta: { title: '高德地图', roles: ['ADMIN'], showInMenu: true } },
                 { path: 'wy-im', name: 'wyIm', component: WyIm, meta: { title: '网易IM', roles: ['ADMIN'], showInMenu: true } }
