@@ -1,6 +1,6 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 /**
- * @des vue-cli-3 中已安装 webpack 只是webpack中被隐藏
+ * @des vue-cli-3 中已安装 webpack 只是webpack被隐藏
  */
 const webpack = require('webpack')
 
@@ -25,7 +25,7 @@ module.exports = {
     },
 
     /**
-     * @des 方式1：链式方式，直接启动server即可查看，方式2如下
+     * @des 方式1：链式方式，直接启动server即可查看
      */
     // chainWebpack: config => {
     //     config
@@ -40,8 +40,9 @@ module.exports = {
      */
     configureWebpack: config => {
         const data = {
+            /* 参见 webpack-pure/README.md */
             externals: {
-                AMap: 'AMap'
+                // AMap: 'AMap'
             },
             plugins: []
         }
@@ -58,13 +59,16 @@ module.exports = {
           * @des 方式3： 可以不加此插件，直接使用 命令行 --report(查看package.json) 方式生成report.html 打开查看即可
           * cli服务中有说明
          */
+        let cn = ''
         if (process.env.NODE_ENV === 'production') {
             // data.plugins.push(new BundleAnalyzerPlugin())
+            cn = 'product hewitt'
         } else {
-            data.plugins.push(new webpack.DefinePlugin({
-                CUSTOM_NAME: JSON.stringify('hewitt')
-            }))
+            cn = 'develop hewitt'
         }
+        data.plugins.push(new webpack.DefinePlugin({
+            CUSTOM_NAME: JSON.stringify(cn)
+        }))
         return data
     },
 

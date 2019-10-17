@@ -62,6 +62,11 @@ httpService.interceptors.response.use((res) => {
             type: 'success',
             duration: 2000
         })
+        // ELEMENT.Message({
+        //     message: data.msg,
+        //     type: 'success',
+        //     duration: 2000
+        // })
     }
 
     if (data.code !== 200) {

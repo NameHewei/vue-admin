@@ -5,7 +5,7 @@
                 操作说明：用鼠标左键点击地图，选择区域，点击鼠标右键结束选择
             </div>
             <div class='lon-lat-notice'>
-                点击地图获取经纬度
+                点击地图获取经纬度(请先关闭 ‘选择区域’ 操作)
             </div>
             <div class="search">
                 <b>搜索地址：</b><input type="text" id="address">
@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import AMap from 'AMap'
-
 export default {
     data () {
         return {
@@ -60,7 +58,6 @@ export default {
         })
 
         this.map = map
-        // this.getArea()
         document.getElementById('setMark').addEventListener('click', () => {
             this.setMark()
         })
@@ -69,7 +66,9 @@ export default {
             this.getAddress()
         })
 
-        this.getCurrentPosition()
+        /** getArea 和 getCurrentPosition 互斥 */
+        this.getArea()
+        // this.getCurrentPosition()
 
         /**
          * @des 点击地图获取经纬度
