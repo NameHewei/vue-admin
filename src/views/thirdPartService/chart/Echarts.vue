@@ -32,6 +32,7 @@
     <div class="part">
       <h3>折线图</h3>
       <div id="line" style="width: 300px; height: 300px"></div>
+      <p> - 容器元素设置宽高</p>
       <p> - y轴上的值根据series的data属性自动生成 </p>
       <p> - y轴上的值，可自定义 </p>
       <p> - legend 中 data 的值要与 series 中的name值对应一致 </p>
@@ -42,11 +43,20 @@
       <h3>柱状图</h3>
       <div id="main" style="width: 300px; height: 300px"></div>
     </div>
+
+    <div class="part">
+      <h3>测试1</h3>
+      <DataZoomEvent></DataZoomEvent>
+    </div>
   </div>
 </template>
 
 <script>
+import DataZoomEvent from './dataZoomEvent'
 export default {
+    components: {
+        DataZoomEvent
+    },
     data () {
         return {}
     },
@@ -59,11 +69,14 @@ export default {
             title: {
                 text: 'Histogram'
             },
+            /** 提示框组件 */
             tooltip: {
                 show: true
             },
             xAxis: {
-                data: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6']
+                data: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6'],
+                /** 是否显示x轴 */
+                show: false
             },
             yAxis: {},
             series: [
