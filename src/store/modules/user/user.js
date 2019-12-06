@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async actionSetUserInfo ({ commit }) {
+        async actionSetUserInfo ({ commit, state }) {
             const userInfo = await reqUserInfo()
 
             document.cookie = 'token=hewei'

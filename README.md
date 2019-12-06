@@ -33,4 +33,13 @@ element-ui 对应 ELEMENT
 
 ---
 
+目录结构
+
+```
+|- src
+    |- view
+        |- vueApiPractice
+            |- mixin         对 Mixin 的使用
+```
+
 

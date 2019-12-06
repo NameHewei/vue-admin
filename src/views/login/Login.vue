@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import CryptoJS from 'crypto-js'
 
 export default {
@@ -47,7 +47,17 @@ export default {
         }
     },
 
-    created () {},
+    created () {
+        console.log('get store data: ', this.projectName)
+        this.actionSetProjectName('Login create data!!')
+        setTimeout(() => {
+            console.log('setTimeout get store data: ', this.projectName)
+        }, 1000)
+    },
+
+    computed: {
+        ...mapState(['projectName'])
+    },
 
     watch: {
         'formData.password' (v) {
@@ -60,6 +70,7 @@ export default {
     },
 
     methods: {
+        ...mapActions(['actionSetProjectName']),
         ...mapActions('user', ['actionSetUserInfo']),
         submitForm () {
             this.actionSetUserInfo()

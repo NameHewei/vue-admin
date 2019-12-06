@@ -49,7 +49,30 @@ export default {
                 { type: 'date', key: 'date', label: '日期' },
                 { type: 'dateTime', key: 'dateTime', label: '日期带时间' },
                 { type: 'dateRange', key: 'dateRange', label: '日期范围' },
-                { type: 'dateTimeRange', key: 'dateTimeRange', label: '日期范围' }
+                { type: 'dateTimeRange', key: 'dateTimeRange', label: '日期范围' },
+                { type: 'cascader',
+                    key: 'cascader',
+                    label: '层级选择',
+                    options: [{
+                        value: 'zhinan',
+                        label: '指南',
+                        children: [{
+                            value: 'shejiyuanze',
+                            label: '设计原则',
+                            children: [{
+                                value: 'yizhi',
+                                label: '一致'
+                            }]
+                        }, {
+                            value: 'daohang',
+                            label: '导航',
+                            children: [{
+                                value: 'cexiangdaohang',
+                                label: '侧向导航'
+                            }]
+                        }]
+                    }]
+                }
             ]
 
         }
