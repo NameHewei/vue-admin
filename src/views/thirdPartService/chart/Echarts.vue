@@ -22,16 +22,20 @@
     </div>
 
     <div class="part">
-      <h3>echarts canvas vs svg</h3>
-      <p>
-        Canvas 更适合绘制图形元素数量非常大（这一般是由数据量大导致）的图表（如热力图、地理坐标系或平行坐标系上的大规模线图或散点图等）;
-        SVG 具有重要的优势：它的内存占用更低（这对移动端尤其重要）、渲染性能略高、并且用户使用浏览器内置的缩放功能时不会模糊
-      </p>
+        <h3>echarts canvas vs svg</h3>
+        <p>
+            Canvas(默认) 更适合绘制图形元素数量非常大（这一般是由数据量大导致）的图表（如热力图、地理坐标系或平行坐标系上的大规模线图或散点图等）;
+            SVG 具有重要的优势：它的内存占用更低（这对移动端尤其重要）、渲染性能略高、并且用户使用浏览器内置的缩放功能时不会模糊
+        </p>
+        <p>1. 移动平台优选 SVG   </p>
+        <p>2. 图表个数很多时优选 SVG</p>
+        <p>3. 导出小文件高清晰时使用 SVG</p>
+        <p>4. 数据量特别大时推荐使用 Canvas 渲染</p>
     </div>
 
     <div class="part">
       <h3>折线图</h3>
-      <div id="line" style="width: 300px; height: 300px"></div>
+      <CustomLine/>
       <p> - 容器元素设置宽高</p>
       <p> - y轴上的值根据series的data属性自动生成 </p>
       <p> - y轴上的值，可自定义 </p>
@@ -41,133 +45,41 @@
 
     <div class="part">
       <h3>柱状图</h3>
-      <div id="main" style="width: 300px; height: 300px"></div>
+      <CustomBar/>
     </div>
 
     <div class="part">
-      <h3>测试1</h3>
+      <h3>饼图</h3>
+      <CustomPie/>
+    </div>
+
+    <div class="part">
+      <h3>方法缩小示例</h3>
       <DataZoomEvent></DataZoomEvent>
     </div>
   </div>
 </template>
 
 <script>
+import CustomLine from './line'
+import CustomBar from './bar'
+import CustomPie from './pie'
 import DataZoomEvent from './dataZoomEvent'
 export default {
     components: {
-        DataZoomEvent
+        DataZoomEvent,
+        CustomLine,
+        CustomBar,
+        CustomPie
     },
     data () {
         return {}
     },
-    mounted () {
-        var myChart = this.$eCharts.init(document.getElementById('main'), null, {
-            renderer: 'svg'
-        })
-        // 绘制图表
-        myChart.setOption({
-            title: {
-                text: 'Histogram'
-            },
-            /** 提示框组件 */
-            tooltip: {
-                show: true
-            },
-            xAxis: {
-                data: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6'],
-                /** 是否显示x轴 */
-                show: false
-            },
-            yAxis: {},
-            series: [
-                {
-                    name: 'value',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }
-            ]
-        })
-
-        this.initLine()
-    },
+    mounted () {},
     methods: {
-        getA () {
-            this.$http({
-                method: 'GET',
-                url: 'cookie/',
-                successFn: res => {
-                    console.log('res:', res)
-                },
-                errorFn: err => {
-                    console.log(err)
-                }
-            })
-        },
-
         handleRouteSkip () {
             this.$router.push({
                 name: 'financial'
-            })
-        },
-
-        initLine () {
-            const myChart = this.$eCharts.init(document.getElementById('line'), null, {
-                renderer: 'canvas'
-            })
-            // 绘制图表
-            myChart.setOption({
-                title: {
-                    text: 'line'
-                },
-                legend: {
-                    data: ['y11', 'y22']
-                },
-                grid: {
-                    left: 10,
-                    right: 10,
-                    top: 50,
-                    bottom: 45,
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'category',
-                    axisLabel: {
-                        rotate: 60,
-                        textStyle: {
-                            fontSize: 14
-                        }
-                    },
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                },
-                yAxis: [
-                    {
-                        name: 'y1',
-                        type: 'value',
-                        axisLabel: {
-                            formatter: (value) => {
-                                const val = (value) + '值'
-                                return val
-                            }
-                        }
-                    },
-                    {
-                        name: 'y2',
-                        type: 'value'
-                    }
-                ],
-                series: [
-                    {
-                        name: 'y11',
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        type: 'line'
-                    },
-                    {
-                        name: 'y22',
-                        yAxisIndex: 1,
-                        data: [11, 21, 31, 41, 51, 61, 71],
-                        type: 'line'
-                    }
-                ]
             })
         }
     }

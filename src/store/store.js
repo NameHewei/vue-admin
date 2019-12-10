@@ -7,6 +7,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        /**
+         * @des 直接调用下面属性，参考 Login.vue
+         */
         projectName: 'vueAdmin'
     },
 
