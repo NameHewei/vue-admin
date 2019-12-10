@@ -42,7 +42,7 @@ module.exports = {
         const data = {
             /* 参见 webpack-pure/README.md */
             externals: {
-                // AMap: 'AMap'
+                NProgress: 'NProgress'
             },
             plugins: []
         }

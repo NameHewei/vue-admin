@@ -6,6 +6,10 @@ import ElementUI from 'element-ui'
 import eCharts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
 
+/** 引入 NProgress 样式 */
+import 'nprogress/nprogress.css'
+// import NProgress from 'nprogress'
+
 // all common components
 import './views/components/index.js'
 
@@ -13,6 +17,7 @@ import './vueConfig.js'
 
 // 引入路由守卫，判断权限
 import './navigationGuard'
+// NProgress.start()
 
 Vue.prototype.$eCharts = eCharts
 Vue.prototype.$message = ElementUI.Message
