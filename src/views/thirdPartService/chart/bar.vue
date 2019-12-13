@@ -21,7 +21,7 @@ export default {
             },
             /** 提示框组件 */
             tooltip: {
-                show: true
+                trigger: 'axis'
             },
             xAxis: {
                 data: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6'],
@@ -33,6 +33,9 @@ export default {
                 {
                     name: 'value',
                     type: 'bar',
+                    label: {
+                        show: true
+                    },
                     data: [5, 20, 36, 10, 10, 20]
                 }
             ]

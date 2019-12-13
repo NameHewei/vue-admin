@@ -51,12 +51,12 @@ export default {
         console.log('get store data: ', this.projectName)
         this.actionSetProjectName('Login create data!!')
         setTimeout(() => {
-            console.log('setTimeout get store data: ', this.projectName)
+            console.log('setTimeout get store data: ', this.projectName, '-------', this.someKey)
         }, 1000)
     },
 
     computed: {
-        ...mapState(['projectName'])
+        ...mapState(['projectName', 'someKey'])
     },
 
     watch: {

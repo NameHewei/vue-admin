@@ -39,7 +39,7 @@ export default {
     data () {
         return {
             searchOptions: [
-                { type: 'input', key: 'name', label: '文本框' },
+                { type: 'input', key: 'name', label: '文本框', defaultValue: 'default' },
                 {
                     type: 'select',
                     key: 'status',
@@ -53,6 +53,7 @@ export default {
                 { type: 'cascader',
                     key: 'cascader',
                     label: '层级选择',
+                    defaultValue: 'yizhi',
                     options: [{
                         value: 'zhinan',
                         label: '指南',

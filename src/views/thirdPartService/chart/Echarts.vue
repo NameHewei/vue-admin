@@ -39,7 +39,6 @@
       <p> - 容器元素设置宽高</p>
       <p> - y轴上的值根据series的data属性自动生成 </p>
       <p> - y轴上的值，可自定义 </p>
-      <p> - legend 中 data 的值要与 series 中的name值对应一致 </p>
       <p> - 当有两个 y 轴时，series 中设置一组数据的 yAxisIndex: 1 表示这组数据的y轴数据使用的是第二个y轴 </p>
     </div>
 

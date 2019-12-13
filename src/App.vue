@@ -1,5 +1,5 @@
 <template>
-  <div class="app" v-if="show">
+  <div class="app">
     <router-view/>
   </div>
 </template>
@@ -7,16 +7,8 @@
 <script>
 import NProgress from 'NProgress'
 export default {
-    data () {
-        return {
-            show: false
-        }
-    },
     mounted () {
-        setTimeout(() => {
-            this.show = true
-            NProgress.done()
-        }, 3000)
+        NProgress.done()
     }
 }
 </script>

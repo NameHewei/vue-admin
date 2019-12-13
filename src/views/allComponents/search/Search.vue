@@ -41,6 +41,7 @@
                     <el-date-picker
                         v-else-if="item.type === 'dateRange'"
                         type="daterange"
+                        v-model="formData[item.key]"
                         range-separator="-"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期">
@@ -108,8 +109,8 @@ export default {
     methods: {
         createFormData () {
             const { searchOptions } = this, data = {}
-            searchOptions.forEach(({ key }) => {
-                data[key] = ''
+            searchOptions.forEach(({ key, defaultValue }) => {
+                data[key] = defaultValue || ''
                 if (/Range/.test(key)) this.currentWidth = 500
             })
             this.formData = data
@@ -126,7 +127,11 @@ export default {
         },
 
         handleReset (formName) {
-            this.$refs.searchForm.resetFields()
+            const { formData } = this
+            Object.keys(formData).forEach(v => {
+                formData[v] = ''
+            })
+            this.formData = formData
             this.$emit('callback', { type: 'reset' })
         }
     }
