@@ -24,9 +24,11 @@ export default {
                     textAlign: 'left'
                 },
                 legend: {
-                    /** legend 中 data 的值要与 series 中的name值对应一致 */
+                    /** 控制图例的显示 */
+                    show: true,
+                    /** legend 中 data 的值要与 series 中的name值对应一致；也可以不写直接默认 */
                     data: ['y11', 'y22'],
-                    /** 图例组件离容器上侧的距离 */
+                    /** 图例组件离容器上侧的距离: 数字或百分比 */
                     top: 10
                 },
                 /** 提示框组件 */

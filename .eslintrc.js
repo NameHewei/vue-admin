@@ -32,5 +32,6 @@ module.exports = {
     Vue: true,
     VueRouter: true,
     ELEMENT: true,
+    AMapUI: true
   }
 }

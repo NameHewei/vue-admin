@@ -25,18 +25,21 @@ export default {
                     left: 'right'
                 },
                 tooltip: {
-                    trigger: 'item',
+                    trigger: 'item'
                     /** 饼图、仪表盘、漏斗图: {a}（系列名称），{b}（数据项名称），{c}（数值）, {d}（百分比） */
-                    formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    // formatter: '{a} <br/>{b} : {c} ({d}%)'
                 },
                 legend: {
                     /** 当图例过多时可以滚动起来 */
                     type: 'scroll',
                     orient: 'vertical',
                     left: 'right',
-                    top: 'center',
-                    /** 这里的值与 series.data 中的 name 对应 */
-                    data: ['直接访问:335次', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                    top: 'center'
+                    /**
+                     * 这里的值与 series.data 中的 name 对应
+                     * 也可以不写，直接默认
+                     */
+                    // data: ['直接访问:335次', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
                 },
                 series: [
                     {
@@ -53,7 +56,7 @@ export default {
                             { value: 1548, name: '搜索引擎' }
                         ],
                         label: {
-                            show: false
+                            show: true
                         },
                         itemStyle: {
                             emphasis: {

@@ -19,6 +19,9 @@ export default {
             title: {
                 text: 'Histogram'
             },
+            legend: {
+                show: true
+            },
             /** 提示框组件 */
             tooltip: {
                 trigger: 'axis'
@@ -26,12 +29,12 @@ export default {
             xAxis: {
                 data: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6'],
                 /** 是否显示x轴 */
-                show: false
+                show: true
             },
             yAxis: {},
             series: [
                 {
-                    name: 'value',
+                    name: 'series-name',
                     type: 'bar',
                     label: {
                         show: true

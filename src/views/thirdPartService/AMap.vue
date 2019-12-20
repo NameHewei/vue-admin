@@ -54,8 +54,16 @@ export default {
 
     mounted () {
         const map = new AMap.Map('aMapContainer', {
-            zoom: 12
-        })
+                zoom: 12
+            }),
+
+            toolBar = new AMap.ToolBar({
+                visible: false
+            })
+
+        /** 设置地图控件，script需要引入 AMap.ToolBar */
+        map.addControl(toolBar)
+        toolBar.show()
 
         this.map = map
         document.getElementById('setMark').addEventListener('click', () => {
@@ -67,8 +75,8 @@ export default {
         })
 
         /** getArea 和 getCurrentPosition 互斥 */
-        this.getArea()
-        // this.getCurrentPosition()
+        // this.getArea()
+        this.getCurrentPosition()
 
         /**
          * @des 点击地图获取经纬度
@@ -78,9 +86,48 @@ export default {
         })
 
         this.searchLocation()
+
+        this.useUI()
     },
 
     methods: {
+        /**
+         * @des 引入UI组件库
+         */
+        useUI () {
+            const { map } = this
+            AMapUI.loadUI(['overlay/SimpleMarker'], (SimpleMarker) => {
+                // 内置的样式
+                /**
+                 * SimpleMarker（简单标注）继承自AMap.Marker
+                 */
+                const sm = new SimpleMarker({
+                    iconTheme: 'default',
+                    // 使用内置的iconStyle
+                    iconStyle: 'red',
+                    // 图标文字
+                    iconLabel: {
+                        innerHTML: 'H',
+                        style: {
+                            // 颜色, #333, red等等
+                            color: '#fff'
+                        }
+                    },
+                    // 显示定位点
+                    // showPositionPoint:true,
+                    map: map,
+                    position: [104.065649, 30.65518]
+                    // Marker的label(见https://lbs.amap.com/api/javascript-api/reference/overlay/#Marker)
+                    // label: {
+                    //     content: '<i>content</i>',
+                    //     offset: new AMap.Pixel(27, 25)
+                    // }
+                })
+
+                console.log(1 || sm)
+            })
+        },
+
         /**
          * @des 搜索地址并定位
          */
@@ -153,7 +200,7 @@ export default {
         */
         getAddress () {
             const geoCoder = new AMap.Geocoder({})
-            geoCoder.getAddress([104.065715, 30.65756], function (status, result) {
+            geoCoder.getAddress([104.065649, 30.65518], function (status, result) {
                 if (status === 'complete' && result.regeocode) {
                     alert(`得到的地址是：${result.regeocode.formattedAddress}`)
                 } else {
@@ -164,7 +211,7 @@ export default {
         },
 
         /**
-         * 打点
+         * 打点 （先禁止：getArea）
          */
         setMark () {
             // 设置地图中心点
@@ -209,7 +256,7 @@ export default {
         initialPolygon () {
             const map = new AMap.Map('aMapContainer', {
                     zoom: 12,
-                    center: [113.246949, 23.122186]
+                    center: [104.065649, 30.65518]
                 }),
 
                 { path } = this,
@@ -260,7 +307,7 @@ export default {
 
         setAMap () {
             const map = new AMap.Map('aMapContainer', {
-                    center: [113.246949, 23.122186],
+                    center: [104.065649, 30.65518],
                     zoom: 12
                 }),
                 mouseTool = new AMap.MouseTool(map)
@@ -386,8 +433,8 @@ export default {
             background-color: rgb(13, 112, 224);
         }
         .set_mark{
-            right: 180px;
-            bottom: 30px;
+            right: 30px;
+            bottom: 90px;
             width: 160px;
             height: 40px;
             border-radius: 4px;

@@ -11,23 +11,23 @@
 </template>
 
 <script>
-    export default {
-        name: 'TsKeepAlive',
+export default {
+    name: 'TsKeepAlive',
 
-        data() {
-            return {
-                key: '23333'
-            }
-        },
+    data () {
+        return {
+            key: '23333'
+        }
+    },
 
-        methods: {
-            handleJump(name) {
-                this.$router.push({
-                    name
-                })
-            }
-        },
+    methods: {
+        handleJump (name) {
+            this.$router.push({
+                name
+            })
+        }
     }
+}
 </script>
 
 <style lang="scss" scoped>

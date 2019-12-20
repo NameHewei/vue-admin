@@ -9,36 +9,36 @@
 </template>
 
 <script>
-    export default {
-        name: 'Start',
+export default {
+    name: 'Start',
 
-        data() {
-            return {
-                key: '23333'
-            }
-        },
+    data () {
+        return {
+            key: '23333'
+        }
+    },
 
-        beforeRouteLeave(to, from, next) {
-            if(!['kaEdit', 'kaCreate'].includes(to.name)) {
-                this.key = '数据重置了'
-            }
-            next()
-        },
+    beforeRouteLeave (to, from, next) {
+        if (!['kaEdit', 'kaCreate'].includes(to.name)) {
+            this.key = '数据重置了'
+        }
+        next()
+    },
 
-        activated() {
-            /**
+    activated () {
+        /**
              * @des 这里更新表格数据等
              */
-        },
+    },
 
-        methods: {
-            handleJump(name) {
-                this.$router.push({
-                    name
-                })
-            }
-        },
+    methods: {
+        handleJump (name) {
+            this.$router.push({
+                name
+            })
+        }
     }
+}
 </script>
 
 <style lang="scss" scoped>

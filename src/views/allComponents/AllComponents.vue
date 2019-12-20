@@ -1,7 +1,7 @@
 <template>
     <div class="main-all-components">
         <div class="part">
-            <h3> 导出 </h3>
+            <h3>导出  利用url下载</h3>
             <ExportWrap></ExportWrap>
         </div>
         <div class="part">
