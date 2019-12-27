@@ -1,6 +1,10 @@
 <template>
     <div class="main-all-components">
         <div class="part">
+            <h3>axios 上传文件</h3>
+            <UploadFile></UploadFile>
+        </div>
+        <div class="part">
             <h3>导出  利用url下载</h3>
             <ExportWrap></ExportWrap>
         </div>
@@ -24,6 +28,7 @@
 </template>
 
 <script>
+import UploadFile from './UploadFile'
 import Search from './search/Search.vue'
 import TableWrap from './table/TableWrap.vue'
 import TreeWrap from './tree/TreeWrap.vue'
@@ -33,7 +38,8 @@ export default {
     components: {
         Search,
         TableWrap,
-        TreeWrap
+        TreeWrap,
+        UploadFile
     },
 
     data () {

@@ -6,7 +6,7 @@ import Home from '@/views/layout/Home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
 
 import AllComponents from '@/views/allComponents/AllComponents.vue'
-import Table from '@/views/table/Table.vue'
+import PageEdit from '@/views/allComponents/table/edit.vue'
 import Entrance from '@/views/vueApiPractice/Entrance.vue'
 
 import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
@@ -30,7 +30,6 @@ const
     Financial = () => import('@/views/thirdPartService/Financial'),
     AMap = () => import('@/views/thirdPartService/AMap'),
     WyIm = () => import('@/views/thirdPartService/WyIm'),
-    UploadFile = () => import('@/views/allComponents/UploadFile.vue'),
     Jsx = () => import('@/views/vueApiPractice/jsx/Jsx.vue'),
     Mixin = () => import('@/views/vueApiPractice/mixin/Mixin.vue')
 
@@ -80,8 +79,7 @@ const
             meta: { title: '常用组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
             children: [
                 { path: 'all-component', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN'], showInMenu: true } },
-                { path: 'table', name: 'table', component: Table, meta: { title: 'table', roles: ['ADMIN'] } },
-                { path: 'upload-file', name: 'uploadFile', component: UploadFile, meta: { title: 'axios 上传文件', roles: ['ADMIN'] } }
+                { path: 'edit/:id', name: 'pageEdit', component: PageEdit, meta: { roles: ['ADMIN'] } }
             ]
         },
         {

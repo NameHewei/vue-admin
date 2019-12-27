@@ -6,9 +6,9 @@
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动区域" prop="region">
-                    <el-select v-model="form.region" placeholder="请选择活动区域">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
+                    <el-select v-model="form.region" placeholder="请选择">
+                        <el-option label="v1" value="11"></el-option>
+                        <el-option label="v2" value="22"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -27,6 +27,10 @@ export default {
         show: {
             type: Boolean,
             default: false
+        },
+        id: {
+            type: String,
+            default: ''
         }
     },
 
@@ -43,7 +47,7 @@ export default {
                     { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
                 ],
                 region: [
-                    { required: true, message: '请选择活动区域', trigger: 'change' }
+                    { required: true, message: '请选择活动区域', trigger: 'blur' }
                 ]
             }
         }
@@ -52,7 +56,13 @@ export default {
     watch: {
         show (v) {
             this.dialogFormVisible = v
-            if (v) {
+        },
+        id (id, old) {
+            this.currentId = id
+            if (id && id !== old) {
+                this.getDetail()
+            }
+            if (!id) {
                 this.resetData()
             }
         }
@@ -60,11 +70,16 @@ export default {
 
     methods: {
         resetData () {
-            // this.form.name = ''
-            // this.form.region = ''
             this.form = {
                 name: '',
                 region: ''
+            }
+        },
+
+        getDetail () {
+            this.form = {
+                name: 'detail name',
+                region: '11'
             }
         },
 
@@ -81,6 +96,7 @@ export default {
                 }
             })
         },
+
         handleHide () {
             this.$emit('callback')
         },

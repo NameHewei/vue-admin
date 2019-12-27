@@ -2,11 +2,12 @@
     <div>
         <div>
             <div style="margin: 10px 0">
-                <el-button type="primary" @click="handleCreate">新增</el-button>
-                <el-button type="danger">删除</el-button>
+                <el-button type="primary" @click="handleCreate">弹窗新增</el-button>
+                <el-button type="danger" @click="handleBatchDelete">批量删除</el-button>
             </div>
              <el-table
                 border
+                v-loading="loading"
                 style="width: 100%"
                 :data="tableData"
                 @selection-change="handleSelectionChange"
@@ -22,7 +23,9 @@
                 <el-table-column prop="zip" label="创建人"></el-table-column>
                 <el-table-column fixed="right" align="center" label="操作">
                 <template slot-scope="scope">
-                    <el-button @click="handleEdit(scope.id)">修改</el-button>
+                    <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
+                    <DeleteBtn @callback="handleDeleteCb"/>
+                    <el-button size="mini" @click="handlePageEdit(scope.row.id)">跳页编辑</el-button>
                 </template>
                 </el-table-column>
             </el-table>
@@ -40,27 +43,33 @@
             </el-pagination>
         </div>
 
-        <div>
-            <Create @callback="handleDialogCallback" :show="show"/>
-        </div>
+        <Create @callback="handleDialogCallback" :show="show" :id="id"/>
     </div>
 </template>
 
 <script>
 import Create from './create'
+import DeleteBtn from './deleteBtn'
 
 export default {
     name: 'TableWrap',
     components: {
-        Create
+        Create,
+        DeleteBtn
     },
     data () {
         return {
-            currentPage: 1,
             show: false,
+            idList: [],
+            id: '',
+            loading: false,
+            currentPage: 1,
+            pageSize: 20,
+            total: 0,
+            query: {},
 
             tableData: [{
-                id: 1,
+                id: '1',
                 date: '2016-05-02',
                 name: '王小虎1',
                 province: '上海',
@@ -68,7 +77,7 @@ export default {
                 address: '上海市普陀区金沙江路 1518 弄',
                 zip: 200333
             }, {
-                id: 2,
+                id: '2',
                 date: '2016-05-04',
                 name: '王小虎2',
                 province: '上海',
@@ -81,24 +90,79 @@ export default {
 
     methods: {
         handleCreate () {
+            this.id = ''
             this.show = true
         },
 
+        /** 批量删除 */
+        handleBatchDelete () {
+            if (this.idList.length) {
+                console.log('选择了：', this.idList)
+            } else {
+                this.$message.warning('请选择数据')
+            }
+        },
+
+        handleSearchCallback ({ data }) {
+            this.query = data
+            this.getTableData()
+        },
+
+        /** 获取表格数据 */
+        getTableData () {
+            // const { currentPage, pageSize, query } = this
+            // this.loading = true
+            // reqKnowledgeList({
+            //     pageNum: currentPage,
+            //     pageSize,
+            //     ...query
+            // })
+            //     .then(() => {
+            //         this.total = 1
+            //         this.tableData = []
+            //         this.loading = false
+            //     }).catch((err) => {
+            //         this.loading = false
+            //         console.log(err)
+            //     })
+        },
+
         handleSizeChange (val) {
-            console.log(`每页 ${val} 条`)
+            this.pageSize = val
+            this.currentPage = 1
+            this.getTableData()
         },
 
         handleCurrentChange (val) {
-            console.log(`当前页: ${val}`)
+            this.currentPage = val
+            this.getTableData()
         },
 
-        handleSelectionChange (val) {
-            // 返回数组
-            console.log('选择了：', val)
+        handleSelectionChange (array) {
+            this.idList = array.map(({ id }) => id)
         },
 
-        handleDialogCallback () {
+        handleDialogCallback (value) {
             this.show = false
+            if (value) this.getTableData()
+        },
+
+        handleDeleteCb (v) {
+            console.log('删除: ', v)
+        },
+
+        handleEdit (id) {
+            this.id = id
+            this.show = true
+        },
+
+        handlePageEdit (id) {
+            this.$router.push({
+                name: 'pageEdit',
+                params: {
+                    id: id
+                }
+            })
         }
     }
 }

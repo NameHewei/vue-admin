@@ -40,11 +40,14 @@
 
         <h2 class="sticky">slot</h2>
         <TempSlot>
-            <em slot="name">在em标签中的文字 具名插槽 </em> <br/>
+            <em slot="name">被废弃了，在em标签中的文字 具名插槽 </em> <br/>
+            <template v-slot:other>template tag</template> <br/>
              default text :this is the text in Slot tag
+            <template #abbr>缩写 #</template>
         </TempSlot>
+        <SlotPure v-slot="data">不要用具名函数：<b>{{ data }}</b></SlotPure>
 
-        <h2>.sync modifier</h2>
+        <h2 class="sticky">.sync modifier</h2>
         <div>name:{{ name }}</div>
         <div>
             parent: {{ count }}
@@ -108,6 +111,7 @@
 <script>
 import DeepSelector from './DeepSelector.vue'
 import Slot from './Slot.vue'
+import SlotPure from './slotPure.vue'
 import ChildComponent from './ChildComponent.vue'
 import TInput from './TInput.vue'
 
@@ -116,7 +120,8 @@ export default {
         DeepSelector,
         TempSlot: Slot,
         ChildComponent,
-        TInput
+        TInput,
+        SlotPure
     },
 
     data () {

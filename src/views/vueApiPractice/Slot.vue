@@ -8,12 +8,23 @@
         <hr>
         <p>默认插槽</p>
         <slot></slot>
+        <p>v-slot</p>
+        <slot name="other">other</slot>
+        <div>
+            <slot name="abbr">abbr</slot>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-
+    data () {
+        return {
+            data: {
+                name: 'warren'
+            }
+        }
+    }
 }
 </script>
 

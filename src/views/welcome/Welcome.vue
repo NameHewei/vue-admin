@@ -2,6 +2,11 @@
     <div>
         <div id="get">I have a dream</div>
         欢迎页面
+        <div>
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-shoutao"></use>
+            </svg>
+        </div>
     </div>
 </template>
 

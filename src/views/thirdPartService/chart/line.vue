@@ -27,7 +27,7 @@ export default {
                     /** 控制图例的显示 */
                     show: true,
                     /** legend 中 data 的值要与 series 中的name值对应一致；也可以不写直接默认 */
-                    data: ['y11', 'y22'],
+                    data: ['y11', 'y22', 'y33'],
                     /** 图例组件离容器上侧的距离: 数字或百分比 */
                     top: 10
                 },
@@ -44,7 +44,7 @@ export default {
                 grid: {
                     left: 10,
                     right: 10,
-                    /** grid 组件离容器上侧的距离 */
+                    /** grid 组件离容器上侧的距离 即绘制的图表距离容器四周的距离 */
                     top: 100,
                     bottom: 45,
                     containLabel: true
@@ -58,7 +58,7 @@ export default {
                             fontSize: 14
                         }
                     },
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: [10, 20, 30, 40, 50, 60, 70]
                 },
                 yAxis: [
                     {
@@ -79,25 +79,57 @@ export default {
                 series: [
                     {
                         name: 'y11',
-                        data: [1, 2, 3, 4, 5, 6, 7],
+                        data: [30, 30, 30, 30, 30, 30, 30],
                         type: 'line',
+                        stack: 'st',
                         itemStyle: {
                             /** 修改的是图例颜色，线条颜色默认也会取该颜色 */
-                            color: 'pink'
+                            color: 'orange'
                         },
                         /** 图形上的文本标签, 比如值，名称等 */
+                        label: {
+                            show: true
+                        },
+                        markLine: {
+                            silent: true,
+                            data: [
+                                {
+                                    name: 'Y 轴值为 100 的水平线',
+                                    xAxis: '50'
+                                },
+                                {
+                                    name: 'Y 轴值为 100 的水平线',
+                                    yAxis: 50
+                                }
+                                // [
+                                //     {
+                                //         // 起点和终点的项会共用一个 name
+                                //         name: '最小值到最大值',
+                                //         type: 'min'
+                                //     },
+                                //     {
+                                //         type: 'max'
+                                //     }
+                                // ],
+
+                            ]
+                        }
+                    },
+                    {
+                        name: 'y22',
+                        /** 添加了stack后 后一条数据在显示时会将前面一条的值累加在自身上，但值还是显示未累加前的值 */
+                        stack: 'st',
+                        data: [50, 30, 80, 100, 20, 10, 60],
+                        type: 'line',
                         label: {
                             show: true
                         }
                     },
                     {
-                        name: 'y22',
+                        name: 'y33',
                         yAxisIndex: 1,
-                        data: [11, 21, 31, 41, 51, 61, 71],
-                        type: 'line',
-                        itemStyle: {
-                            color: 'blue'
-                        }
+                        data: [10, 20, 30, 40, 50, 60, 70],
+                        type: 'line'
                     }
                 ]
             })

@@ -45,6 +45,8 @@ export default {
                     {
                         name: '访问来源',
                         type: 'pie',
+                        /** 兰丁格尔图  以半径radius或面积area */
+                        roseType: 'radius',
                         radius: '55%',
                         /** 饼图圆心位置 */
                         center: ['40%', '50%'],
@@ -56,7 +58,9 @@ export default {
                             { value: 1548, name: '搜索引擎' }
                         ],
                         label: {
-                            show: true
+                            show: true,
+                            /** inside outside */
+                            position: 'outside'
                         },
                         itemStyle: {
                             emphasis: {

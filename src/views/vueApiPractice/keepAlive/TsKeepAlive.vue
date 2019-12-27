@@ -24,7 +24,7 @@ export default {
         handleJump (name) {
             this.$router.push({
                 name
-            })
+            }).catch(err => err)
         }
     }
 }
