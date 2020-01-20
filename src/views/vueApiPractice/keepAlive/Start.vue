@@ -19,6 +19,7 @@ export default {
     },
 
     beforeRouteLeave (to, from, next) {
+        /** 这里主要是重置数据 */
         if (!['kaEdit', 'kaCreate'].includes(to.name)) {
             this.key = '数据重置了'
         }
@@ -27,8 +28,14 @@ export default {
 
     activated () {
         /**
-             * @des 这里更新表格数据等
-             */
+        * @des 这里更新表格数据等
+        */
+    },
+
+    created () {
+        /**
+         * 这里请求不需要频繁更新的数据
+         */
     },
 
     methods: {

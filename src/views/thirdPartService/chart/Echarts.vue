@@ -21,6 +21,10 @@
       <el-button @click="handleRouteSkip">Financial</el-button>
     </div>
 
+    <p>
+      在设置 echarts 宽度时，如果该元素默认是先隐藏的状态，那 echarts 将无法正确设置图表宽度
+    </p>
+
     <div class="part">
         <h3>echarts canvas vs svg</h3>
         <p>

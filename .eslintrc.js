@@ -17,13 +17,6 @@ module.exports = {
     "indent": [
       "error",
       4
-    ],
-    "one-var": [
-      "error",
-      {
-        // 对已经初始化的变量，要求其连续的变量声明合并为一个声明
-        "initialized": "consecutive"
-      }
     ]
   },
   // 允许一些全局的变量，如在html中引入的高德地图全局变量

@@ -7,7 +7,7 @@
                     :key="item.key"
                     :label="item.label"
                     :prop="item.key"
-                    :style="`width:${currentWidth}px`"
+                    :style="widthStyle"
                 >
                     <el-input v-if="item.type === 'input'" v-model="formData[item.key]"></el-input>
                     <el-select v-else-if="item.type === 'select'" v-model="formData[item.key]">
@@ -68,9 +68,10 @@ export default {
     name: 'Search',
 
     props: {
+        /** 控制每一条搜索项宽度，不传就直接顺序排列 */
         width: {
-            type: Number,
-            default: () => 320
+            type: [Number, String],
+            default: () => 0
         },
         labelWidth: {
             type: Number,
@@ -91,27 +92,36 @@ export default {
         }
     },
 
-    created () {
-        const { width } = this
-        this.currentWidth = width
-        this.createFormData()
-    },
-
     data () {
         return {
             formData: {},
             /** @des 需要时添加 */
             formRules: {},
-            currentWidth: 320
+            currentWidth: ''
         }
     },
 
+    created () {
+        const { width } = this
+        this.getWidthStyle(width)
+        this.createFormData()
+    },
+
     methods: {
+        getWidthStyle (width) {
+            if (width) {
+                width = `width:${width}px`
+            } else {
+                width = ''
+            }
+            this.widthStyle = width
+        },
+
         createFormData () {
-            const { searchOptions } = this, data = {}
+            const { searchOptions } = this; const data = {}
             searchOptions.forEach(({ key, defaultValue }) => {
                 data[key] = defaultValue || ''
-                if (/Range/.test(key)) this.currentWidth = 500
+                if (/Range/.test(key)) this.getWidthStyle(500)
             })
             this.formData = data
         },

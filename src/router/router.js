@@ -26,12 +26,12 @@ import KaEdit from '@/views/vueApiPractice/keepAlive/KaEdit.vue'
 import KaCreate from '@/views/vueApiPractice/keepAlive/KaCreate.vue'
 
 const
-    Echarts = () => import('@/views/thirdPartService/chart/Echarts'),
-    Financial = () => import('@/views/thirdPartService/Financial'),
-    AMap = () => import('@/views/thirdPartService/AMap'),
-    WyIm = () => import('@/views/thirdPartService/WyIm'),
-    Jsx = () => import('@/views/vueApiPractice/jsx/Jsx.vue'),
-    Mixin = () => import('@/views/vueApiPractice/mixin/Mixin.vue')
+    Echarts = () => import('@/views/thirdPartService/chart/Echarts')
+const Financial = () => import('@/views/thirdPartService/Financial')
+const AMap = () => import('@/views/thirdPartService/AMap')
+const WyIm = () => import('@/views/thirdPartService/WyIm')
+const Jsx = () => import('@/views/vueApiPractice/jsx/Jsx.vue')
+const Mixin = () => import('@/views/vueApiPractice/mixin/Mixin.vue')
 
 Vue.use(Router)
 
@@ -44,69 +44,69 @@ const
     baseRouter = [
         { path: '/login', name: 'login', component: Login },
         { path: '*', component: Echarts }
-    ],
-
-    // 路由表
-    routerTable = [
-        {
-            path: 'practice',
-            name: 'practice',
-            component: Entrance,
-            meta: { title: 'Vue API 练习', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN', 'STUDENT'] },
-            children: [
-                { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
-                { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'practice vuex', showInMenu: true, roles: ['STUDENT'] } },
-                { path: 'vue-jsx', name: 'vue-jsx', component: Jsx, meta: { title: 'vue jsx', showInMenu: true, roles: ['ADMIN'] } },
-                { path: 'mixin', name: 'mixin', component: Mixin, meta: { title: 'mixin', showInMenu: true, roles: ['ADMIN'] } },
-
-                {
-                    path: 'ts-keep-alive',
-                    name: 'tsKeepAlive',
-                    component: TsKeepAlive,
-                    meta: { title: '测试keep-alives', showInMenu: true, roles: ['ADMIN'] },
-                    children: [
-                        { path: 'start', name: 'kaStart', component: Start },
-                        { path: 'edit', name: 'kaEdit', component: KaEdit },
-                        { path: 'create', name: 'kaCreate', component: KaCreate }
-                    ]
-                }
-            ]
-        },
-        {
-            path: 'frequently-use-component',
-            name: 'frequentlyUseComponent',
-            component: Entrance,
-            meta: { title: '常用组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
-            children: [
-                { path: 'all-component', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN'], showInMenu: true } },
-                { path: 'edit/:id', name: 'pageEdit', component: PageEdit, meta: { roles: ['ADMIN'] } }
-            ]
-        },
-        {
-            path: 'third-part',
-            name: 'thirdPart',
-            component: Entrance,
-            meta: { title: '第三方服务', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
-            children: [
-                { path: 'echarts', name: 'echarts', component: Echarts, meta: { title: '图表', roles: ['ADMIN'], showInMenu: true } },
-                { path: 'financial', name: 'financial', component: Financial, meta: { roles: ['ADMIN'] } },
-                { path: 'a-map', name: 'aMap', component: AMap, meta: { title: '高德地图', roles: ['ADMIN'], showInMenu: true } },
-                { path: 'wy-im', name: 'wyIm', component: WyIm, meta: { title: '网易IM', roles: ['ADMIN'], showInMenu: true } }
-            ]
-        },
-        {
-            path: 'test-vue-router',
-            name: 'testVueRouter',
-            component: Entrance,
-            meta: { title: '测试路由replace', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
-            children: [
-                { path: 'p1', name: 'page1', component: Page1, meta: { title: 'page1', roles: ['ADMIN'], showInMenu: true } },
-                { path: 'p2', name: 'page2', component: Page2, meta: { title: 'page2', roles: ['ADMIN'], showInMenu: true } },
-                { path: 'p3', name: 'page3', component: Page3, meta: { title: 'page3', roles: ['ADMIN'], showInMenu: true } },
-                { path: 'p4', name: 'page4', component: Page4, meta: { title: 'page4', roles: ['ADMIN'], showInMenu: true } }
-            ]
-        }
     ]
+
+// 路由表
+const routerTable = [
+    {
+        path: 'practice',
+        name: 'practice',
+        component: Entrance,
+        meta: { title: 'Vue API 练习', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN', 'STUDENT'] },
+        children: [
+            { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
+            { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'practice vuex', showInMenu: true, roles: ['STUDENT'] } },
+            { path: 'vue-jsx', name: 'vue-jsx', component: Jsx, meta: { title: 'vue jsx', showInMenu: true, roles: ['ADMIN'] } },
+            { path: 'mixin', name: 'mixin', component: Mixin, meta: { title: 'mixin', showInMenu: true, roles: ['ADMIN'] } },
+
+            {
+                path: 'ts-keep-alive',
+                name: 'tsKeepAlive',
+                component: TsKeepAlive,
+                meta: { title: '测试keep-alives', showInMenu: true, roles: ['ADMIN'] },
+                children: [
+                    { path: 'start', name: 'kaStart', component: Start },
+                    { path: 'edit', name: 'kaEdit', component: KaEdit },
+                    { path: 'create', name: 'kaCreate', component: KaCreate }
+                ]
+            }
+        ]
+    },
+    {
+        path: 'frequently-use-component',
+        name: 'frequentlyUseComponent',
+        component: Entrance,
+        meta: { title: '常用组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
+        children: [
+            { path: 'all-component', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN'], showInMenu: true } },
+            { path: 'edit/:id', name: 'pageEdit', component: PageEdit, meta: { roles: ['ADMIN'] } }
+        ]
+    },
+    {
+        path: 'third-part',
+        name: 'thirdPart',
+        component: Entrance,
+        meta: { title: '第三方服务', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
+        children: [
+            { path: 'echarts', name: 'echarts', component: Echarts, meta: { title: '图表', roles: ['ADMIN'], showInMenu: true } },
+            { path: 'financial', name: 'financial', component: Financial, meta: { roles: ['ADMIN'] } },
+            { path: 'a-map', name: 'aMap', component: AMap, meta: { title: '高德地图', roles: ['ADMIN'], showInMenu: true } },
+            { path: 'wy-im', name: 'wyIm', component: WyIm, meta: { title: '网易IM', roles: ['ADMIN'], showInMenu: true } }
+        ]
+    },
+    {
+        path: 'test-vue-router',
+        name: 'testVueRouter',
+        component: Entrance,
+        meta: { title: '测试路由replace', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
+        children: [
+            { path: 'p1', name: 'page1', component: Page1, meta: { title: 'page1', roles: ['ADMIN'], showInMenu: true } },
+            { path: 'p2', name: 'page2', component: Page2, meta: { title: 'page2', roles: ['ADMIN'], showInMenu: true } },
+            { path: 'p3', name: 'page3', component: Page3, meta: { title: 'page3', roles: ['ADMIN'], showInMenu: true } },
+            { path: 'p4', name: 'page4', component: Page4, meta: { title: 'page4', roles: ['ADMIN'], showInMenu: true } }
+        ]
+    }
+]
 
 /**
  * @des 根据权限生成路由

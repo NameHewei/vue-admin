@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="line" style="width: 400px; height: 400px"></div>
+        <div id="line" style="width: 600px; height: 400px"></div>
     </div>
 </template>
 
@@ -21,7 +21,11 @@ export default {
             myChart.setOption({
                 title: {
                     text: 'line',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    subtext: '副标题',
+                    textStyle: {
+                        fontSize: 20
+                    }
                 },
                 legend: {
                     /** 控制图例的显示 */
@@ -79,7 +83,7 @@ export default {
                 series: [
                     {
                         name: 'y11',
-                        data: [30, 30, 30, 30, 30, 30, 30],
+                        data: [90, 80, 30, 30, 10, 30, 110],
                         type: 'line',
                         stack: 'st',
                         itemStyle: {
@@ -91,26 +95,22 @@ export default {
                             show: true
                         },
                         markLine: {
+                            lineStyle: {
+                                color: '#09f2b8'
+                            },
                             silent: true,
                             data: [
-                                {
-                                    name: 'Y 轴值为 100 的水平线',
-                                    xAxis: '50'
-                                },
-                                {
-                                    name: 'Y 轴值为 100 的水平线',
-                                    yAxis: 50
-                                }
-                                // [
-                                //     {
-                                //         // 起点和终点的项会共用一个 name
-                                //         name: '最小值到最大值',
-                                //         type: 'min'
-                                //     },
-                                //     {
-                                //         type: 'max'
-                                //     }
-                                // ],
+                                [
+                                    {
+                                        // 最大值和最小值之间的连线
+                                        name: '最小值到最大值',
+                                        type: 'min'
+                                    },
+                                    {
+                                        name: '最大值',
+                                        type: 'max'
+                                    }
+                                ]
 
                             ]
                         }
@@ -123,13 +123,40 @@ export default {
                         type: 'line',
                         label: {
                             show: true
+                        },
+                        markLine: {
+                            silent: true,
+                            data: [
+                                {
+                                    name: 'Y 轴值为 100 的水平线',
+                                    /** 注意这里的值为字符串 */
+                                    xAxis: '50',
+                                    label: {
+                                        formatter: '格式化名称'
+                                    }
+                                },
+                                {
+                                    name: 'Y 轴值为 100 的水平线',
+                                    yAxis: 60
+                                }
+                            ]
                         }
                     },
                     {
                         name: 'y33',
                         yAxisIndex: 1,
                         data: [10, 20, 30, 40, 50, 60, 70],
-                        type: 'line'
+                        type: 'line',
+                        markLine: {
+                            silent: true,
+                            data: [
+                                {
+                                    name: 'x',
+                                    /** 注意这里的值为字符串 */
+                                    xAxis: '20'
+                                }
+                            ]
+                        }
                     }
                 ]
             })
