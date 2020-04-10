@@ -40,12 +40,12 @@
 
         <h2 class="sticky">slot</h2>
         <TempSlot>
-            <em slot="name">被废弃了，在em标签中的文字 具名插槽 </em> <br/>
+            <template #name> <b>具名插槽</b> </template>
             <template v-slot:other>template tag</template> <br/>
              default text :this is the text in Slot tag
-            <template #abbr>缩写 #</template>
+            <template #abbr><span style="color:red">v-slot:xxx 缩写 #xxx</span></template>
         </TempSlot>
-        <SlotPure v-slot="data">不要用具名函数：<b>{{ data }}</b></SlotPure>
+        <SlotPure v-slot="data">为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)：<b>{{ data }}</b></SlotPure>
 
         <h2 class="sticky">.sync modifier</h2>
         <div>name:{{ name }}</div>
@@ -151,90 +151,7 @@ export default {
         }
     },
 
-    mounted () {
-        const tree = [
-                {
-                    id: 1,
-                    label: '一级 1',
-                    children: [{
-                        id: 4,
-                        label: '二级 1-1',
-                        children: [{
-                            id: 9,
-                            label: '三级 1-1-1'
-                        }, {
-                            id: 10,
-                            label: '三级 1-1-2'
-                        }]
-                    }]
-                }, {
-                    id: 2,
-                    label: '一级 2',
-                    children: [{
-                        id: 5,
-                        label: '二级 2-1'
-                    }, {
-                        id: 6,
-                        label: '二级 2-2'
-                    }]
-                }, {
-                    id: 3,
-                    label: '一级 3',
-                    children: [{
-                        id: 7,
-                        label: '二级 3-1'
-                    }, {
-                        id: 8,
-                        label: '二级 3-2'
-                    }]
-                }],
-
-            loopTree = (data) => {
-                const tempArr = []
-                data.forEach(v => {
-                    const tempObj = {}
-                    tempObj.id = v.id
-                    tempObj.label = `new ${v.label}`
-                    if (v.children && v.children.length) {
-                        tempObj.list = loopTree(v.children)
-                    }
-                    tempArr.push(tempObj)
-                })
-                return tempArr
-            }
-
-        function throttle (func, wait, options) {
-            var context, args, result
-            var timeout = null, previous = 0
-
-            if (!options) options = {}
-            var later = function () {
-                previous = options.leading === false ? 0 : Date.now()
-                timeout = null
-                result = func.apply(context, args)
-                if (!timeout) context = args = null
-            }
-            return function () {
-                var now = Date.now()
-                if (!previous && options.leading === false) previous = now
-                var remaining = wait - (now - previous)
-                context = this
-                args = arguments
-                if (remaining <= 0 || remaining > wait) {
-                    if (timeout) {
-                        clearTimeout(timeout)
-                        timeout = null
-                    }
-                    previous = now
-                    result = func.apply(context, args)
-                    if (!timeout) context = args = null
-                } else if (!timeout && options.trailing !== false) {
-                    timeout = setTimeout(later, remaining)
-                }
-                return result
-            }
-        };
-    },
+    mounted () {},
 
     computed: {
         filterForArray () {

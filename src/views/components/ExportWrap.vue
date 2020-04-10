@@ -46,8 +46,8 @@ export default {
 
     methods: {
         exportData () {
-            const { url, query } = this,
-                lenth = Object.keys(query).length
+            const { url, query } = this
+            const lenth = Object.keys(query).length
 
             window.location.href = `${url}${lenth ? `?${formatToQueryString(query)}` : ''}`
         }

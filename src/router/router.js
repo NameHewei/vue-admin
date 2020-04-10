@@ -11,6 +11,7 @@ import Entrance from '@/views/vueApiPractice/Entrance.vue'
 
 import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
 import ApiVuex from '@/views/vueApiPractice/Vuex.vue'
+import CustomDirective from '@/views/vueApiPractice/customDirective.vue'
 
 import Page1 from '@/views/testRouter/Page1'
 import Page2 from '@/views/testRouter/Page2'
@@ -25,13 +26,12 @@ import Start from '@/views/vueApiPractice/keepAlive/Start.vue'
 import KaEdit from '@/views/vueApiPractice/keepAlive/KaEdit.vue'
 import KaCreate from '@/views/vueApiPractice/keepAlive/KaCreate.vue'
 
-const
-    Echarts = () => import('@/views/thirdPartService/chart/Echarts')
+const Echarts = () => import('@/views/thirdPartService/chart/Echarts')
 const Financial = () => import('@/views/thirdPartService/Financial')
 const AMap = () => import('@/views/thirdPartService/AMap')
 const WyIm = () => import('@/views/thirdPartService/WyIm')
 const Jsx = () => import('@/views/vueApiPractice/jsx/Jsx.vue')
-const Mixin = () => import('@/views/vueApiPractice/mixin/Mixin.vue')
+const MixinC = () => import('@/views/vueApiPractice/mixin/Mixin.vue')
 
 Vue.use(Router)
 
@@ -57,7 +57,8 @@ const routerTable = [
             { path: 'practice-vue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
             { path: 'practice-vuex', name: 'practiceVuex', component: ApiVuex, meta: { title: 'practice vuex', showInMenu: true, roles: ['STUDENT'] } },
             { path: 'vue-jsx', name: 'vue-jsx', component: Jsx, meta: { title: 'vue jsx', showInMenu: true, roles: ['ADMIN'] } },
-            { path: 'mixin', name: 'mixin', component: Mixin, meta: { title: 'mixin', showInMenu: true, roles: ['ADMIN'] } },
+            { path: 'mixin', name: 'mixin', component: MixinC, meta: { title: 'mixin', showInMenu: true, roles: ['ADMIN'] } },
+            { path: 'custom-directive', name: 'customDirective', component: CustomDirective, meta: { title: '自定义命令', showInMenu: true, roles: ['ADMIN'] } },
 
             {
                 path: 'ts-keep-alive',

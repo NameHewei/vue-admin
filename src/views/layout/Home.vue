@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <footer class="layout-footer">
-                    copyright © {{ new Date().getFullYear() }} <a href="https://github.com/NameHewei" target="_blank">NameHewei@github</a>
+                    copyright © {{ new Date().getFullYear() }} <a href="https://github.com/WarrenHewitt" target="_blank">Github-WarrenHewitt</a>
                 </footer>
             </div>
         </div>
