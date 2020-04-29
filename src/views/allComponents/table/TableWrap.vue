@@ -21,12 +21,12 @@
                 <el-table-column prop="name" label="角色名字"></el-table-column>
                 <el-table-column prop="address" label="修改时间"></el-table-column>
                 <el-table-column prop="zip" label="创建人"></el-table-column>
-                <el-table-column fixed="right" align="center" label="操作">
-                <template slot-scope="scope">
-                    <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
-                    <DeleteBtn @callback="handleDeleteCb"/>
-                    <el-button size="mini" @click="handlePageEdit(scope.row.id)">跳页编辑</el-button>
-                </template>
+                <el-table-column fixed="right" align="center" label="操作" width="300">
+                    <template slot-scope="scope">
+                        <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
+                        <DeleteBtn @callback="handleDeleteCb"/>
+                        <el-button size="mini" @click="handlePageEdit(scope.row.id)">跳页编辑</el-button>
+                    </template>
                 </el-table-column>
             </el-table>
         </div>
@@ -43,7 +43,16 @@
             </el-pagination>
         </div>
 
-        <Create @callback="handleDialogCallback" :show="show" :id="id"/>
+        <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+            <Create
+                @callback="handleDialogCallback"
+                :id="id"
+                @click="handleListener"
+                :selectOptions="selectOptions"
+                grandsonName="hew-son"
+                otherKey="other key value"
+                someKey="some key value"/>
+        </el-dialog>
     </div>
 </template>
 
@@ -59,15 +68,15 @@ export default {
     },
     data () {
         return {
-            show: false,
+            dialogFormVisible: false,
             idList: [],
-            id: '',
+            id: '1111',
             loading: false,
             currentPage: 1,
             pageSize: 20,
             total: 0,
             query: {},
-
+            selectOptions: [],
             tableData: [{
                 id: '1',
                 date: '2016-05-02',
@@ -90,8 +99,18 @@ export default {
 
     methods: {
         handleCreate () {
-            this.id = ''
-            this.show = true
+            this.id = 'is id'
+            this.dialogFormVisible = true
+
+            /* 模拟数据请求 */
+            setTimeout(() => {
+                this.id = '2323'
+                this.selectOptions = [1, 2, 3]
+            }, 2000)
+        },
+
+        handleListener () {
+            console.log('console listeners')
         },
 
         /** 批量删除 */
@@ -143,7 +162,7 @@ export default {
         },
 
         handleDialogCallback (value) {
-            this.show = false
+            this.dialogFormVisible = false
             if (value) this.getTableData()
         },
 
@@ -153,7 +172,7 @@ export default {
 
         handleEdit (id) {
             this.id = id
-            this.show = true
+            this.dialogFormVisible = true
         },
 
         handlePageEdit (id) {
@@ -169,5 +188,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

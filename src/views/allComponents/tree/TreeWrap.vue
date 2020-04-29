@@ -91,21 +91,21 @@ export default {
 
     methods: {
         initData () {
-            const { initIds } = this,
-                tempArr = [],
-                sureInit = [],
-                filterTree = (arr) => {
-                    arr.forEach(v => {
-                        const haveChildren = v.children && v.children.length
-                        tempArr.push(v.id)
-                        if (initIds.includes(v.id) && !haveChildren) {
-                            sureInit.push(v.id)
-                        }
-                        if (haveChildren) {
-                            filterTree(v.children)
-                        }
-                    })
-                }
+            const { initIds } = this
+            const tempArr = []
+            const sureInit = []
+            const filterTree = (arr) => {
+                arr.forEach(v => {
+                    const haveChildren = v.children && v.children.length
+                    tempArr.push(v.id)
+                    if (initIds.includes(v.id) && !haveChildren) {
+                        sureInit.push(v.id)
+                    }
+                    if (haveChildren) {
+                        filterTree(v.children)
+                    }
+                })
+            }
             filterTree(this.treeData)
 
             this.ids = tempArr

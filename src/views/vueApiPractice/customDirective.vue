@@ -1,6 +1,6 @@
 <template>
     <div>
-        你好
+        自定义【v-xxx】命令
         <input type="text" v-focus:[par]="val">
 
     </div>

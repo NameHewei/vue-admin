@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Login from '@/views/login/Login.vue'
 import Home from '@/views/layout/Home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
+import NotFind from '@/views/error/notFind.vue'
 
 import AllComponents from '@/views/allComponents/AllComponents.vue'
 import PageEdit from '@/views/allComponents/table/edit.vue'
@@ -21,7 +22,7 @@ import Page4 from '@/views/testRouter/Page4'
 /**
  * @des 练习keep-alive
  */
-import TsKeepAlive from '@/views/vueApiPractice/keepAlive/TsKeepAlive.vue'
+import KAEntrance from '@/views/vueApiPractice/keepAlive/Entrance.vue'
 import Start from '@/views/vueApiPractice/keepAlive/Start.vue'
 import KaEdit from '@/views/vueApiPractice/keepAlive/KaEdit.vue'
 import KaCreate from '@/views/vueApiPractice/keepAlive/KaCreate.vue'
@@ -33,6 +34,17 @@ const WyIm = () => import('@/views/thirdPartService/WyIm')
 const Jsx = () => import('@/views/vueApiPractice/jsx/Jsx.vue')
 const MixinC = () => import('@/views/vueApiPractice/mixin/Mixin.vue')
 
+/*
+   利用push 跳转路由，当重复点击跳转同一个路由地址时会报错 NavigationDuplicated 一下为处理该报错
+   Vue-router在3.1之后把$router.push()方法改为了Promise
+   */
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location, onResolve, onReject) {
+    if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+    /* 添加 catch 不抛出错误 */
+    return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(Router)
 
 /**
@@ -43,7 +55,7 @@ const
     // 基础路由
     baseRouter = [
         { path: '/login', name: 'login', component: Login },
-        { path: '*', component: Echarts }
+        { path: '*', component: NotFind }
     ]
 
 // 路由表
@@ -63,7 +75,7 @@ const routerTable = [
             {
                 path: 'ts-keep-alive',
                 name: 'tsKeepAlive',
-                component: TsKeepAlive,
+                component: KAEntrance,
                 meta: { title: '测试keep-alives', showInMenu: true, roles: ['ADMIN'] },
                 children: [
                     { path: 'start', name: 'kaStart', component: Start },

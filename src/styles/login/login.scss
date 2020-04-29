@@ -1,3 +1,4 @@
+@import '../variable.scss';
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
@@ -5,6 +6,7 @@ $light_gray:#eee;
 .login-part{
     height: 100%;
     padding-top:50px;
+    background: url($bgImg1) no-repeat center/cover;
     background-color: $bg;
     .auto-login{
         margin-bottom:10px;

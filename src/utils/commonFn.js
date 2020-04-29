@@ -2,8 +2,8 @@ import Cookies from 'js-cookie'
 
 export function formatToQueryString (obj) {
     // format the object as a queryString
-    const temp = [],
-        allKeys = Object.keys(obj)
+    const temp = []
+    const allKeys = Object.keys(obj)
 
     allKeys.forEach(v => {
         if (obj[v]) temp.push(`${v}=${obj[v]}`)
@@ -17,7 +17,7 @@ export function formatTime (dateString, type) {
         type = type || 'precisionM'
 
         const date = new Date(dateString)
-        let y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate(), h = date.getHours(), minute = date.getMinutes(), s = date.getSeconds()
+        let y = date.getFullYear(); let m = date.getMonth() + 1; let d = date.getDate(); let h = date.getHours(); let minute = date.getMinutes(); let s = date.getSeconds()
 
         if (m < 10) m = '0' + m
         if (h < 10) h = '0' + h
@@ -41,8 +41,8 @@ export function formatTime (dateString, type) {
 }
 
 export const cookieMethods = {
-    get () {
-        Cookies.get('a')
+    get (name) {
+        return Cookies.get(name)
     },
 
     set (name, value) {

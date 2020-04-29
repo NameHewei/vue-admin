@@ -1,42 +1,62 @@
 <template>
     <div>
-        <el-dialog title="收货地址" :visible.sync="dialogFormVisible" @close="handleClose">
-            <el-form :model="form" :rules="rules" ref="ruleForm">
-                <el-form-item label="活动名称" prop="name">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="活动区域" prop="region">
-                    <el-select v-model="form.region" placeholder="请选择">
-                        <el-option label="v1" value="11"></el-option>
-                        <el-option label="v2" value="22"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="handleCancel">取 消</el-button>
-                <el-button type="primary" @click="handleSure">确 定</el-button>
-            </div>
-        </el-dialog>
+        <el-form :model="form" :rules="rules" ref="ruleForm">
+            <el-form-item label="活动名称" prop="name">
+                <el-input v-model="form.name" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="活动区域" prop="region">
+                <el-select v-model="form.region" placeholder="请选择">
+                    <el-option label="v1" value="11"></el-option>
+                    <el-option label="v2" value="22"></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <div>
+            <el-button @click="handleChangeWatchObj">修改watchObj</el-button>
+        </div>
+        <div>
+            <Grandson v-bind="$attrs" v-on="$listeners" :watchObj="watchObj"></Grandson>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="handleCancel">取 消</el-button>
+            <el-button type="primary" @click="handleSure">确 定</el-button>
+        </div>
     </div>
 </template>
 
 <script>
+import Grandson from './grandson'
 export default {
     name: 'create',
+    components: {
+        Grandson
+    },
     props: {
-        show: {
-            type: Boolean,
-            default: false
-        },
         id: {
+            type: String,
+            default: ''
+        },
+        selectOptions: {
+            type: Array,
+            default: () => ([])
+        },
+        otherKey: {
             type: String,
             default: ''
         }
     },
 
+    created () {
+        console.log('child otherKey:', this.otherKey)
+        console.log('created id', this.id)
+        console.log('created selectOptions', this.selectOptions)
+    },
+
     data () {
         return {
-            dialogFormVisible: false,
+            watchObj: {
+                name: 'hew'
+            },
             form: {
                 name: '',
                 region: ''
@@ -54,10 +74,11 @@ export default {
     },
 
     watch: {
-        show (v) {
-            this.dialogFormVisible = v
+        selectOptions (v) {
+            console.log('watch selectOptions', v)
         },
         id (id, old) {
+            console.log('watch id', id)
             this.currentId = id
             if (id && id !== old) {
                 this.getDetail()
@@ -69,6 +90,10 @@ export default {
     },
 
     methods: {
+        handleChangeWatchObj () {
+            this.watchObj = { name: 'warren11' }
+        },
+
         resetData () {
             this.form = {
                 name: '',
@@ -99,10 +124,6 @@ export default {
 
         handleHide () {
             this.$emit('callback')
-        },
-
-        handleClose () {
-            this.handleHide()
         },
 
         submitForm (formName) {

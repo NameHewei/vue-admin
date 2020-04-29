@@ -23,6 +23,7 @@ export default {
         if (!['kaEdit', 'kaCreate'].includes(to.name)) {
             this.key = '数据重置了'
         }
+        console.log(to.name)
         next()
     },
 

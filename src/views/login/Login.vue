@@ -13,6 +13,9 @@
                     <el-form-item>
                         <el-button style="width:100%" type="primary" @click="submitForm">Login</el-button>
                     </el-form-item>
+                    <el-form-item>
+                        <el-button style="width:100%" type="primary" @click="reset">reset</el-button>
+                    </el-form-item>
                 </el-form>
             </el-col>
         </el-row>
@@ -24,7 +27,9 @@
 </template>
 
 <script>
+import { cookieMethods } from '@/utils/commonFn'
 import { mapState, mapActions } from 'vuex'
+import { reqLogin, reqUserInfo } from '@/api/user/user.js'
 import CryptoJS from 'crypto-js'
 
 export default {
@@ -48,11 +53,18 @@ export default {
     },
 
     created () {
-        console.log('get store data: ', this.projectName)
-        this.actionSetProjectName('Login create data!!')
-        setTimeout(() => {
-            console.log('setTimeout get store data: ', this.projectName, '-------', this.someKey)
-        }, 1000)
+        /* 如果能获取到用户信息 直接跳转 不再次登录 */
+        reqUserInfo()
+            .then((result) => {
+                this.actionSetUserInfo(result)
+                    .then((result) => {
+                        this.$router.push({ path: '/' })
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+            }).catch((err) => {
+                console.log(err)
+            })
     },
 
     computed: {
@@ -73,18 +85,32 @@ export default {
         ...mapActions(['actionSetProjectName']),
         ...mapActions('user', ['actionSetUserInfo']),
         submitForm () {
-            this.actionSetUserInfo()
-            this.$router.push({
-                path: '/'
+            this.$refs.formLogin.validate((valid) => {
+                if (valid) {
+                    reqLogin()
+                        .then(({ name, age, roles, token }) => {
+                            cookieMethods.set('token', token)
+                            this.actionSetUserInfo({
+                                name,
+                                age,
+                                roles
+                            })
+                                .then((result) => {
+                                    this.$router.push({ path: '/' })
+                                }).catch((error) => {
+                                    console.log(error)
+                                })
+                        }).catch((err) => {
+                            console.log('error in login page:', err)
+                        })
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
             })
-            // this.$refs.formLogin.validate((valid) => {
-            //     if (valid) {
-            //         alert('submit!')
-            //     } else {
-            //         console.log('error submit!!')
-            //         return false
-            //     }
-            // })
+        },
+        reset () {
+            Object.assign(this.$data, this.$options.data())
         }
     }
 }

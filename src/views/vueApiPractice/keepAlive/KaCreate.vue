@@ -6,14 +6,14 @@
 </template>
 
 <script>
-    export default {
-        name: 'KaCreate',
-        methods: {
-            handleBack() {
-                this.$router.go(-1)
-            }
-        },
+export default {
+    name: 'KaCreate',
+    methods: {
+        handleBack () {
+            this.$router.go(-1)
+        }
     }
+}
 </script>
 
 <style lang="scss" scoped>

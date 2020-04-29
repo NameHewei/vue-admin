@@ -2,7 +2,7 @@
     <div>
         <p>{{ this.key }}</p>
         <pre>
-            遇到同名，除了周期钩子函数是都执行外，其它的都是组件覆盖混合对象
+            说明见笔记 vue => mixin
         </pre>
     </div>
 </template>
@@ -18,8 +18,19 @@ export default {
         }
     },
 
+    computed: {
+        age () {
+            return 5656
+        },
+        name () {
+            return 'kkkk'
+        }
+    },
+
     mounted () {
         this.key = this.keya
+
+        console.log(this.name, this.age)
     }
 }
 </script>

@@ -151,7 +151,8 @@ export default {
         }
     },
 
-    mounted () {},
+    mounted () {
+    },
 
     computed: {
         filterForArray () {

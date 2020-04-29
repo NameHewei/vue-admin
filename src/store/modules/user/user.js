@@ -1,4 +1,5 @@
 import { reqUserInfo } from '@/api/user/user'
+import router, { permitRouters } from '@/router/router'
 
 export default {
     namespaced: true,
@@ -18,12 +19,14 @@ export default {
     },
 
     actions: {
-        async actionSetUserInfo ({ commit, state }) {
-            const userInfo = await reqUserInfo()
-
-            document.cookie = 'token=hewei'
-
-            commit('setUserInfo', { ...userInfo })
+        async actionSetUserInfo ({ commit }, data) {
+            try {
+                /* 根据当前登录用户的角色，添加路由 */
+                router.addRoutes(permitRouters(data.roles))
+                commit('setUserInfo', { ...data })
+            } catch (error) {
+                throw new Error('未获取到用户信息')
+            }
         }
     }
 }

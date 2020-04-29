@@ -1,4 +1,4 @@
-import uuidV1 from 'uuid/v1'
+import { v1 as uuIdV1 } from 'uuid'
 import axios from 'axios'
 // import router from '../router/router'
 import { Message } from 'element-ui'
@@ -15,11 +15,10 @@ const httpService = axios.create({
 })
 
 httpService.interceptors.request.use((cfg) => {
-    const
-        { url, method, params } = cfg,
-        tempData = { ...params }
+    const { url, method, params } = cfg
+    const tempData = { ...params }
 
-    cfg.headers.uuid = uuidV1().replace(/-/g, '')
+    cfg.headers.uuid = uuIdV1().replace(/-/g, '')
 
     /**
      * @des 处理url中带参数（例：/xx/:id/xx/ -> /xx/123/xx/）

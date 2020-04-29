@@ -23,9 +23,9 @@ export default {
     mounted () {
         const myChart = this.$eCharts.init(document.getElementById('mainT1'), null, { renderer: 'svg' })
 
-        let start = false,
-            down = false,
-            move = false
+        let start = false
+        let down = false
+        let move = false
 
         myChart.on('datazoom', (params) => {
             let s = 0
@@ -101,6 +101,7 @@ export default {
 
     methods: {
         enlarge () {
+            /* 参见 官方文档 API 中的action */
             this.chart.dispatchAction({
                 type: 'dataZoom',
                 start: 20,

@@ -1,6 +1,10 @@
 <template>
     <div class="main-all-components">
         <div class="part">
+            <h3>返回</h3>
+            <BackHeader></BackHeader>
+        </div>
+        <div class="part">
             <h3>axios 上传文件</h3>
             <UploadFile></UploadFile>
         </div>
@@ -24,14 +28,20 @@
             <h3>树组件</h3>
             <TreeWrap></TreeWrap>
         </div>
+        <div class="part">
+            <h3>表单</h3>
+            <CusForm></CusForm>
+        </div>
     </div>
 </template>
 
 <script>
+import BackHeader from '@/views/components/backHeader'
 import UploadFile from './UploadFile'
 import Search from './search/Search.vue'
 import TableWrap from './table/TableWrap.vue'
 import TreeWrap from './tree/TreeWrap.vue'
+import CusForm from './form/cusForm.vue'
 
 export default {
     name: 'AllComponents',
@@ -39,7 +49,9 @@ export default {
         Search,
         TableWrap,
         TreeWrap,
-        UploadFile
+        UploadFile,
+        CusForm,
+        BackHeader
     },
 
     data () {
@@ -56,8 +68,8 @@ export default {
                 { type: 'dateTime', key: 'dateTime', label: '日期带时间' },
                 { type: 'dateRange', key: 'dateRange', label: '日期范围' },
                 { type: 'dateTimeRange', key: 'dateTimeRange', label: '日期范围' },
-                { type: 'cascader',
-                    key: 'cascader',
+                { type: 'cascade',
+                    key: 'cascade',
                     label: '层级选择',
                     defaultValue: 'yizhi',
                     options: [{

@@ -1,25 +1,35 @@
 import router, { permitRouters } from './router/router'
 import store from './store/store'
+import { cookieMethods } from '@/utils/commonFn'
+import { reqUserInfo } from '@/api/user/user.js'
 
 router.beforeEach(async (to, from, next) => {
-    if (to.path === '/login') {
-        // 如果是进入登录页面不需要进行校验
-        next()
-    } else {
-        // 判断用户信息是否已经有了，如果没有，进行获取和添加路由等操作
-        if (store.state.user.roles.length === 0) {
-            try {
-                await store.dispatch('user/actionSetUserInfo')
-                // 根据当前登录用户的角色，添加路由
-                router.addRoutes(permitRouters(store.state.user.roles))
-
-                next({ ...to, replace: true })
-            } catch (error) {
-                next({ path: '/login' })
-                console.error('beforeEach catch error:', error)
-            }
-        } else {
+    if (cookieMethods.get('token')) {
+        if (to.path === '/login') {
+            // 如果是进入登录页面不需要进行校验
             next()
+        } else {
+            // 权限控制部分 判断用户信息是否已经有了，如果没有，进行获取和添加路由等操作
+            if (store.state.user.roles.length === 0) {
+                try {
+                    const userInfo = await reqUserInfo()
+                    await store.dispatch('user/actionSetUserInfo', userInfo)
+                    next({ ...to, replace: true })
+                } catch (error) {
+                    /* 没有获取到信息，即可能登录超时，无法获取用户信息，所以跳转登录页面 */
+                    next({ path: '/login' })
+                    console.error('beforeEach catch error:', error)
+                }
+            } else {
+                next()
+            }
+        }
+    } else {
+        /* 这里还有可能是其它的一些路由地址  这里目前只有登录地址 所以直接判断 */
+        if (to.path === '/login') {
+            next()
+        } else {
+            next({ path: '/login' })
         }
     }
 })

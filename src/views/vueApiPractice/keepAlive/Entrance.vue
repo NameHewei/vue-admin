@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: 'TsKeepAlive',
+    name: 'KAEntrance',
 
     data () {
         return {

@@ -47,7 +47,7 @@
                         end-placeholder="结束日期">
                     </el-date-picker>
                     <el-cascader
-                        v-else-if="item.type === 'cascader'"
+                        v-else-if="item.type === 'cascade'"
                         v-model="formData[item.key]"
                         :show-all-levels="false"
                         :options="item.options"
@@ -137,11 +137,7 @@ export default {
         },
 
         handleReset (formName) {
-            const { formData } = this
-            Object.keys(formData).forEach(v => {
-                formData[v] = ''
-            })
-            this.formData = formData
+            this.$refs.searchForm.resetFields()
             this.$emit('callback', { type: 'reset' })
         }
     }
