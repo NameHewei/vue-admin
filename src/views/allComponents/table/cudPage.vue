@@ -11,12 +11,6 @@
                 </el-select>
             </el-form-item>
         </el-form>
-        <div>
-            <el-button @click="handleChangeWatchObj">修改watchObj</el-button>
-        </div>
-        <div>
-            <Grandson v-bind="$attrs" v-on="$listeners" :watchObj="watchObj"></Grandson>
-        </div>
         <div slot="footer" class="dialog-footer">
             <el-button @click="handleCancel">取 消</el-button>
             <el-button type="primary" @click="handleSure">确 定</el-button>
@@ -25,38 +19,11 @@
 </template>
 
 <script>
-import Grandson from './grandson'
 export default {
-    name: 'create',
-    components: {
-        Grandson
-    },
-    props: {
-        id: {
-            type: String,
-            default: ''
-        },
-        selectOptions: {
-            type: Array,
-            default: () => ([])
-        },
-        otherKey: {
-            type: String,
-            default: ''
-        }
-    },
-
-    created () {
-        console.log('child otherKey:', this.otherKey)
-        console.log('created id', this.id)
-        console.log('created selectOptions', this.selectOptions)
-    },
-
+    name: 'PageEdit',
     data () {
         return {
-            watchObj: {
-                name: 'hew'
-            },
+            id: this.$route.params.id,
             form: {
                 name: '',
                 region: ''
@@ -72,60 +39,38 @@ export default {
             }
         }
     },
-
-    watch: {
-        selectOptions (v) {
-            console.log('watch selectOptions', v)
-        },
-        id (id, old) {
-            console.log('watch id', id)
-            this.currentId = id
-            if (id && id !== old) {
-                this.getDetail()
-            }
-            if (!id) {
-                this.resetData()
-            }
+    mounted () {
+        console.log('id', this.id)
+        if (this.id) {
+            this.getDetail()
         }
     },
-
     methods: {
-        handleChangeWatchObj () {
-            this.watchObj = { name: 'warren11' }
-        },
-
         resetData () {
             this.form = {
                 name: '',
                 region: ''
             }
         },
-
         getDetail () {
             this.form = {
                 name: 'detail name',
                 region: '11'
             }
         },
-
         handleCancel () {
-            this.handleHide()
+            this.$router.go(-1)
         },
         handleSure () {
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    this.handleHide()
+                    this.$router.go(-1)
                 } else {
                     console.log('error submit!!')
                     return false
                 }
             })
         },
-
-        handleHide () {
-            this.$emit('callback')
-        },
-
         submitForm (formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -144,5 +89,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

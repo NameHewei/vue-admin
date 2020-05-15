@@ -42,33 +42,31 @@
             >
             </el-pagination>
         </div>
-
-        <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-            <Create
-                @callback="handleDialogCallback"
-                :id="id"
-                @click="handleListener"
-                :selectOptions="selectOptions"
-                grandsonName="hew-son"
-                otherKey="other key value"
-                someKey="some key value"/>
-        </el-dialog>
+        <CudInfo
+            :show="show"
+            :id="id"
+            @callback="handleDialogCallback"
+            @click="handleListener"
+            :selectOptions="selectOptions"
+            grandsonName="hew-son"
+            otherKey="other key value"
+            someKey="some key value"/>
     </div>
 </template>
 
 <script>
-import Create from './create'
+import CudInfo from './cudInfo'
 import DeleteBtn from './deleteBtn'
 
 export default {
     name: 'TableWrap',
     components: {
-        Create,
+        CudInfo,
         DeleteBtn
     },
     data () {
         return {
-            dialogFormVisible: false,
+            show: false,
             idList: [],
             id: '1111',
             loading: false,
@@ -76,7 +74,7 @@ export default {
             pageSize: 20,
             total: 0,
             query: {},
-            selectOptions: [],
+            selectOptions: [1, 2, 3],
             tableData: [{
                 id: '1',
                 date: '2016-05-02',
@@ -99,21 +97,15 @@ export default {
 
     methods: {
         handleCreate () {
-            this.id = 'is id'
-            this.dialogFormVisible = true
-
-            /* 模拟数据请求 */
-            setTimeout(() => {
-                this.id = '2323'
-                this.selectOptions = [1, 2, 3]
-            }, 2000)
+            this.id = ''
+            this.show = true
         },
 
         handleListener () {
             console.log('console listeners')
         },
 
-        /** 批量删除 */
+        /* 批量删除 */
         handleBatchDelete () {
             if (this.idList.length) {
                 console.log('选择了：', this.idList)
@@ -162,7 +154,7 @@ export default {
         },
 
         handleDialogCallback (value) {
-            this.dialogFormVisible = false
+            this.show = false
             if (value) this.getTableData()
         },
 
@@ -172,7 +164,7 @@ export default {
 
         handleEdit (id) {
             this.id = id
-            this.dialogFormVisible = true
+            this.show = true
         },
 
         handlePageEdit (id) {

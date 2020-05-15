@@ -7,7 +7,7 @@ import Welcome from '@/views/welcome/Welcome.vue'
 import NotFind from '@/views/error/notFind.vue'
 
 import AllComponents from '@/views/allComponents/AllComponents.vue'
-import PageEdit from '@/views/allComponents/table/edit.vue'
+import CudPage from '@/views/allComponents/table/cudPage.vue'
 import Entrance from '@/views/vueApiPractice/Entrance.vue'
 
 import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
@@ -92,7 +92,7 @@ const routerTable = [
         meta: { title: '常用组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
         children: [
             { path: 'all-component', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN'], showInMenu: true } },
-            { path: 'edit/:id', name: 'pageEdit', component: PageEdit, meta: { roles: ['ADMIN'] } }
+            { path: 'edit/:id', name: 'pageEdit', component: CudPage, meta: { roles: ['ADMIN'] } }
         ]
     },
     {

@@ -30,7 +30,7 @@ export default {
                 legend: {
                     /** 控制图例的显示 */
                     show: true,
-                    /** legend 中 data 的值要与 series 中的name值对应一致；也可以不写直接默认 */
+                    /** legend 中 data 的值要与 series 中的name值对应一致；也可以不写直接默认(多数系列会取自 series.name) */
                     data: ['y11', 'y22', 'y33'],
                     /** 图例组件离容器上侧的距离: 数字或百分比 */
                     top: 10

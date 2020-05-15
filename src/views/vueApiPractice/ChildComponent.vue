@@ -30,7 +30,7 @@ export default {
 
     watch: {
         name (v) {
-            this.name = v
+            // this.name = v
         }
     },
 
