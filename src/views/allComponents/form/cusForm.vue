@@ -60,7 +60,7 @@ export default {
             formData: {
                 inputSelect: '',
                 selected: [{ value: '1', label: '第一' }],
-                relationSelect: '',
+                relationSelect: '3',
                 levelSelect: []
             },
             formRules: {
@@ -99,11 +99,13 @@ export default {
                 value: '2',
                 label: '第一级2',
                 children: [{
-                    value: '12',
+                    value: '21',
                     label: '2-1'
                 }]
-            }
-            ]
+            }, {
+                value: '3',
+                label: '第一级3'
+            }]
         }
     },
     methods: {

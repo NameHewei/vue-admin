@@ -42,6 +42,7 @@ export default {
                 left: 30,
                 right: 10
             },
+            /* 工具栏 */
             toolbox: {
                 show: true,
                 /** 图标大小 */

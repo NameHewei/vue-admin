@@ -109,6 +109,21 @@ export default {
         handleBatchDelete () {
             if (this.idList.length) {
                 console.log('选择了：', this.idList)
+                this.$confirm('确认删除?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    })
+                })
             } else {
                 this.$message.warning('请选择数据')
             }
@@ -163,8 +178,22 @@ export default {
         },
 
         handleEdit (id) {
-            this.id = id
-            this.show = true
+            this.$prompt('输入提前编辑内容', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消'
+            }).then(({ value }) => {
+                this.id = id
+                this.show = true
+                this.$message({
+                    type: 'success',
+                    message: '输入了: ' + value
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '取消输入'
+                })
+            })
         },
 
         handlePageEdit (id) {

@@ -56,12 +56,8 @@ export default {
         /* 如果能获取到用户信息 直接跳转 不再次登录 */
         reqUserInfo()
             .then((result) => {
-                this.actionSetUserInfo(result)
-                    .then((result) => {
-                        this.$router.push({ path: '/' })
-                    }).catch((error) => {
-                        console.log(error)
-                    })
+                console.log('登录页自动登录')
+                this.$router.push({ path: '/' })
             }).catch((err) => {
                 console.log(err)
             })

@@ -1,11 +1,13 @@
-import router, { permitRouters } from './router/router'
+import router from './router/router'
 import store from './store/store'
 import { cookieMethods } from '@/utils/commonFn'
 import { reqUserInfo } from '@/api/user/user.js'
 
 router.beforeEach(async (to, from, next) => {
-    if (cookieMethods.get('token')) {
-        if (to.path === '/login') {
+    const currentPath = to.path
+    const token = cookieMethods.get('token')
+    if (token) {
+        if (currentPath === '/login') {
             // 如果是进入登录页面不需要进行校验
             next()
         } else {
@@ -26,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
         }
     } else {
         /* 这里还有可能是其它的一些路由地址  这里目前只有登录地址 所以直接判断 */
-        if (to.path === '/login') {
+        if (currentPath === '/login') {
             next()
         } else {
             next({ path: '/login' })

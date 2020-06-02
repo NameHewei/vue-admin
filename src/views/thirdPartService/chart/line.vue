@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div>
+            <el-button type="primary" @click="exportChart">导出图片(也可以采用toolbox方式)</el-button>
+        </div>
         <div id="line" style="width: 600px; height: 400px"></div>
     </div>
 </template>
@@ -7,15 +10,42 @@
 <script>
 export default {
     name: 'CustomLine',
+    data () {
+        return {
+            myChart: null
+        }
+    },
 
     mounted () {
         this.initLine()
     },
 
     methods: {
+        exportChart () {
+            const aEle = document.createElement('a')
+            aEle.href = this.myChart.getDataURL({
+                // 导出的格式，可选 png, jpeg
+                type: 'png',
+                // 导出的图片分辨率比例，默认为 1。
+                pixelRatio: 1,
+                // 导出的图片背景色，默认使用 option 里的 backgroundColor
+                backgroundColor: 'white',
+                // 忽略组件的列表，例如要忽略 toolbox 就是 ['toolbox']
+                excludeComponents: ['legend']
+            })
+            aEle.download = '导出'
+            aEle.setAttribute('style', 'display:none')
+            document.body.appendChild(aEle)
+            aEle.click()
+        },
         initLine () {
             const myChart = this.$eCharts.init(document.getElementById('line'), null, {
                 renderer: 'canvas'
+            })
+            this.myChart = myChart
+            myChart.on('click', (params) => {
+                /* params.name 返回的是x轴值 */
+                console.log('line click', params)
             })
             // 绘制图表
             myChart.setOption({
@@ -62,6 +92,34 @@ export default {
                             fontSize: 14
                         }
                     },
+                    /* 设置坐标轴的显示隐藏与样式 */
+                    axisLine: {
+                        show: true,
+                        symbol: 'arrow',
+                        lineStyle: {
+                            color: '#48b',
+                            width: 2,
+                            type: 'solid'
+                        }
+                    },
+                    /* 垂直与x轴的分割线 */
+                    splitLine: {
+                        show: true
+                    },
+                    /* 坐标轴刻度相关设置 */
+                    axisTick: {
+                        /* 隔一个显示一个 */
+                        interval: 1
+                    },
+                    name: 'x轴',
+                    /* 设置上面name的样式 */
+                    nameTextStyle: {
+                        color: '#E64EA1'
+                    },
+                    /* name显示的位置 */
+                    nameLocation: 'start',
+                    /* 名称距离x轴端点的水平距离 */
+                    nameGap: 0,
                     data: [10, 20, 30, 40, 50, 60, 70]
                 },
                 yAxis: [

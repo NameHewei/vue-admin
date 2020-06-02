@@ -1,4 +1,3 @@
-import { reqUserInfo } from '@/api/user/user'
 import router, { permitRouters } from '@/router/router'
 
 export default {
@@ -19,7 +18,7 @@ export default {
     },
 
     actions: {
-        async actionSetUserInfo ({ commit }, data) {
+        async actionSetUserInfo ({ state, commit }, data) {
             try {
                 /* 根据当前登录用户的角色，添加路由 */
                 router.addRoutes(permitRouters(data.roles))

@@ -49,3 +49,41 @@ export const cookieMethods = {
         Cookies.set(name, value)
     }
 }
+
+export const aMapLoad = () => {
+    if (window.AMap) {
+        return new Promise((resolve) => {
+            resolve()
+        })
+    }
+    const loadAMap = new Promise((resolve, reject) => {
+        const src = 'https://webapi.amap.com/maps?v=1.4.10&key=6d7aa6691cb9e3bc264003ea296181d3&plugin=AMap.MouseTool,AMap.PolyEditor,AMap.Geocoder,AMap.Autocomplete,AMap.PlaceSearch,AMap.ToolBar'
+        const scriptEle = document.createElement('script')
+        scriptEle.onerror = _ => {
+            reject(new Error('load AMap failure!'))
+        }
+        scriptEle.onload = _ => {
+            resolve()
+        }
+        scriptEle.src = src
+        document.head.appendChild(scriptEle)
+    })
+    const loadAMapUI = () => {
+        return new Promise((resolve, reject) => {
+            const src = '//webapi.amap.com/ui/1.1/main.js'
+            const scriptEle = document.createElement('script')
+            scriptEle.onerror = _ => {
+                reject(new Error('load AMapUI failure!'))
+            }
+            scriptEle.onload = _ => {
+                resolve('load amap ui success')
+            }
+            scriptEle.src = src
+            document.head.appendChild(scriptEle)
+        })
+    }
+    return loadAMap.then(() => {
+        /* 等待地图api加载完成，才加载UI */
+        return loadAMapUI()
+    })
+}

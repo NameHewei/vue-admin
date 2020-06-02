@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { aMapLoad } from '@/utils/commonFn.js'
 export default {
     data () {
         return {
@@ -53,44 +54,52 @@ export default {
     },
 
     mounted () {
-        const map = new AMap.Map('aMapContainer', {
-                zoom: 12
-            }),
-
-            toolBar = new AMap.ToolBar({
-                visible: false
+        aMapLoad()
+            .then(() => {
+                this.setMap()
+            }).catch((err) => {
+                console.log(err)
             })
-
-        /** 设置地图控件，script需要引入 AMap.ToolBar */
-        map.addControl(toolBar)
-        toolBar.show()
-
-        this.map = map
-        document.getElementById('setMark').addEventListener('click', () => {
-            this.setMark()
-        })
-
-        document.getElementById('getAddress').addEventListener('click', () => {
-            this.getAddress()
-        })
-
-        /** getArea 和 getCurrentPosition 互斥 */
-        // this.getArea()
-        this.getCurrentPosition()
-
-        /**
-         * @des 点击地图获取经纬度
-         */
-        map.on('click', (e) => {
-            alert(`点击点：${e.lnglat.getLng()}-${e.lnglat.getLat()}`)
-        })
-
-        this.searchLocation()
-
-        this.useUI()
     },
 
     methods: {
+        setMap () {
+            const map = new AMap.Map('aMapContainer', {
+                zoom: 12
+            })
+
+            const toolBar = new AMap.ToolBar({
+                visible: false
+            })
+
+            /** 设置地图控件，script需要引入 AMap.ToolBar */
+            map.addControl(toolBar)
+            toolBar.show()
+
+            this.map = map
+            document.getElementById('setMark').addEventListener('click', () => {
+                this.setMark()
+            })
+
+            document.getElementById('getAddress').addEventListener('click', () => {
+                this.getAddress()
+            })
+
+            /** getArea 和 getCurrentPosition 互斥 */
+            // this.getArea()
+            this.getCurrentPosition()
+
+            /**
+             * @des 点击地图获取经纬度
+             */
+            map.on('click', (e) => {
+                alert(`点击点：${e.lnglat.getLng()}-${e.lnglat.getLat()}`)
+            })
+
+            this.searchLocation()
+
+            this.useUI()
+        },
         /**
          * @des 引入UI组件库
          */
@@ -123,8 +132,6 @@ export default {
                     //     offset: new AMap.Pixel(27, 25)
                     // }
                 })
-
-                console.log(1 || sm)
             })
         },
 
@@ -133,12 +140,12 @@ export default {
          */
         searchLocation () {
             const autoOptions = {
-                    input: 'address'
-                },
-                auto = new AMap.Autocomplete(autoOptions),
-                placeSearch = new AMap.PlaceSearch({
-                    map: this.map
-                })
+                input: 'address'
+            }
+            const auto = new AMap.Autocomplete(autoOptions)
+            const placeSearch = new AMap.PlaceSearch({
+                map: this.map
+            })
             // 构造地点查询类
             // 注册监听，当选中某条记录时会触发
             AMap.event.addListener(auto, 'select', (e) => {
@@ -221,21 +228,21 @@ export default {
              * api https://lbs.amap.com/api/javascript-api/reference/overlay/#icon
              * */
             const icon = new AMap.Icon({
-                    // 图标尺寸
-                    size: new AMap.Size(40, 40),
-                    // Icon的图像
-                    image: '/img/car.png',
-                    // 图像相对展示区域的偏移量，适于雪碧图等
-                    imageOffset: new AMap.Pixel(0, 0),
-                    // 根据所设置的大小拉伸或压缩图片
-                    imageSize: new AMap.Size(40, 40)
-                }),
-                marker = new AMap.Marker({
-                    icon: icon,
-                    position: [104.0689, 30.554876],
-                    // 偏移的位置，这只为图标size的一半较好
-                    offset: new AMap.Pixel(-20, -20)
-                })
+                // 图标尺寸
+                size: new AMap.Size(40, 40),
+                // Icon的图像
+                image: '/img/car.png',
+                // 图像相对展示区域的偏移量，适于雪碧图等
+                imageOffset: new AMap.Pixel(0, 0),
+                // 根据所设置的大小拉伸或压缩图片
+                imageSize: new AMap.Size(40, 40)
+            })
+            const marker = new AMap.Marker({
+                icon: icon,
+                position: [104.0689, 30.554876],
+                // 偏移的位置，这只为图标size的一半较好
+                offset: new AMap.Pixel(-20, -20)
+            })
             marker.setMap(this.map)
         },
 
@@ -255,24 +262,24 @@ export default {
 
         initialPolygon () {
             const map = new AMap.Map('aMapContainer', {
-                    zoom: 12,
-                    center: [104.065649, 30.65518]
-                }),
+                zoom: 12,
+                center: [104.065649, 30.65518]
+            })
 
-                { path } = this,
+            const { path } = this
 
-                polygon = new AMap.Polygon({
-                    path,
-                    isOutline: true,
-                    borderWeight: 3,
-                    strokeColor: '#10c4f9',
-                    strokeWeight: 6,
-                    strokeOpacity: 0.2,
-                    fillOpacity: 0.4,
-                    // 线样式还支持 'dashed'
-                    fillColor: '#54cdfd',
-                    zIndex: 50
-                })
+            const polygon = new AMap.Polygon({
+                path,
+                isOutline: true,
+                borderWeight: 3,
+                strokeColor: '#10c4f9',
+                strokeWeight: 6,
+                strokeOpacity: 0.2,
+                fillOpacity: 0.4,
+                // 线样式还支持 'dashed'
+                fillColor: '#54cdfd',
+                zIndex: 50
+            })
 
             polygon.setMap(map)
             // 缩放地图到合适的视野级别
@@ -307,10 +314,10 @@ export default {
 
         setAMap () {
             const map = new AMap.Map('aMapContainer', {
-                    center: [104.065649, 30.65518],
-                    zoom: 12
-                }),
-                mouseTool = new AMap.MouseTool(map)
+                center: [104.065649, 30.65518],
+                zoom: 12
+            })
+            const mouseTool = new AMap.MouseTool(map)
 
             // 监听draw事件可获取画好的覆盖物
             let overlays = []
