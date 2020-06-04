@@ -6,10 +6,6 @@ import ElementUI from 'element-ui'
 import eCharts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
 
-/** 引入 NProgress 样式 */
-import 'nprogress/nprogress.css'
-// import NProgress from 'nprogress'
-
 // all common components
 import './views/components/index.js'
 

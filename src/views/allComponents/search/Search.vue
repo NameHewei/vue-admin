@@ -10,7 +10,7 @@
                     :style="widthStyle"
                 >
                     <el-input v-if="item.type === 'input'" v-model="formData[item.key]"></el-input>
-                    <el-select v-else-if="item.type === 'select'" v-model="formData[item.key]">
+                    <el-select v-else-if="item.type === 'select'" :multiple="!!item.multiple" v-model="formData[item.key]">
                         <el-option
                             v-for="option in item.options"
                             :key="option.key"

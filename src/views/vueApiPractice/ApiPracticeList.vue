@@ -132,7 +132,7 @@ export default {
             }, {
                 value: '选项2',
                 label: '双皮奶'
-            } ],
+            }],
             selectValue: '',
             name: 'hew',
             count: 10,
@@ -253,7 +253,7 @@ export default {
         }
     }
 
-    .parent /deep/ .need {
+    .parent ::v-deep .need {
         color: rgb(7, 197, 108)
     }
 

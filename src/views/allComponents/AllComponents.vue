@@ -62,13 +62,15 @@ export default {
                     type: 'select',
                     key: 'status',
                     label: '下拉选择',
+                    // multiple: ,
                     options: [{ key: 'yes', value: '是' }, { key: 'no', value: '否' }]
                 },
                 { type: 'date', key: 'date', label: '日期' },
                 { type: 'dateTime', key: 'dateTime', label: '日期带时间' },
                 { type: 'dateRange', key: 'dateRange', label: '日期范围' },
                 { type: 'dateTimeRange', key: 'dateTimeRange', label: '日期范围' },
-                { type: 'cascade',
+                {
+                    type: 'cascade',
                     key: 'cascade',
                     label: '层级选择',
                     defaultValue: 'yizhi',

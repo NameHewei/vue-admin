@@ -3,6 +3,7 @@
         <div>
             <h2 class="need">深度作用选择器 >>> (alias:/deep/)</h2>
             <pre>
+                使用方法
                 .parent /deep/ .need {
                     color: rgb(7, 197, 108)
                 }
