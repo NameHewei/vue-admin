@@ -1,11 +1,13 @@
 <template>
     <div>
-        <div>
-            <div style="margin: 10px 0">
+        <CusTable @callback="handleTableCallback" :total=total>
+            <template #header>
                 <el-button type="primary" @click="handleCreate">弹窗新增</el-button>
-                <el-button type="danger" @click="handleBatchDelete">批量删除</el-button>
-            </div>
-             <el-table
+                <el-button type="primary" @click="handleBatch('publish')">批量发布</el-button>
+                <el-button type="primary" @click="handleBatch('offline')">批量下线</el-button>
+                <el-button type="danger" @click="handleBatch('del')">批量删除</el-button>
+            </template>
+            <el-table
                 border
                 v-loading="loading"
                 style="width: 100%"
@@ -29,20 +31,8 @@
                     </template>
                 </el-table-column>
             </el-table>
-        </div>
-        <div>
-            <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[10, 20, 50, 100,]"
-                :page-size="100"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="400"
-            >
-            </el-pagination>
-        </div>
-        <CudInfo
+        </CusTable>
+         <CudInfo
             :show="show"
             :id="id"
             @callback="handleDialogCallback"
@@ -57,42 +47,45 @@
 <script>
 import CudInfo from './cudInfo'
 import DeleteBtn from './deleteBtn'
+import CusTable from './cusTable.vue'
+
+import tableMixin from '@/mixin/tableMixin.js'
 
 export default {
     name: 'TableWrap',
     components: {
         CudInfo,
-        DeleteBtn
+        DeleteBtn,
+        CusTable
     },
+    mixins: [tableMixin],
     data () {
         return {
             show: false,
-            idList: [],
             id: '1111',
-            loading: false,
-            currentPage: 1,
-            pageSize: 20,
-            total: 0,
-            query: {},
-            selectOptions: [1, 2, 3],
-            tableData: [{
-                id: '1',
-                date: '2016-05-02',
-                name: '王小虎1',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-            }, {
-                id: '2',
-                date: '2016-05-04',
-                name: '王小虎2',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1517 弄',
-                zip: 200333
-            }]
+            selectOptions: [1, 2, 3]
         }
+    },
+
+    mounted () {
+        this.tableData = [{
+            id: '1',
+            date: '2016-05-02',
+            name: '王小虎1',
+            province: '上海',
+            city: '普陀区',
+            address: '上海市普陀区金沙江路 1518 弄',
+            zip: 200333
+        }, {
+            id: '2',
+            date: '2016-05-04',
+            name: '王小虎2',
+            province: '上海',
+            city: '普陀区',
+            address: '上海市普陀区金沙江路 1517 弄',
+            zip: 200333
+        }]
+        this.total = 100
     },
 
     methods: {
@@ -106,69 +99,36 @@ export default {
         },
 
         /* 批量删除 */
-        handleBatchDelete () {
-            if (this.idList.length) {
-                console.log('选择了：', this.idList)
-                this.$confirm('确认删除?', '提示', {
+        handleBatch (type) {
+            const { multipleSelection } = this
+            let ids = ''
+            const commandObj = {
+                publish: () => {
+                    console.log('publish ids', ids)
+                },
+                offline: () => {
+                    console.log('offline ids', ids)
+                },
+                del: () => {
+                    console.log('delete ids', ids)
+                }
+            }
+            if (multipleSelection.length) {
+                this.$confirm(this.msg, '确认操作当前选择的数据？', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    })
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    })
+                    ids = multipleSelection.toString()
+                    commandObj[type]()
                 })
             } else {
-                this.$message.warning('请选择数据')
+                this.$message.warning('请选择操作项！')
             }
         },
 
-        handleSearchCallback ({ data }) {
-            this.query = data
-            this.getTableData()
-        },
-
-        /** 获取表格数据 */
-        getTableData () {
-            // const { currentPage, pageSize, query } = this
-            // this.loading = true
-            // reqKnowledgeList({
-            //     pageNum: currentPage,
-            //     pageSize,
-            //     ...query
-            // })
-            //     .then(() => {
-            //         this.total = 1
-            //         this.tableData = []
-            //         this.loading = false
-            //     }).catch((err) => {
-            //         this.loading = false
-            //         console.log(err)
-            //     })
-        },
-
-        handleSizeChange (val) {
-            this.pageSize = val
-            this.currentPage = 1
-            this.getTableData()
-        },
-
-        handleCurrentChange (val) {
-            this.currentPage = val
-            this.getTableData()
-        },
-
-        handleSelectionChange (array) {
-            this.idList = array.map(({ id }) => id)
-        },
-
         handleDialogCallback (value) {
+            /* 这里只处理成功之后的一些操作 */
             this.show = false
             if (value) this.getTableData()
         },

@@ -6,7 +6,7 @@ import ElementUI from 'element-ui'
 import eCharts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
 
-// all common components
+// 自动全局挂载组件
 import './views/components/index.js'
 
 import './vueConfig.js'

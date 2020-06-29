@@ -1,18 +1,18 @@
 <template>
     <div>
         <el-menu
-            default-active="2"
-            background-color="rgba(250,250,250,.3)"
-            text-color="#fff"
-            active-text-color="#fff"
+            background-color="green"
+            text-color="pink"
+            active-text-color="#3478E6"
             class="ud-menu"
+            unique-opened
             @open="handleOpen"
             @close="handleClose"
         >
             <el-submenu
                 v-for="(item, index) in menu"
                 :key="index"
-                :index="`${index}`"
+                :index="`f${index}`"
             >
                 <template slot="title">
                     <i class="el-icon-location"></i>
@@ -44,6 +44,7 @@ export default {
 
     created () {
         this.menu = permitMenu(this.roles)
+        console.log(this.menu)
     },
 
     computed: {
@@ -57,17 +58,17 @@ export default {
             })
         },
 
-        handleClose () {
-            // console.log('')
+        handleClose (key, keyPath) {
+            console.log('close', key, keyPath)
         },
 
-        handleOpen () {
-            // console.log('')
+        handleOpen (key, keyPath) {
+            console.log('open', key, keyPath)
         }
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/styles/layout/navbar.scss';
 </style>

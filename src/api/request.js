@@ -16,7 +16,7 @@ const httpService = axios.create({
 
 httpService.interceptors.request.use((cfg) => {
     const { url, method, params } = cfg
-    const tempData = { ...params }
+    const tempData = params
 
     cfg.headers.uuid = uuIdV1().replace(/-/g, '')
 
@@ -55,17 +55,13 @@ httpService.interceptors.request.use((cfg) => {
 httpService.interceptors.response.use((res) => {
     const { config, data } = res
 
-    if (config.showSuccessMsg) {
+    /* 注意这个参数实在 api文件里面的方法中传递的，是和url同一级 */
+    if (config.showSuccessMsg && data.code === '成功') {
         Message({
             message: data.msg,
             type: 'success',
             duration: 2000
         })
-        // ELEMENT.Message({
-        //     message: data.msg,
-        //     type: 'success',
-        //     duration: 2000
-        // })
     }
 
     if (data.code !== 200) {

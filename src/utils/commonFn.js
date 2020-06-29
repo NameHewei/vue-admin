@@ -12,12 +12,32 @@ export function formatToQueryString (obj) {
     return temp.join('&')
 }
 
+/**
+ * @des 获取字典值，或返回字典
+ * 只有一个参数时，返回当前项的所有选项
+ * @param {Array} params 第一个值：需要的项的键值 第二个值：某一项的键值
+ */
+export const handleDectionary = (...params) => {
+    const reFn = (data) => {
+        if (params.length === 1) {
+            return data
+        }
+        return data[params[1]]
+    }
+    const commandObj = {
+        val1: () => (reFn(['0', '1'])),
+        val2: () => (reFn({ a: 'a', b: 'b', c: 'c', d: 'd' }))
+    }
+
+    return commandObj[params[0]]()
+}
+
 export function formatTime (dateString, type) {
     if (dateString) {
         type = type || 'precisionM'
 
         const date = new Date(dateString)
-        let y = date.getFullYear(); let m = date.getMonth() + 1; let d = date.getDate(); let h = date.getHours(); let minute = date.getMinutes(); let s = date.getSeconds()
+        const y = date.getFullYear(); let m = date.getMonth() + 1; const d = date.getDate(); let h = date.getHours(); let minute = date.getMinutes(); let s = date.getSeconds()
 
         if (m < 10) m = '0' + m
         if (h < 10) h = '0' + h
@@ -85,5 +105,44 @@ export const aMapLoad = () => {
     return loadAMap.then(() => {
         /* 等待地图api加载完成，才加载UI */
         return loadAMapUI()
+    })
+}
+
+/* 获取本地图片 */
+export const getPhotoFromLocal = (callback) => {
+    let inputElement = document.querySelector('#cusSelectPhoto')
+    if (!inputElement) {
+        inputElement = document.createElement('input')
+        inputElement.setAttribute('id', 'cusSelectPhoto')
+        inputElement.setAttribute('type', 'file')
+        inputElement.setAttribute('style', 'display:none')
+        document.body.appendChild(inputElement)
+    }
+    inputElement.click()
+
+    inputElement.addEventListener('change', (e) => {
+        callback(e.target.files)
+    })
+}
+
+/* 获取环境域名 */
+export const getDomain = () => {
+    let domain = ''
+    if (/xxx/.test(location.href)) {
+        domain = 'xxx'
+    }
+
+    return domain
+}
+
+/**
+ * @des 上传单个图片
+ * @param {file: File} 选中的文件
+ */
+export const uploadPhoto = (file) => {
+    const formData = new FormData()
+    formData.append('对应的字段名称', file)
+    return new Promise((resolve, reject) => {
+        // 上传接口请求
     })
 }

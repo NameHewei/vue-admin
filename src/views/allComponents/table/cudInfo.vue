@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-dialog title="收货地址" :visible.sync="show">
+        <el-dialog title="收货地址" :visible.sync="currentShow" @close="handleCancel">
             <el-form :model="form" :rules="rules" ref="ruleForm">
                 <el-form-item label="活动名称" prop="name">
                     <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -60,6 +60,7 @@ export default {
 
     data () {
         return {
+            currentShow: false,
             watchObj: {
                 name: 'hew'
             },
@@ -80,14 +81,16 @@ export default {
     },
 
     watch: {
-        selectOptions (v) {
-            console.log('watch selectOptions', v)
-        },
-        show (v) {
-            if (v) {
-                this.getDetail()
-            } else {
-                this.resetData()
+        /* 不直接用 show 属性， 点击dialog自带的关闭，或是点击空白透明区域关闭，会提示 prop 不能修改的 warning */
+        show: {
+            immediate: true,
+            handler (v) {
+                this.currentShow = v
+                if (v) {
+                    this.getDetail()
+                } else {
+                    this.resetData()
+                }
             }
         }
     },
@@ -98,7 +101,10 @@ export default {
         },
 
         resetData () {
-            this.$refs.ruleForm.resetFields()
+            /* 这里在第一次执行时是拿不到dom的，所以排除 */
+            if (this.$refs.ruleForm) {
+                this.$refs.ruleForm.resetFields()
+            }
         },
 
         getDetail () {
