@@ -85,3 +85,17 @@ $light_gray:#eee;
         width: 100%;
     }
 }
+
+.eye-open,.eye-close{
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    top: 8px;
+    right: 10px;
+}
+.eye-open{
+    background: url(../../assets/eye-open.png) no-repeat center/contain;
+}
+.eye-close{
+    background: url(../../assets/eye-close.png) no-repeat center/contain;
+}
