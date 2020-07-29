@@ -20,7 +20,6 @@ export default {
             /* 添加inserted钩子函数 当元素被插入时执行 */
             inserted: function (el, bind) {
                 el.focus()
-                console.log(bind)
             }
         }
     }

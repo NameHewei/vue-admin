@@ -87,7 +87,7 @@ export default {
                 name: '',
                 inputSelect: '',
                 selected: [{ value: '1', label: '第一' }],
-                relationSelect: '3',
+                relationSelect: '11',
                 levelSelect: []
             },
             rules: {

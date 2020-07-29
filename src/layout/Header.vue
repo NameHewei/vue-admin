@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 @click="routerSkip">
-            <img src="../../assets/logo.png"/>
+            <img src="../assets/logo.png"/>
             <span>vue-admin</span>
         </h1>
     </div>
@@ -35,5 +35,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../styles/layout/header.scss";
+@import "@/styles/layout/header.scss";
 </style>

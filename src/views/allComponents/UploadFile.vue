@@ -16,7 +16,7 @@
 
 <script>
 import { reqUploadFile } from '@/api/common/common'
-import { getPhotoFromLocal } from '@/utils/commonFn'
+import { getFileFromLocal } from '@/utils/commonFn'
 
 export default {
     data () {
@@ -32,7 +32,7 @@ export default {
         },
 
         handleSelectImg () {
-            getPhotoFromLocal(files => {
+            getFileFromLocal(files => {
                 this.images = [window.URL.createObjectURL(files[0])]
             })
         },

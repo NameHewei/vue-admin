@@ -15,6 +15,7 @@ export function formatToQueryString (obj) {
 /**
  * @des 获取字典值，或返回字典
  * 只有一个参数时，返回当前项的所有选项
+ * 返回值可能是值、数组、对象
  * @param {Array} params 第一个值：需要的项的键值 第二个值：某一项的键值
  */
 export const handleDectionary = (...params) => {
@@ -26,7 +27,8 @@ export const handleDectionary = (...params) => {
     }
     const commandObj = {
         val1: () => (reFn(['0', '1'])),
-        val2: () => (reFn({ a: 'a', b: 'b', c: 'c', d: 'd' }))
+        val2: () => (reFn({ a: 'a', b: 'b', c: 'c', d: 'd' })),
+        val3: () => (reFn([{ key: 0, value: 'data-1' }, { key: 2, value: 'data-2' }]))
     }
 
     return commandObj[params[0]]()
@@ -108,8 +110,8 @@ export const aMapLoad = () => {
     })
 }
 
-/* 获取本地图片 */
-export const getPhotoFromLocal = (callback) => {
+/* 获取本地文件 */
+export const getFileFromLocal = (callback) => {
     let inputElement = document.querySelector('#cusSelectPhoto')
     if (!inputElement) {
         inputElement = document.createElement('input')
@@ -145,4 +147,13 @@ export const uploadPhoto = (file) => {
     return new Promise((resolve, reject) => {
         // 上传接口请求
     })
+}
+
+/* 导出 */
+export const handleExport = () => {
+    const a = document.createElement('a')
+    a.href = 'url'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
 }

@@ -60,11 +60,15 @@
         <div>
             parent count: {{ count }}
         </div>
+        <div>
+            v-model实时值：{{ select }}
+        </div>
         <ChildComponent
             v-if="true"
             :name="name"
             @updateName="handleName"
             :count.sync="count"
+            v-model="select"
         ></ChildComponent>
         <el-button
             type="primary"
@@ -152,6 +156,7 @@ export default {
             input: '',
             input1: '',
             input2: '',
+            select: 0,
 
             forArray: [
                 { name: 'hew', judge: true },

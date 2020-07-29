@@ -18,7 +18,7 @@
         </div>
         <div class="part">
             <h3> 搜索组件 </h3>
-            <Search :searchOptions="searchOptions" @callback="handleCallback"></Search>
+            <Search :searchOptions="searchOptions" @callback="handleCallback" inline></Search>
         </div>
         <div class="part">
             <h3>表格组件</h3>
