@@ -69,7 +69,8 @@ export default {
                 label: '一级 3',
                 children: [{
                     id: 7,
-                    label: '二级 7'
+                    label: '二级 7',
+                    children: []
                 }, {
                     id: 8,
                     label: '二级 8'

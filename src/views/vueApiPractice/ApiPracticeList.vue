@@ -45,14 +45,23 @@
              default text :this is the text in Slot tag
             <template #abbr><span style="color:red">v-slot:xxx 缩写 #xxx</span></template>
         </TempSlot>
-        <SlotPure v-slot="data">为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)：<b>{{ data }}</b></SlotPure>
+        <SlotPure >
+            <template v-slot:age>new age</template>
+            <template v-slot:default="d">
+                为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)：<b>{{ d }}</b>
+            </template>
+            <template v-slot:scopedSlotData="d">
+                只有data：<b>{{ d }}</b>
+            </template>
+        </SlotPure>
 
         <h2 class="sticky">.sync modifier</h2>
         <div>name:{{ name }}</div>
         <div>
-            parent: {{ count }}
+            parent count: {{ count }}
         </div>
         <ChildComponent
+            v-if="true"
             :name="name"
             @updateName="handleName"
             :count.sync="count"
@@ -132,7 +141,7 @@ export default {
             }, {
                 value: '选项2',
                 label: '双皮奶'
-            } ],
+            }],
             selectValue: '',
             name: 'hew',
             count: 10,
@@ -253,7 +262,7 @@ export default {
         }
     }
 
-    .parent /deep/ .need {
+    .parent ::v-deep .need {
         color: rgb(7, 197, 108)
     }
 

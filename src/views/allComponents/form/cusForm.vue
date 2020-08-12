@@ -1,9 +1,12 @@
 <template>
-    <el-form :model="formData" :rules="formRules" ref="cusForm" label-width="200px">
+    <el-form :model="form" :rules="rules" ref="cusForm" label-width="200px">
         <pre>主要利用blur事件将获取到input 将其值重新赋给绑定的字段，若提交了输入值，当类似编辑赋初值时需要伪造一条列表数据</pre>
+        <el-form-item label="name" prop="name">
+            <el-input v-model="form.name"></el-input>
+        </el-form-item>
         <el-form-item label="可输入，可搜索">
             <el-select
-                v-model="formData.inputSelect"
+                v-model="form.inputSelect"
                 filterable
                 @blur="handleInputSelectBlur('name', $event)"
             >
@@ -19,7 +22,7 @@
         <el-form-item label="可返回label 可多选">
             <el-select
                 multiple
-                v-model="formData.selected"
+                v-model="form.selected"
             >
                 <el-option
                     v-for="item in sOptions"
@@ -31,9 +34,10 @@
         </el-form-item>
         <pre>可获得label(不能第一级单选，第二级多选，只能统一单选或多选)</pre>
         <el-form-item label="级联选择">
+            <!-- :props="{ expandTrigger: 'hover', emitPath: false, multiple: true, checkStrictly: true }" -->
             <el-cascader
                 ref="refCas"
-                v-model="formData.relationSelect"
+                v-model="form.relationSelect"
                 :options="options"
                 :show-all-levels="false"
                 :props="{ expandTrigger: 'hover', emitPath: false, multiple: true }"
@@ -56,14 +60,40 @@ export default {
         RelationSelect
     },
     data () {
+        const validateFn = (rule, value, callback) => {
+            const { field } = rule
+            const commandObject = {
+                name: () => {
+                    if (value) {
+                        callback()
+                    } else {
+                        callback(new Error('请输入名称'))
+                    }
+                },
+                error: () => {
+                    callback()
+                    console.error(`没有${rule.field}项`)
+                }
+            }
+
+            if (commandObject[field]) {
+                commandObject[field]()
+            } else {
+                callback(new Error(`不存在${field}校验`))
+            }
+        }
         return {
-            formData: {
+            form: {
+                name: '',
                 inputSelect: '',
                 selected: [{ value: '1', label: '第一' }],
                 relationSelect: '3',
                 levelSelect: []
             },
-            formRules: {
+            rules: {
+                name: [
+                    { required: true, validator: validateFn, trigger: 'blur' }
+                ]
             },
             sOptions: [{
                 value: '1',
@@ -79,6 +109,7 @@ export default {
                 value: '1',
                 label: '第一级1',
                 children: [{
+                    /* 这里如果不是 value label  也可以设置prop属性来适配 */
                     value: '11',
                     label: '1-1'
                 },
@@ -100,7 +131,11 @@ export default {
                 label: '第一级2',
                 children: [{
                     value: '21',
-                    label: '2-1'
+                    label: '2-1',
+                    children: []
+                }, {
+                    value: '22',
+                    label: '2-2'
                 }]
             }, {
                 value: '3',
@@ -112,7 +147,7 @@ export default {
         submitForm (formName) {
             this.$refs.cusForm.validate((valid) => {
                 if (valid) {
-                    console.log(this.formData)
+                    console.log(this.form)
                 } else {
                     console.log('error submit!!')
                     return false
@@ -134,11 +169,11 @@ export default {
 
         handleInputSelectBlur (e, ee) {
             console.log(e, ee.target.value)
-            this.formData.inputSelect = ee.target.value
+            this.form.inputSelect = ee.target.value
         },
 
         handleRelationSelect (v) {
-            this.formData.levelSelect = v
+            this.form.levelSelect = v
         }
     }
 }

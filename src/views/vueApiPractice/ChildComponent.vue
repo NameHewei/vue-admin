@@ -1,14 +1,15 @@
 <template>
     <div style="padding: 10px;margin: 10px 0; background-color: rgba(150,150,150,.1)">
         <div>
-            child:{{ count }}
+            child count:{{ count }}
         </div>
         <el-button
             type="success"
             @click="add"
-        >子组件+1</el-button>
+        >子组件+1  .sync 方式</el-button>
 
         <div style="margin-top: 20px">
+            <span>一般emit方式</span>
             <input :value="name" @input="passByEmit"/>
         </div>
     </div>
@@ -27,6 +28,8 @@ export default {
             default: 0
         }
     },
+
+    created () { },
 
     watch: {
         name (v) {

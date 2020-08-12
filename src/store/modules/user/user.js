@@ -10,7 +10,7 @@ export default {
     },
 
     mutations: {
-        setUserInfo (state, { name, age, roles: roles = [] }) {
+        setUserInfo (state, { name, age, roles = [] }) {
             state.name = name
             state.age = age
             state.roles = [...roles]
@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async actionSetUserInfo ({ state, commit }, data) {
+        actionSetUserInfo ({ state, commit }, data) {
             try {
                 /* 根据当前登录用户的角色，添加路由 */
                 router.addRoutes(permitRouters(data.roles))
