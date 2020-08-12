@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate</title>
+    <style>
+        *{
+            color: red;
+        }
+        span{
+            margin-right: 5px;
+            font-weight: 700;
+            color: rgb(100, 100, 100);
+        }
+        input{
+            height: 24px;
+            border: 1px solid red;
+            outline: none;
+        }
+        input::placeholder{
+            color: red;
+        }
+        button{
+            height: 28px;
+            width: 200px;
+            color: #fff;
+            background-color: red;
+            border: 0;
+            outline: none;
+        }
+        .increase{
+
+        }
+    </style>
+</head>
+<body>
+    <div class="increase">
+        <input type="number" placeholder="现价">
+        <input type="number" placeholder="成本" onkeyup="handleEnter(event)">
+        <button onclick="compute()">计算</button>
+        <h3>
+            (现价-成本)/成本 = 涨幅：<b id="res1"></b>
+        </h3>
+    </div>
+    <script>
+        var input = document.querySelectorAll('input')
+        function compute() {
+            var v =  ((input[0].value - input[1].value)/input[1].value * 100 ).toFixed(3)
+            console.log(typeof v);
+            v = v || ''
+            document.querySelector('#res1').innerHTML = v +  '%'
+        }
+
+        function handleEnter(e){
+            if(e.keyCode === 13) compute()
+        }
+    </script>
+</body>
+</html>
