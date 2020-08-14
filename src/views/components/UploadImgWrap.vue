@@ -3,6 +3,7 @@
         <el-upload
             action="https://jsonplaceholder.typicode.com/posts/"
             list-type="picture-card"
+            :file-list="fileList"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
         >
@@ -16,10 +17,30 @@
 
 <script>
 export default {
+    model: {
+        prop: 'imageUrls',
+        event: 'upSuccess'
+    },
+
+    props: {
+        imageUrls: {
+            type: Array,
+            default: () => ([])
+        }
+    },
+
     data () {
         return {
             dialogImageUrl: '',
             dialogVisible: false
+        }
+    },
+
+    computed: {
+        fileList (v) {
+            const { imageUrls } = this
+            if (imageUrls && imageUrls.length) return imageUrls.map((v, index) => ({ name: index, url: v }))
+            return []
         }
     },
 

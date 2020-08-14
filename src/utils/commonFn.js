@@ -19,11 +19,16 @@ export function formatToQueryString (obj) {
  * @param {Array} params 第一个值：需要的项的键值 第二个值：某一项的键值
  */
 export const handleDectionary = (...params) => {
-    const reFn = (data) => {
+    const reFn = (o) => {
         if (params.length === 1) {
-            return data
+            return o
+        } else {
+            if (o instanceof Array && typeof o[0] === 'object') {
+                return o.find(v => v.key === params[1]) || {}
+            } else {
+                return o[params[1]]
+            }
         }
-        return data[params[1]]
     }
     const commandObj = {
         val1: () => (reFn(['0', '1'])),
