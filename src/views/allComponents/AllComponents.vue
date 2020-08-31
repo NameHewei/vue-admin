@@ -21,7 +21,7 @@
         </div>
         <div class="part">
             <h3> 搜索组件 </h3>
-            <Search :searchOptions="searchOptions" @callback="handleCallback" inline></Search>
+            <Search :searchOptions="searchOptions" @callback="handleCallback" inline withoutLabel></Search>
         </div>
         <div class="part">
             <h3>表格组件</h3>
@@ -35,6 +35,9 @@
             <h3>表单</h3>
             <CusForm></CusForm>
         </div>
+        <div class="part">
+           <DisplayHtmlText/>
+        </div>
     </div>
 </template>
 
@@ -45,6 +48,7 @@ import Search from './search/Search.vue'
 import TableWrap from './table/TableWrap.vue'
 import TreeWrap from './tree/TreeWrap.vue'
 import CusForm from './form/cusForm.vue'
+import DisplayHtmlText from './displayHtmlText'
 
 export default {
     name: 'AllComponents',
@@ -54,7 +58,8 @@ export default {
         TreeWrap,
         UploadFile,
         CusForm,
-        BackHeader
+        BackHeader,
+        DisplayHtmlText
     },
 
     data () {

@@ -5,12 +5,12 @@
                 <el-form-item
                     v-for="item in searchOptions"
                     :key="item.key"
-                    :label="item.label"
+                    :label="withoutLabel ? '' : item.label"
                     :prop="item.key"
                     :style="widthStyle"
                 >
-                    <el-input v-if="item.type === 'input'" v-model="formData[item.key]"></el-input>
-                    <el-select v-else-if="item.type === 'select'" :multiple="!!item.multiple" v-model="formData[item.key]">
+                    <el-input v-if="item.type === 'input'" v-model="formData[item.key]" :placeholder="withoutLabel ? item.label : ''"></el-input>
+                    <el-select v-else-if="item.type === 'select'" :multiple="!!item.multiple" v-model="formData[item.key]" :placeholder="withoutLabel ? item.label : ''">
                         <el-option
                             v-for="option in item.options"
                             :key="option.key"
@@ -22,13 +22,13 @@
                         v-else-if="item.type === 'date'"
                         v-model="formData[item.key]"
                         type="date"
-                        placeholder="选择日期">
+                        :placeholder="withoutLabel ? item.label : '选择日期'">
                     </el-date-picker>
                     <el-date-picker
                         v-else-if="item.type === 'dateTime'"
                         v-model="formData[item.key]"
                         type="datetime"
-                        placeholder="选择日期时间">
+                        :placeholder="withoutLabel ? item.label : '选择日期时间'">
                     </el-date-picker>
                     <el-date-picker
                         v-else-if="item.type === 'dateTimeRange'"
@@ -51,6 +51,7 @@
                         v-model="formData[item.key]"
                         :show-all-levels="false"
                         :options="item.options"
+                        :placeholder="withoutLabel ? item.label : ''"
                     >
                     </el-cascader>
                 </el-form-item>
@@ -72,6 +73,10 @@ export default {
         width: {
             type: [Number, String],
             default: () => 0
+        },
+        withoutLabel: {
+            type: Boolean,
+            default: false
         },
         labelWidth: {
             type: Number,
