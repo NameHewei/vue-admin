@@ -5,6 +5,7 @@ import store from './store/store'
 import ElementUI from 'element-ui'
 import eCharts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
+import utils from './utils/index.js'
 
 // 自动全局挂载组件
 import './views/components/index.js'
@@ -17,6 +18,7 @@ import './navigationGuard'
 
 Vue.prototype.$eCharts = eCharts
 Vue.prototype.$message = ElementUI.Message
+Vue.prototype.$utils = utils
 
 Vue.use(ElementUI)
 

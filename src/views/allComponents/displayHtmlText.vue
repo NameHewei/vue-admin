@@ -1,6 +1,18 @@
 <template>
     <div>
-        <p> http 请求返回完整的 html  怎么预览 </p>
+        <h3> http 请求返回完整的 html  怎么预览 </h3>
+        <p>将html注入到 localStorage</p>
+        <pre>
+            localStorage.removeItem('displayHtmlText')
+            localStorage.setItem('displayHtmlText', '这是一个后端返回的完整html文件字符串')
+            window.open('./displayHtmlText.html')
+        </pre>
+        <p>在打开页面将 localStorage 中的html显示出来 </p>
+        <pre>
+            document.open();
+            document.write(localStorage.getItem('preview'))
+            document.close();
+        </pre>
         <el-button type="primary" @click="handleOpenPage">打开新页面</el-button>
     </div>
 </template>

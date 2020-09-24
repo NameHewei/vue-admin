@@ -124,6 +124,8 @@ export const getFileFromLocal = (callback) => {
         inputElement.setAttribute('type', 'file')
         inputElement.setAttribute('style', 'display:none')
         document.body.appendChild(inputElement)
+    } else {
+        inputElement.value = ''
     }
     inputElement.click()
 

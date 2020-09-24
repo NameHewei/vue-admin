@@ -6,6 +6,7 @@
             default-expand-all
             ref="elTree"
             node-key="id"
+            :check-strictly="true"
             :data="treeData"
             :props="defaultProps"
             @check="handleCurrentChange"
@@ -112,7 +113,8 @@ export default {
             this.ids = tempArr
             this.sureInit = sureInit
             this.checked = initIds
-            this.$refs.elTree.setCheckedKeys(sureInit)
+            /* 如果设置了父id 又没有设置 父子不互相关联 那子一级将被全部选中 */
+            this.$refs.elTree.setCheckedKeys(initIds)
         },
 
         handleCheckAllChange (val) {

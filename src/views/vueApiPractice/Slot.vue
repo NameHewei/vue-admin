@@ -21,9 +21,13 @@ export default {
     data () {
         return {
             data: {
-                name: 'warren'
+                name: 'warren',
+                a: ''
             }
         }
+    },
+
+    mounted () {
     }
 }
 </script>

@@ -5,9 +5,6 @@
             <BackHeader></BackHeader>
         </div>
         <div class="part">
-            <el-button type="primary" @click="handles">23333</el-button>
-        </div>
-        <div class="part">
             <h3>axios 上传文件</h3>
             <UploadFile></UploadFile>
         </div>
@@ -114,10 +111,6 @@ export default {
     methods: {
         handleCallback (data) {
             console.log('搜索值：', data)
-        },
-
-        handles () {
-            this.created()
         }
     }
 }

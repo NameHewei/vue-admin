@@ -161,6 +161,7 @@ export default {
 
         handleChange (v) {
             console.log('联级选择获取label：')
+            /* 该方法是将当前节点后其子节点一并返回 */
             const arr = this.$refs.refCas.getCheckedNodes()
             for (let i = 0; i < arr.length; i++) {
                 console.log(arr[i].label, arr[i].parent ? arr[i].parent.label : '--')

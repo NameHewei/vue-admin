@@ -81,7 +81,7 @@ export default {
                 }
             })
         },
-        resetForm (formName) {
+        resetForm () {
             this.$refs.ruleForm.resetFields()
         }
     }
