@@ -32,17 +32,8 @@
                 </el-option>
             </el-select>
         </el-form-item>
-        <pre>可获得label(不能第一级单选，第二级多选，只能统一单选或多选)</pre>
         <el-form-item label="级联选择">
-            <!-- :props="{ expandTrigger: 'hover', emitPath: false, multiple: true, checkStrictly: true }" -->
-            <el-cascader
-                ref="refCas"
-                v-model="form.relationSelect"
-                :options="options"
-                :show-all-levels="false"
-                :props="{ expandTrigger: 'hover', emitPath: false, multiple: true }"
-                @change="handleChange"
-            ></el-cascader>
+            <CasCaDerWrap v-model="form.casData" :casOptions="options" multiple/>
         </el-form-item>
         <el-form-item label="联动选择">
             <RelationSelect @callbackRelationSelect="handleRelationSelect"></RelationSelect>
@@ -53,11 +44,13 @@
     </el-form>
 </template>
 <script>
+import CasCaDerWrap from './casCaDerWrap.vue'
 import RelationSelect from './relationSelect'
+
 export default {
     name: 'CusForm',
     components: {
-        RelationSelect
+        RelationSelect, CasCaDerWrap
     },
     data () {
         const validateFn = (rule, value, callback) => {
@@ -87,8 +80,8 @@ export default {
                 name: '',
                 inputSelect: '',
                 selected: [{ value: '1', label: '第一' }],
-                relationSelect: '11',
-                levelSelect: []
+                levelSelect: [],
+                casData: {}
             },
             rules: {
                 name: [
@@ -130,7 +123,7 @@ export default {
                 value: '2',
                 label: '第一级2',
                 children: [{
-                    value: '21',
+                    value: 21,
                     label: '2-1',
                     children: []
                 }, {
@@ -143,6 +136,13 @@ export default {
             }]
         }
     },
+
+    mounted () {
+        setTimeout(() => {
+            this.form.casData = { type: 'init', value: ['11', '21'] }
+        }, 3000)
+    },
+
     methods: {
         submitForm (formName) {
             this.$refs.cusForm.validate((valid) => {
@@ -175,7 +175,7 @@ export default {
 
         handleRelationSelect (v) {
             this.form.levelSelect = v
-        }
+        },
     }
 }
 </script>

@@ -116,22 +116,22 @@ export const aMapLoad = () => {
 }
 
 /* 获取本地文件 */
-export const getFileFromLocal = (callback) => {
-    let inputElement = document.querySelector('#cusSelectPhoto')
-    if (!inputElement) {
+export const getFileFromLocal = (callback, inputId = 'cusSelectPhoto') => {
+    let inputElement = document.querySelector(`#${inputId}`)
+
+    if (inputElement) {
+        inputElement.value = ''
+    } else {
         inputElement = document.createElement('input')
-        inputElement.setAttribute('id', 'cusSelectPhoto')
+        inputElement.setAttribute('id', inputId)
         inputElement.setAttribute('type', 'file')
         inputElement.setAttribute('style', 'display:none')
         document.body.appendChild(inputElement)
-    } else {
-        inputElement.value = ''
+        inputElement.addEventListener('change', (e) => {
+            callback(e.target.files)
+        })
     }
     inputElement.click()
-
-    inputElement.addEventListener('change', (e) => {
-        callback(e.target.files)
-    })
 }
 
 /* 获取环境域名 */
