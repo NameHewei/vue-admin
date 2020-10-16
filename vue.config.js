@@ -12,6 +12,9 @@ module.exports = {
     */
     publicPath: './',
 
+    /* 生产环境打包时,不生成 map 文件 */
+    productionSourceMap: false,
+
     devServer: {
         compress: true,
         port: 7878,
