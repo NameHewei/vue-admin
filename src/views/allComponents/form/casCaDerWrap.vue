@@ -1,7 +1,7 @@
 <template>
     <div style="display:inline-block">
         <pre>可获得label(不能第一级单选，第二级多选，只能统一单选或多选)</pre>
-        <pre>checkStrictly: true 是否严格的遵守父子节点不互相关联</pre>
+        <pre>checkStrictly: true 是否严格的遵守父子节点不互相关联, 如果没有设置，又对数据进行了disabled 处理，则不能正常显示数据</pre>
         <el-cascader
             ref="refCas"
             v-model="value"
