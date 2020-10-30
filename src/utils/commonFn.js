@@ -120,17 +120,17 @@ export const getFileFromLocal = (callback, inputId = 'cusSelectPhoto') => {
     let inputElement = document.querySelector(`#${inputId}`)
 
     if (inputElement) {
-        inputElement.value = ''
-    } else {
-        inputElement = document.createElement('input')
-        inputElement.setAttribute('id', inputId)
-        inputElement.setAttribute('type', 'file')
-        inputElement.setAttribute('style', 'display:none')
-        document.body.appendChild(inputElement)
-        inputElement.addEventListener('change', (e) => {
-            callback(e.target.files)
-        })
+        /* 这里删除的原因是为了防止同一个页面有多个该功能，导致所有的input都挂载同一个回调方法 */
+        inputElement.parentNode.removeChild(inputElement)
     }
+    inputElement = document.createElement('input')
+    inputElement.setAttribute('id', inputId)
+    inputElement.setAttribute('type', 'file')
+    inputElement.setAttribute('style', 'display:none')
+    document.body.appendChild(inputElement)
+    inputElement.addEventListener('change', (e) => {
+        callback(e.target.files)
+    })
     inputElement.click()
 }
 

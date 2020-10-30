@@ -7,7 +7,7 @@ import Vue from 'vue'
 // 设置为false，防止vue启动时生成提示
 Vue.config.productionTip = false
 
-console.log(process.env.NODE_ENV)
+console.log('环境变量：', process.env.NODE_ENV)
 
 if (process.env.NODE_ENV === 'production') {
     // 跟踪运行时的错误

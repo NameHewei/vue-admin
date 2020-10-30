@@ -1,6 +1,11 @@
 <template>
     <div>
-        自定义【v-xxx】命令
+        <h1>
+            自定义【v-xxx】命令
+        </h1>
+        <section>
+            <button type="primary" v-permission="'20123'">权限按钮</button>
+        </section>
         <input type="text" v-focus:[par]="val">
 
     </div>

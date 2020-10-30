@@ -16,6 +16,18 @@ import './vueConfig.js'
 import './navigationGuard'
 // NProgress.start()
 
+/* 按钮权限 */
+Vue.directive('permission', {
+    /* 添加inserted钩子函数 当元素被插入时执行 */
+    inserted: function (el, binding) {
+        const permission = ['2012'].includes(binding.value)
+        el.innerHTML = permission ? '有权限' : '无权限'
+        if (!permission) {
+            el.setAttribute('disabled', true)
+        }
+    }
+})
+
 Vue.prototype.$eCharts = eCharts
 Vue.prototype.$message = ElementUI.Message
 Vue.prototype.$utils = utils
