@@ -6,13 +6,14 @@
             active-text-color="#3478E6"
             class="ud-menu"
             unique-opened
-            @open="handleOpen"
-            @close="handleClose"
+            :default-openeds="open"
+            :default-active="active"
+            @select="handleSelect"
         >
             <el-submenu
                 v-for="(item, index) in menu"
                 :key="index"
-                :index="`f${index}`"
+                :index="item.name"
             >
                 <template slot="title">
                     <i class="el-icon-location"></i>
@@ -21,7 +22,7 @@
                 <el-menu-item
                     v-for="(_item, _index) in item.children"
                     :key="_index"
-                    :index="`${index}-${_index}`"
+                    :index="_item.name"
                     @click="routerSkip(_item.name)"
                 >
                     {{ _item.title }}
@@ -38,32 +39,41 @@ import { permitMenu } from '@/router/router'
 export default {
     data () {
         return {
-            menu: []
+            menu: [],
+            open: []
         }
     },
 
     created () {
         this.menu = permitMenu(this.roles)
-        console.log(this.menu)
     },
 
     computed: {
-        ...mapState('user', ['roles'])
+        ...mapState('user', ['roles']),
+
+        active () {
+            const r = this.$route
+            const { name } = r
+            this.initOpen()
+            return name
+        }
     },
 
     methods: {
+        initOpen () {
+            const rp = this.$route.path
+            const openPath = rp === '/' ? [] : rp.slice(1).split('/')
+            this.open = openPath
+        },
+
         routerSkip (name) {
             this.$router.push({
                 name
             })
         },
 
-        handleClose (key, keyPath) {
-            console.log('close', key, keyPath)
-        },
-
-        handleOpen (key, keyPath) {
-            console.log('open', key, keyPath)
+        handleSelect (val, select) {
+            this.open = select
         }
     }
 }

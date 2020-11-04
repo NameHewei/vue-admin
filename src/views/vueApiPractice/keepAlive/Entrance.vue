@@ -23,7 +23,7 @@ export default {
     methods: {
         handleJump (name) {
             this.$router.push({
-                name
+                name, query: { name: 9090 }
             }).catch(err => err)
         }
     }

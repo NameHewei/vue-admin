@@ -15,18 +15,25 @@ export function formatToQueryString (obj) {
 /**
  * @des 获取字典值，或返回字典
  * 只有一个参数时，返回当前项的所有选项
+ * 返回值可能是值、数组、对象
  * @param {Array} params 第一个值：需要的项的键值 第二个值：某一项的键值
  */
 export const handleDectionary = (...params) => {
-    const reFn = (data) => {
+    const reFn = (o) => {
         if (params.length === 1) {
-            return data
+            return o
+        } else {
+            if (o instanceof Array && typeof o[0] === 'object') {
+                return o.find(v => v.key === params[1]) || {}
+            } else {
+                return o[params[1]]
+            }
         }
-        return data[params[1]]
     }
     const commandObj = {
         val1: () => (reFn(['0', '1'])),
-        val2: () => (reFn({ a: 'a', b: 'b', c: 'c', d: 'd' }))
+        val2: () => (reFn({ a: 'a', b: 'b', c: 'c', d: 'd' })),
+        val3: () => (reFn([{ key: 0, value: 'data-1' }, { key: 2, value: 'data-2' }]))
     }
 
     return commandObj[params[0]]()
@@ -108,21 +115,23 @@ export const aMapLoad = () => {
     })
 }
 
-/* 获取本地图片 */
-export const getPhotoFromLocal = (callback) => {
-    let inputElement = document.querySelector('#cusSelectPhoto')
-    if (!inputElement) {
-        inputElement = document.createElement('input')
-        inputElement.setAttribute('id', 'cusSelectPhoto')
-        inputElement.setAttribute('type', 'file')
-        inputElement.setAttribute('style', 'display:none')
-        document.body.appendChild(inputElement)
-    }
-    inputElement.click()
+/* 获取本地文件 */
+export const getFileFromLocal = (callback, inputId = 'cusSelectPhoto') => {
+    let inputElement = document.querySelector(`#${inputId}`)
 
+    if (inputElement) {
+        /* 这里删除的原因是为了防止同一个页面有多个该功能，导致所有的input都挂载同一个回调方法 */
+        inputElement.parentNode.removeChild(inputElement)
+    }
+    inputElement = document.createElement('input')
+    inputElement.setAttribute('id', inputId)
+    inputElement.setAttribute('type', 'file')
+    inputElement.setAttribute('style', 'display:none')
+    document.body.appendChild(inputElement)
     inputElement.addEventListener('change', (e) => {
         callback(e.target.files)
     })
+    inputElement.click()
 }
 
 /* 获取环境域名 */
@@ -145,4 +154,13 @@ export const uploadPhoto = (file) => {
     return new Promise((resolve, reject) => {
         // 上传接口请求
     })
+}
+
+/* 导出 */
+export const handleExport = () => {
+    const a = document.createElement('a')
+    a.href = 'url'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
 }

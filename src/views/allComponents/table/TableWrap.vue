@@ -1,5 +1,6 @@
 <template>
     <div>
+        <p>使用树形数据与懒加载时，删除某条数据，防止列表不更新，可以采用在 table 上绑定 v-if 重新渲染绑定table上的数据</p>
         <CusTable @callback="handleTableCallback" :total=total>
             <template #header>
                 <el-button type="primary" @click="handleCreate">弹窗新增</el-button>

@@ -1,23 +1,33 @@
 <template>
     <el-form :model="form" :rules="rules" ref="cusForm" label-width="200px">
-        <pre>主要利用blur事件将获取到input 将其值重新赋给绑定的字段，若提交了输入值，当类似编辑赋初值时需要伪造一条列表数据</pre>
         <el-form-item label="name" prop="name">
             <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="可输入，可搜索">
-            <el-select
-                v-model="form.inputSelect"
-                filterable
-                @blur="handleInputSelectBlur('name', $event)"
+
+        <pre>带推荐输入框  所有可搜索选择，或直接输入的形式输入框都采用该方式</pre>
+        <el-form-item label="recommend" prop="recommend">
+            <el-autocomplete
+                popper-class="my-autocomplete"
+                v-model="form.recommend"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入内容"
+                value-key="cusVal"
+                id="someId"
+                @select="handleSelect"
+                @focus="handleCompleteFocus"
             >
-                <el-option
-                    v-for="item in sOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item">
-                </el-option>
-            </el-select>
+                <i
+                    class="el-icon-edit el-input__icon"
+                    slot="suffix"
+                    @click="handleIconClick">
+                </i>
+                <template slot-scope="{ item }">
+                    <div class="name">{{ item.cusVal }}</div>
+                    <span class="addr">{{ item.address }}</span>
+                </template>
+            </el-autocomplete>
         </el-form-item>
+
         <pre> 这里的 value 传入整个key value 对象 </pre>
         <el-form-item label="可返回label 可多选">
             <el-select
@@ -32,17 +42,8 @@
                 </el-option>
             </el-select>
         </el-form-item>
-        <pre>可获得label(不能第一级单选，第二级多选，只能统一单选或多选)</pre>
         <el-form-item label="级联选择">
-            <!-- :props="{ expandTrigger: 'hover', emitPath: false, multiple: true, checkStrictly: true }" -->
-            <el-cascader
-                ref="refCas"
-                v-model="form.relationSelect"
-                :options="options"
-                :show-all-levels="false"
-                :props="{ expandTrigger: 'hover', emitPath: false, multiple: true }"
-                @change="handleChange"
-            ></el-cascader>
+            <CasCaDerWrap v-model="form.casData" :casOptions="options" multiple/>
         </el-form-item>
         <el-form-item label="联动选择">
             <RelationSelect @callbackRelationSelect="handleRelationSelect"></RelationSelect>
@@ -53,11 +54,13 @@
     </el-form>
 </template>
 <script>
+import CasCaDerWrap from './casCaDerWrap.vue'
 import RelationSelect from './relationSelect'
+
 export default {
     name: 'CusForm',
     components: {
-        RelationSelect
+        RelationSelect, CasCaDerWrap
     },
     data () {
         const validateFn = (rule, value, callback) => {
@@ -83,12 +86,13 @@ export default {
             }
         }
         return {
+            restaurants: [],
             form: {
                 name: '',
-                inputSelect: '',
+                recommend: '',
                 selected: [{ value: '1', label: '第一' }],
-                relationSelect: '3',
-                levelSelect: []
+                levelSelect: [],
+                casData: {}
             },
             rules: {
                 name: [
@@ -130,7 +134,7 @@ export default {
                 value: '2',
                 label: '第一级2',
                 children: [{
-                    value: '21',
+                    value: 21,
                     label: '2-1',
                     children: []
                 }, {
@@ -143,7 +147,51 @@ export default {
             }]
         }
     },
+
+    mounted () {
+        setTimeout(() => {
+            this.form.casData = { type: 'init', value: ['11', '21'] }
+        }, 3000)
+
+        this.restaurants = this.loadAll()
+    },
+
     methods: {
+        querySearch (queryString, cb) {
+            clearTimeout(this.timeout)
+            this.timeout = setTimeout(() => {
+                var restaurants = this.restaurants
+                var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
+                // 调用 callback 返回建议列表的数据
+                cb(results)
+            }, 2000)
+        },
+
+        createFilter (queryString) {
+            return (restaurant) => {
+                return (restaurant.cusVal.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+            }
+        },
+
+        handleSelect (item) {
+            console.log('select', item)
+        },
+
+        handleCompleteFocus (e) {
+            /**
+             * 这里通过id去获取当前操作项数据 例如 可编辑表格中获取当前操作的行
+             */
+            console.log('change id', e.target.id)
+        },
+
+        handleIconClick (ev) {
+            console.log(ev)
+        },
+
+        loadAll () {
+            return [{ cusVal: '三全鲜食（北新泾店）', address: '长宁区新渔路144号' }]
+        },
+
         submitForm (formName) {
             this.$refs.cusForm.validate((valid) => {
                 if (valid) {
@@ -161,24 +209,38 @@ export default {
 
         handleChange (v) {
             console.log('联级选择获取label：')
+            /* 该方法是将当前节点后其子节点一并返回 */
             const arr = this.$refs.refCas.getCheckedNodes()
             for (let i = 0; i < arr.length; i++) {
                 console.log(arr[i].label, arr[i].parent ? arr[i].parent.label : '--')
             }
         },
 
-        handleInputSelectBlur (e, ee) {
-            console.log(e, ee.target.value)
-            this.form.inputSelect = ee.target.value
-        },
-
         handleRelationSelect (v) {
             this.form.levelSelect = v
-        }
+        },
     }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.my-autocomplete {
+  li {
+    line-height: normal;
+    padding: 7px;
 
+    .name {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .addr {
+      font-size: 12px;
+      color: #b4b4b4;
+    }
+
+    .highlighted .addr {
+      color: #ddd;
+    }
+  }
+}
 </style>

@@ -15,7 +15,7 @@ router.beforeEach(async (to, from, next) => {
             if (store.state.user.roles.length === 0) {
                 try {
                     const userInfo = await reqUserInfo()
-                    await store.dispatch('user/actionSetUserInfo', userInfo)
+                    await store.dispatch('user/actionSetUserInfo', userInfo.data)
                     next({ ...to, replace: true })
                 } catch (error) {
                     /* 没有获取到信息，即可能登录超时，无法获取用户信息，所以跳转登录页面 */

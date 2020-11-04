@@ -8,6 +8,7 @@
                 <div class="layout-sidebar">
                     <Navbar></Navbar>
                 </div>
+                <TagsNav></TagsNav>
                 <div class="layout-content">
                     <div class="content-inner">
                         <router-view></router-view>
@@ -24,12 +25,14 @@
 <script>
 import Header from './Header.vue'
 import Navbar from './Navbar.vue'
+import TagsNav from './tagsNav.vue'
 
 export default {
     name: 'home',
     components: {
         Header,
-        Navbar
+        Navbar,
+        TagsNav
     }
 }
 </script>

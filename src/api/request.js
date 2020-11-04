@@ -43,7 +43,7 @@ httpService.interceptors.request.use((cfg) => {
      */
     console.log('NODE_ENV', process.env.NODE_ENV)
     if (/localhost/.test(window.location.host)) {
-        cfg.baseURL = 'http://xxx.xx:8080/'
+        // cfg.baseURL = 'http://xxx.xx:8080/'
     }
 
     return cfg
@@ -65,11 +65,14 @@ httpService.interceptors.response.use((res) => {
     }
 
     if (data.code !== 200) {
+        /* 这里的错误，只做提示信息的统一处理，因为每一个地方的错误处理业务不同 */
         Message({
-            message: data.msg,
+            message: data.message,
             type: 'error',
             duration: 2000
         })
+
+        return Promise.reject(res.data)
     }
 
     /**
@@ -81,7 +84,7 @@ httpService.interceptors.response.use((res) => {
 
     return res.data
 }, (error) => {
-    console.log(error)
+    console.log('request error:', error)
     Message({
         message: error.message,
         type: 'error',

@@ -1,6 +1,7 @@
 // @import './variables.scss';
 // @import './mixin.scss';
 // @import './transition.scss';
+@import './media.scss';
 @import './common.scss';
 
 body {
@@ -77,4 +78,12 @@ pre{
     line-height: 1.45;
     background-color: #f6f8fa;
     border-radius: 3px;
+}
+
+/* 处理高德地图图标 */
+.amap-logo{
+    display: none !important;
+}
+.amap-copyright{
+    display: none !important;
 }

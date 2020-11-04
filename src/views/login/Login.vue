@@ -10,7 +10,7 @@
                         <el-input :type="eyeStatus? 'text' : 'password'" v-model="formData.password" placeholder="password"></el-input>
                         <div :class="eyeStatus? 'eye-open': 'eye-close'" @click="handleEye"></div>
                     </el-form-item>
-                    <el-checkbox class="auto-login" v-model="autoLogin">remember login</el-checkbox>
+                    <el-checkbox class="auto-login" v-model="rememberPassword">remember login</el-checkbox>
                     <el-form-item>
                         <el-button style="width:100%" type="primary" @click="submitForm">Login</el-button>
                     </el-form-item>
@@ -28,15 +28,17 @@
 </template>
 
 <script>
-import { cookieMethods } from '@/utils/commonFn'
+import Cookies from 'js-cookie'
 import { mapState, mapActions } from 'vuex'
 import { reqLogin, reqUserInfo } from '@/api/user/user.js'
 import CryptoJS from 'crypto-js'
 
 export default {
+    comments: {
+    },
     data () {
         return {
-            autoLogin: false,
+            rememberPassword: false,
             MD5SHA1: '',
             eyeStatus: false,
             formData: {
@@ -55,14 +57,7 @@ export default {
     },
 
     created () {
-        /* 如果能获取到用户信息 直接跳转 不再次登录 */
-        reqUserInfo()
-            .then((result) => {
-                console.log('登录页自动登录')
-                this.$router.push({ path: '/' })
-            }).catch((err) => {
-                console.log(err)
-            })
+        this.autoLogin()
     },
 
     computed: {
@@ -87,22 +82,27 @@ export default {
             this.eyeStatus = !this.eyeStatus
         },
 
+        autoLogin () {
+            if (Cookies.get('token')) {
+                this.$router.push({ path: '/' })
+            }
+        },
+
         submitForm () {
             this.$refs.formLogin.validate((valid) => {
                 if (valid) {
-                    reqLogin()
-                        .then(({ name, age, roles, token }) => {
-                            cookieMethods.set('token', token)
-                            this.actionSetUserInfo({
-                                name,
-                                age,
-                                roles
-                            })
-                                .then((result) => {
-                                    this.$router.push({ path: '/' })
-                                }).catch((error) => {
-                                    console.log(error)
-                                })
+                    const { rememberPassword, formData: { username, password } } = this
+                    reqLogin({ username })
+                        .then(({ code, data }) => {
+                            console.log(999999999999999)
+                            const { token } = data
+                            Cookies.set('token', token)
+                            if (rememberPassword) {
+                                Cookies.set('login', encodeURIComponent(`${password}&${username}`))
+                            } else {
+                                Cookies.set('login', '')
+                            }
+                            this.$router.push({ path: '/' })
                         }).catch((err) => {
                             console.log('error in login page:', err)
                         })

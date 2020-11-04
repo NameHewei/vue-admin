@@ -6,6 +6,7 @@
             default-expand-all
             ref="elTree"
             node-key="id"
+            check-strictly
             :data="treeData"
             :props="defaultProps"
             @check="handleCurrentChange"
@@ -22,6 +23,27 @@
         <hr/>
          <h4>结果：</h4>
         <p>{{ checked.toString() }}</p>
+        <div>
+            <h1>自定义设置，父子关联</h1>
+            <pre>
+                1. 勾选父一级，自动勾选所有子级
+                2. 勾选父一级，可以不用必须勾选子级
+                3. 勾选任一级，自动勾选所有父级
+            </pre>
+            <el-tree
+                ref="cusTreeRef"
+                show-checkbox
+                check-strictly
+                default-expand-all
+                node-key="id"
+                :data="treeData"
+                :props="defaultProps"
+                @check="handleCheck">
+            </el-tree>
+            <p>
+                <b>当前选中</b> <span>{{ cusChecked }}</span>
+            </p>
+        </div>
     </div>
 </template>
 
@@ -82,7 +104,8 @@ export default {
             checked: [],
             /** @des 所有选项的id */
             ids: [],
-            halfIds: []
+            halfIds: [],
+            cusChecked: []
         }
     },
 
@@ -112,7 +135,8 @@ export default {
             this.ids = tempArr
             this.sureInit = sureInit
             this.checked = initIds
-            this.$refs.elTree.setCheckedKeys(sureInit)
+            /* 如果设置了父id 又没有设置 父子不互相关联 那子一级将被全部选中 */
+            this.$refs.elTree.setCheckedKeys(initIds)
         },
 
         handleCheckAllChange (val) {
@@ -128,6 +152,47 @@ export default {
         handleCurrentChange (v, a) {
             this.halfIds = this.$refs.elTree.getHalfCheckedKeys()
             this.checked = [...this.halfIds, ...a.checkedKeys]
+        },
+
+        handleCheck (currentNode, treeStatus) {
+            console.log(currentNode, treeStatus)
+            /**
+             * @des 根据父元素的勾选或取消勾选，将所有子级处理为选择或非选中状态
+             * @param { node: Object }  当前节点
+             * @param { status: Boolean } （true ： 处理为勾选状态 ； false： 处理非选中）
+             */
+            const setChildStatus = (node, status) => {
+                /* 这里的 id children 也可以是其它字段，根据实际的业务更改 */
+                this.$refs.cusTreeRef.setChecked(node.id, status)
+                if (node.children) {
+                    /* 循环递归处理子节点 */
+                    for (let i = 0; i < node.children.length; i++) {
+                        setChildStatus(node.children[i], status)
+                    }
+                }
+            }
+            /* 设置父节点为选中状态 */
+            const setParentStatus = (nodeObj) => {
+                /* 拿到tree组件中的node,使用该方法的原因是第一次传入的 node 没有 parent */
+                const node = this.$refs.cusTreeRef.getNode(nodeObj)
+                if (node.parent.key) {
+                    this.$refs.cusTreeRef.setChecked(node.parent, true)
+                    setParentStatus(node.parent)
+                }
+            }
+
+            /* 判断当前点击是选中还是取消选中操作 */
+            if (treeStatus.checkedKeys.includes(currentNode.id)) {
+                setParentStatus(currentNode)
+                setChildStatus(currentNode, true)
+            } else {
+                /* 取消选中 */
+                if (currentNode.children) {
+                    setChildStatus(currentNode, false)
+                }
+            }
+
+            this.cusChecked = [...this.$refs.cusTreeRef.getHalfCheckedKeys(), ...this.$refs.cusTreeRef.getCheckedKeys()]
         }
     }
 }
