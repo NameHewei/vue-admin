@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div :class="{'ele-inline': inline === 'inline'}">
+        <div :class="{'ele-inline': inline }">
             <el-form :inline="true" :model="formData" :rules="formRules" ref="searchForm" :label-width="`${labelWidth}px`" class="demo-formData">
                 <el-form-item
                     v-for="item in searchOptions"
@@ -56,7 +56,7 @@
                 </el-form-item>
             </el-form>
         </div>
-        <div :class="{ 'part-btn': true,'ele-inline':inline === 'inline' }">
+        <div :class="{ 'part-btn': true,'ele-inline':inline }">
             <el-button type="primary" @click="handleSearch">搜索</el-button>
             <el-button @click="handleReset">重置</el-button>
         </div>
@@ -87,8 +87,8 @@ export default {
         },
         /** @des 搜索按钮是否换行 */
         inline: {
-            type: String,
-            default: 'block'
+            type: Boolean,
+            default: false
         }
     },
 

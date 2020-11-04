@@ -5,7 +5,7 @@ export function reqProducts () {
 }
 
 export function reqUpdateProduct (params) {
-    return request({ url: '/api/financial/product/', method: 'post', ...params })
+    return request({ url: '/api/financial/product/', method: 'post', params })
 }
 
 export function reqCompany () {
@@ -13,7 +13,7 @@ export function reqCompany () {
 }
 
 export function reqCompanyChange (params) {
-    return request({ url: '/api/financial/company/', ...params })
+    return request({ url: '/api/financial/company/', params })
     // return new Promise(function (resolve, reject) {
     //     resolve({
     //         code: 200,

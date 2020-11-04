@@ -56,7 +56,7 @@ httpService.interceptors.response.use((res) => {
     const { config, data } = res
 
     /* 注意这个参数实在 api文件里面的方法中传递的，是和url同一级 */
-    if (config.showSuccessMsg && data.code === '成功') {
+    if (config.showSuccessMsg && data.code === 'xxx 根据不同的后端数据结构来定义') {
         Message({
             message: data.msg,
             type: 'success',

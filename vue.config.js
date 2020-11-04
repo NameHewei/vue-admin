@@ -16,10 +16,14 @@ module.exports = {
         compress: true,
         port: 7878,
 
+        // publicPath: './',
+
         proxy: {
             '/api': {
                 target: 'http://localhost:2500',
-                changeOrigin: true
+                changeOrigin: true,
+                /* 如果这个 'api' 公共前缀不是后端需要的，用以下方法去除 */
+                pathRewrite: { '^/api': '' }
             }
         }
     },
