@@ -12,6 +12,8 @@ import './views/components/index.js'
 
 import './vueConfig.js'
 
+import '../mock/mock.js'
+
 // 引入路由守卫，判断权限
 import './navigationGuard'
 // NProgress.start()

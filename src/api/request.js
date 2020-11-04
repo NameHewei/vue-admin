@@ -43,7 +43,7 @@ httpService.interceptors.request.use((cfg) => {
      */
     console.log('NODE_ENV', process.env.NODE_ENV)
     if (/localhost/.test(window.location.host)) {
-        cfg.baseURL = 'http://xxx.xx:8080/'
+        // cfg.baseURL = 'http://xxx.xx:8080/'
     }
 
     return cfg

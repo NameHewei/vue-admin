@@ -1,22 +1,19 @@
 import request from '@/api/request'
-import { v1 as uuIdV1 } from 'uuid'
-
 import { cookieMethods } from '@/utils/commonFn'
 
-export function reqLogin () {
+export function reqLogin (params) {
     console.log('登录')
-    return new Promise(function (resolve) {
-        resolve({
-            name: 123,
-            age: 10,
-            roles: ['ADMIN'],
-            token: uuIdV1()
-        })
+    return request({
+        url: '/login',
+        method: 'post',
+        params
     })
+    // return new Promise(function (resolve) {
+    //     resolve()
+    // })
 }
 
 export function reqUserInfo () {
-    console.log('获取用户信息')
     return new Promise(function (resolve, reject) {
         if (cookieMethods.get('token')) {
             resolve({

@@ -60,24 +60,7 @@ export default {
     },
 
     created () {
-        /* 如果能获取到用户信息 直接跳转 不再次登录 */
-        reqUserInfo()
-            .then((result) => {
-                console.log('登录页自动登录')
-                throw Error('123')
-                // this.$router.push({ path: '/' })
-            }).catch((err) => {
-                console.error('自动登录失败：', err)
-
-                /* 查看是否需要回填账号密码 */
-                const user = Cookies.get('login')
-                if (user) {
-                    const ap = decodeURIComponent(user).split('&')
-                    this.formData.username = ap[1]
-                    this.formData.password = ap[0]
-                    this.rememberPassword = true
-                }
-            })
+        this.getUserInfo()
     },
 
     computed: {
@@ -102,28 +85,51 @@ export default {
             this.eyeStatus = !this.eyeStatus
         },
 
+        getUserInfo () {
+            if (Cookies.get('token')) {
+                /* 如果能获取到用户信息 直接跳转 不再次登录 */
+                reqUserInfo()
+                    .then(({ name, age, roles }) => {
+                        console.log('登录页自动登录')
+                        this.actionSetUserInfo({
+                            name,
+                            age,
+                            roles
+                        })
+                            .then((result) => {
+                                const { rememberPassword, formData: { username, password } } = this
+                                if (rememberPassword) {
+                                    Cookies.set('login', encodeURIComponent(`${password}&${username}`))
+                                } else {
+                                    Cookies.set('login', '')
+                                }
+                                this.$router.push({ path: '/' })
+                            }).catch((error) => {
+                                console.log(error)
+                            })
+                        this.$router.push({ path: '/' })
+                    }).catch((err) => {
+                        console.error('自动登录失败：', err)
+
+                        /* 查看是否需要回填账号密码 */
+                        const user = Cookies.get('login')
+                        if (user) {
+                            const ap = decodeURIComponent(user).split('&')
+                            this.formData.username = ap[1]
+                            this.formData.password = ap[0]
+                            this.rememberPassword = true
+                        }
+                    })
+            }
+        },
+
         submitForm () {
             this.$refs.formLogin.validate((valid) => {
                 if (valid) {
                     reqLogin()
-                        .then(({ name, age, roles, token }) => {
+                        .then((data) => {
+                            const { token } = data
                             Cookies.set('token', token)
-                            this.actionSetUserInfo({
-                                name,
-                                age,
-                                roles
-                            })
-                                .then((result) => {
-                                    const { rememberPassword, formData: { username, password } } = this
-                                    if (rememberPassword) {
-                                        Cookies.set('login', encodeURIComponent(`${password}&${username}`))
-                                    } else {
-                                        Cookies.set('login', '')
-                                    }
-                                    this.$router.push({ path: '/' })
-                                }).catch((error) => {
-                                    console.log(error)
-                                })
                         }).catch((err) => {
                             console.log('error in login page:', err)
                         })
