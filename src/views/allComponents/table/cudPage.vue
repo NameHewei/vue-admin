@@ -40,7 +40,7 @@ export default {
         }
     },
     mounted () {
-        console.log('id', this.id)
+        // console.log('id-s-ss', this.id)
         if (this.id) {
             this.getDetail()
         }
@@ -66,7 +66,7 @@ export default {
                 if (valid) {
                     this.$router.go(-1)
                 } else {
-                    console.log('error submit!!')
+                    console.error('error submit!!')
                     return false
                 }
             })
@@ -76,7 +76,7 @@ export default {
                 if (valid) {
                     alert('submit!')
                 } else {
-                    console.log('error submit!!')
+                    console.error('error submit!!')
                     return false
                 }
             })

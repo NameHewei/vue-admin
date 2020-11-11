@@ -79,6 +79,10 @@ module.exports = {
         return data
     },
 
-    // 是否每次保存时 lint 代码，错误输出为编译警告
-    lintOnSave: true
+    // 是否每次保存时 lint 代码
+    // 'default' 编译时强制将所有 lint 错误 输出为编译错误, 错误在开发时直接显示在浏览器中
+    // true 或 'warning' lint 错误输出为编译警告 不会导致编译失败
+    // 'error' 把 lint 输出为编译错误
+    // false 禁用，如下是生产环境禁用
+    lintOnSave: process.env.NODE_ENV === 'production' ? false : 'default'
 }

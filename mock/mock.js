@@ -17,4 +17,4 @@ Mock.mock('/user/info', () => {
     return { code: 200, message: 'sucess', data: { name: 'hew', age: 10, roles: ['ADMIN'] } }
 })
 
-console.log(process.env.NODE_ENV)
+console.warn(process.env.NODE_ENV)
