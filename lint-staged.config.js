@@ -1,3 +1,3 @@
 module.exports = {
-    '*.{js}': () => 'vue-cli-service lint'
+    '**/*.js?(x)': () => 'vue-cli-service lint'
 }

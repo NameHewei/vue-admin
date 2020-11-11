@@ -45,5 +45,12 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "npm run cusPre",
+      "vue-cli-service lint",
+      "git add ."
+    ]
   }
 }
