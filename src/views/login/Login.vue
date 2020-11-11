@@ -61,7 +61,7 @@ export default {
 
     created () {
         this.autoLogin()
-        console.warn(23232)
+        console.warn(111)
     },
 
     computed: {
