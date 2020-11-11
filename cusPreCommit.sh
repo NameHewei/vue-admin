@@ -1,2 +1,2 @@
 #! /bin/sh
-echo 'precommit test -------------'
+echo 'precommit test -------------' > 'ttt.txt'
