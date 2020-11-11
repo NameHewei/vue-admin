@@ -30,7 +30,10 @@
 <script>
 import Cookies from 'js-cookie'
 import { mapState, mapActions } from 'vuex'
-import { reqLogin, reqUserInfo } from '@/api/user/user.js'
+import {
+    reqLogin,
+// reqUserInfo
+} from '@/api/user/user.js'
 import CryptoJS from 'crypto-js'
 
 export default {
@@ -58,6 +61,7 @@ export default {
 
     created () {
         this.autoLogin()
+        console.log(object)
     },
 
     computed: {
@@ -94,7 +98,6 @@ export default {
                     const { rememberPassword, formData: { username, password } } = this
                     reqLogin({ username })
                         .then(({ code, data }) => {
-                            console.log(999999999999999)
                             const { token } = data
                             Cookies.set('token', token)
                             if (rememberPassword) {
@@ -104,10 +107,10 @@ export default {
                             }
                             this.$router.push({ path: '/' })
                         }).catch((err) => {
-                            console.log('error in login page:', err)
+                            console.error('error in login page:', err)
                         })
                 } else {
-                    console.log('error submit!!')
+                    console.error('error submit!!')
                     return false
                 }
             })

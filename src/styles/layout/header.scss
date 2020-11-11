@@ -1,7 +1,11 @@
 $headerH: 55px;
 
+.page_head{
+    display: flex;
+    justify-content: space-between;
+}
 h1{
-    display: inline-block;
+    width: 150px;
     margin: 0 15px 0 0;
     height: $headerH;
     line-height: $headerH;
@@ -16,11 +20,18 @@ h1{
 }
 
 .user-operations{
-    float: right;
     margin: 15px 50px 0 0;
     height: 30px;
     line-height: 30px;
     font-size: 14px;
     cursor: pointer;
+    color: #fff;
+}
+
+.user{
+    width: 160px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 7.5px;
     color: #fff;
 }

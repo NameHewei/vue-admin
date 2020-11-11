@@ -1,7 +1,6 @@
-// 该文件没有用 scoped
 .ud-menu .el-submenu__title i{
     color: #fff;
 }
 .ud-menu ::v-deep .is-active{
-    background-color: orange!important;
+    background-color: #409EFF!important;
 }

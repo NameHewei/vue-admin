@@ -95,10 +95,15 @@ $sideW: 210px;
             display: inline-block;
             padding: 5px 15px;
             margin: 3px 5px;
-            border: 1px solid rgb(40, 95, 248);
+            border-radius: 2px;
+            font-size: 14px;
+            color:  rgb(153, 153, 153);
+            border: 1px solid rgb(153, 153, 153);
         }
         .select-tag{
-            color: red;
+            color: #fff;
+            border: 0;
+            background-color:#409EFF ;
         }
     }
 }

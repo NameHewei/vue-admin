@@ -1,9 +1,9 @@
 <template>
     <div>
         <el-menu
-            background-color="green"
-            text-color="pink"
-            active-text-color="#3478E6"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#fff"
             class="ud-menu"
             unique-opened
             :default-openeds="open"

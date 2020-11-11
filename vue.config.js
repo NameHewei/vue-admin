@@ -80,5 +80,5 @@ module.exports = {
     },
 
     // 是否每次保存时 lint 代码，错误输出为编译警告
-    lintOnSave: false
+    lintOnSave: true
 }

@@ -12,7 +12,7 @@ module.exports = {
   },
   rules: {
       // 允许使用console
-      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+      'no-console': process.env.NODE_ENV === 'production' ? 'error' : ["error", { allow: ["warn", "error"] }],
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       "indent": [
           "error",

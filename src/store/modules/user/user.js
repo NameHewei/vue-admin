@@ -20,7 +20,6 @@ export default {
     actions: {
         actionSetUserInfo ({ state, commit }, data) {
             try {
-                console.log('action', data)
                 /* 根据当前登录用户的角色，添加路由 */
                 router.addRoutes(permitRouters(data.roles))
                 commit('setUserInfo', { ...data })
