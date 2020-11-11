@@ -46,7 +46,6 @@
   },
   "lint-staged": {
     "*.{js,vue}": [
-      "cusPreCimmot",
       "vue-cli-service lint",
       "git add ."
     ]
