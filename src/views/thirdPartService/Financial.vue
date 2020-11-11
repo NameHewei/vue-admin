@@ -53,31 +53,31 @@ export default {
         async getCompa () {
             const res = await reqCompanyChange()
 
-            console.log(res)
+            // console.log(res)
             this.initCompanyProduct(res.results)
         },
 
         getCompanyData () {
             reqCompany().then((res) => {
-                console.log(res)
+                // console.log(res)
                 this.createPie(res.results)
 
                 res.results.forEach(v => {
 
                 })
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
             })
         },
 
         getProducts () {
             reqProducts().then((res) => {
-                console.log(res)
+                // console.log(res)
                 this.productsSelect = res.results.map(v => ({
                     label: v.name, value: v.id
                 }))
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
             })
         },
 
@@ -102,7 +102,7 @@ export default {
          * 创建折线图
          */
         createLine (data) {
-            const xData = [], yData = []
+            const xData = []; const yData = []
             data.list.forEach(({ total, date }) => {
                 xData.push(date)
                 yData.push(total)
@@ -202,7 +202,7 @@ export default {
                 this.$message.error('please enter number')
             }
 
-            console.log(product, change)
+            // console.log(product, change)
             reqUpdateProduct({
                 data: {
                     product,

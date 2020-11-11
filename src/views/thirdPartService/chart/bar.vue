@@ -25,7 +25,7 @@ export default {
                     lineStyle: {
                         color: 'orange'
                     },
-                    data: [ { xAxis: '1-1' } ]
+                    data: [{ xAxis: '1-1' }]
                 }
             }
         ]
@@ -70,7 +70,7 @@ export default {
                             if (sData[0].markLine.data.length) {
                                 sData[0].markLine.data = []
                             } else {
-                                sData[0].markLine.data = [ { xAxis: '1-1' } ]
+                                sData[0].markLine.data = [{ xAxis: '1-1' }]
                             }
 
                             myChart.setOption(option)
