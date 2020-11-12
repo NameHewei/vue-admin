@@ -1,9 +1,9 @@
 module.exports = {
     '**/*.js?(x)': (allStagedFiles) => {
         if (allStagedFiles.length) {
-            const file = allStagedFiles
-            return ` ${file}`
+            // const file = allStagedFiles
+            return 'file check'
         }
-        return ['vue-cli-service lint']
+        return 'success'
     }
 }
