@@ -34,8 +34,6 @@ Vue.prototype.$eCharts = eCharts
 Vue.prototype.$message = ElementUI.Message
 Vue.prototype.$utils = utils
 
-console.error(23223)
-
 Vue.use(ElementUI)
 
 new Vue({

@@ -45,7 +45,7 @@
   },
   "lint-staged": {
     "*.{js,vue}": [
-      "vue-cli-service lint -c ./.eslintrcCus.js",
+      "vue-cli-service lint --no-eslintrc -c .eslintrcCommit.js",
       "git add ."
     ]
   }

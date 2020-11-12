@@ -12,8 +12,8 @@ module.exports = {
   },
   rules: {
       // 允许使用console  off 是通用的关闭
-      //   'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      'no-console': process.env.NODE_ENV === 'production' ? 'error' : ['error', { allow: ['warn', 'error'] }],
+        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    //   'no-console': process.env.NODE_ENV === 'production' ? 'error' : ['error', { allow: ['warn', 'error'] }],
       // 允许使用 debugger
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       "indent": [
