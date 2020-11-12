@@ -6,10 +6,7 @@
     "start": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-
-    "cusPre": "bash cusPreCommit.sh",
-    "cusPreCimmot": "npm run cusPre"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -45,5 +42,11 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "vue-cli-service lint -c ./.eslintrcCus.js",
+      "git add ."
+    ]
   }
 }
