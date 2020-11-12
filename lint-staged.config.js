@@ -1,8 +1,9 @@
 module.exports = {
     '**/*.js?(x)': (allStagedFiles) => {
         if (allStagedFiles.length) {
-            return `printf Script files arent allowed in src directory: ${allStagedFiles.length}`
+            const file = allStagedFiles
+            return `printf Script files arent allowed in src directory: ${file}`
         }
-        return ['npm run cusPre', 'vue-cli-service lint']
+        return ['vue-cli-service lint']
     }
 }
