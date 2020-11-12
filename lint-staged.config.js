@@ -4,6 +4,6 @@ module.exports = {
             // const file = allStagedFiles
             return 'file check'
         }
-        return 'success'
+        return 'check success'
     }
 }
