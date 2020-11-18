@@ -42,9 +42,9 @@ export default {
         })
 
         myChart.on('mouseup', (params) => {
-            console.log(start, down, move, 'up')
+            // console.log(start, down, move, 'up')
             if (start && down && move) {
-                alert('加载')
+                this.$message.success('加载')
             }
             down = false
             move = false
@@ -52,12 +52,12 @@ export default {
 
         myChart.on('mousedown', (params) => {
             down = true
-            console.log('down')
+            // console.log('down')
         })
 
         myChart.on('mousemove', (params) => {
             move = true
-            console.log('move')
+            // console.log('move')
         })
 
         const options = {

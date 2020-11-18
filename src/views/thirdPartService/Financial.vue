@@ -53,13 +53,13 @@ export default {
         async getCompa () {
             const res = await reqCompanyChange()
 
-            // console.log(res)
+            // // console.log(res)
             this.initCompanyProduct(res.results)
         },
 
         getCompanyData () {
             reqCompany().then((res) => {
-                // console.log(res)
+                // // console.log(res)
                 this.createPie(res.results)
 
                 res.results.forEach(v => {
@@ -72,7 +72,7 @@ export default {
 
         getProducts () {
             reqProducts().then((res) => {
-                // console.log(res)
+                // // console.log(res)
                 this.productsSelect = res.results.map(v => ({
                     label: v.name, value: v.id
                 }))
@@ -202,7 +202,7 @@ export default {
                 this.$message.error('please enter number')
             }
 
-            // console.log(product, change)
+            // // console.log(product, change)
             reqUpdateProduct({
                 data: {
                     product,

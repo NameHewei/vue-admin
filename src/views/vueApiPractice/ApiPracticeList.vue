@@ -177,35 +177,35 @@ export default {
     watch: {
         input (v) {
             v = v.toString()
-            console.log(v, v.length)
+            // // console.log(v, v.length)
             // this.$nextTick(() => {
             if (v.length > 5) {
                 // setTimeout(() => {
                 this.input = 33335
                 // }, 0)
-                console.log('inner')
+                // // console.log('inner')
             }
             // })
         },
 
         input1 (v) {
             v = v.toString()
-            console.log(v, v.length)
+            // // console.log(v, v.length)
             // this.$nextTick(() => {
             if (v.length > 5) {
                 setTimeout(() => {
                     this.input1 = 33335
                 }, 0)
-                console.log('inner')
+                // // console.log('inner')
             }
             // })
         },
 
         selectValue () {
-            // console.log(document.getElementById('inputFile'))
+            // // console.log(document.getElementById('inputFile'))
             // document.getElementById('inputFile').dispatchEvent(new Event('click'))
 
-            console.log('watch')
+            // // console.log('watch')
             // document.getElementById('inputFile').click()
         }
     },
@@ -237,8 +237,8 @@ export default {
         },
 
         handleSelectChange (v) {
-            // console.log('onchange')
-            // console.log(document.getElementById('inputFile'))
+            // // console.log('onchange')
+            // // console.log(document.getElementById('inputFile'))
             document.getElementById('inputFile').click()
         }
     }

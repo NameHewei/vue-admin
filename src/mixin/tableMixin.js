@@ -32,7 +32,7 @@ export default {
 
         /** 获取表格数据 */
         getTableData () {
-            console.log(this.currentPage, this.pageSize)
+            // console.log(this.currentPage, this.pageSize)
         }
     }
 }

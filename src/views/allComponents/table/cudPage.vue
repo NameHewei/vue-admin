@@ -40,7 +40,7 @@ export default {
         }
     },
     mounted () {
-        // console.log('id-s-ss', this.id)
+        // // console.log('id-s-ss', this.id)
         if (this.id) {
             this.getDetail()
         }
@@ -74,7 +74,7 @@ export default {
         submitForm (formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!')
+                    this.$message.success('submit!')
                 } else {
                     console.error('error submit!!')
                     return false

@@ -93,7 +93,7 @@ export default {
 
         /* 当点击输入框的tag 删除时触发；同样的该操作也会触发 change 事件，但是需要在change事件中过滤掉 checked为 false 的值 */
         handleRemoveTag (n) {
-            console.log(n)
+            // console.log(n)
         }
     }
 }

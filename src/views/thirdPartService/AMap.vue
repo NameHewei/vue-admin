@@ -58,7 +58,7 @@ export default {
             .then(() => {
                 this.setMap()
             }).catch((err) => {
-                console.log(err)
+                console.error(err)
             })
     },
 
@@ -93,7 +93,7 @@ export default {
              * @des 点击地图获取经纬度
              */
             map.on('click', (e) => {
-                alert(`点击点：${e.lnglat.getLng()}-${e.lnglat.getLat()}`)
+                this.$message.success(`点击点：${e.lnglat.getLng()}-${e.lnglat.getLat()}`)
             })
 
             this.searchLocation()
@@ -104,34 +104,34 @@ export default {
          * @des 引入UI组件库
          */
         useUI () {
-            const { map } = this
+            // const { map } = this
             AMapUI.loadUI(['overlay/SimpleMarker'], (SimpleMarker) => {
                 // 内置的样式
                 /**
                  * SimpleMarker（简单标注）继承自AMap.Marker
                  */
-                const sm = new SimpleMarker({
-                    iconTheme: 'default',
-                    // 使用内置的iconStyle
-                    iconStyle: 'red',
-                    // 图标文字
-                    iconLabel: {
-                        innerHTML: 'H',
-                        style: {
-                            // 颜色, #333, red等等
-                            color: '#fff'
-                        }
-                    },
-                    // 显示定位点
-                    // showPositionPoint:true,
-                    map: map,
-                    position: [104.065649, 30.65518]
-                    // Marker的label(见https://lbs.amap.com/api/javascript-api/reference/overlay/#Marker)
-                    // label: {
-                    //     content: '<i>content</i>',
-                    //     offset: new AMap.Pixel(27, 25)
-                    // }
-                })
+                // const sm = new SimpleMarker({
+                //     iconTheme: 'default',
+                //     // 使用内置的iconStyle
+                //     iconStyle: 'red',
+                //     // 图标文字
+                //     iconLabel: {
+                //         innerHTML: 'H',
+                //         style: {
+                //             // 颜色, #333, red等等
+                //             color: '#fff'
+                //         }
+                //     },
+                //     // 显示定位点
+                //     // showPositionPoint:true,
+                //     map: map,
+                //     position: [104.065649, 30.65518]
+                //     // Marker的label(见https://lbs.amap.com/api/javascript-api/reference/overlay/#Marker)
+                //     // label: {
+                //     //     content: '<i>content</i>',
+                //     //     offset: new AMap.Pixel(27, 25)
+                //     // }
+                // })
             })
         },
 
@@ -162,7 +162,7 @@ export default {
             var gps = [116.3, 39.9]
             AMap.convertFrom(gps, 'gps', function (status, result) {
                 if (result.info === 'ok') {
-                    console.log(result.locations) // Array.<LngLat>
+                    // console.log(result.locations) // Array.<LngLat>
                 }
             })
         },
@@ -191,12 +191,12 @@ export default {
                 geolocation.getCurrentPosition()
                 AMap.event.addListener(geolocation, 'complete', (data) => {
                     // 返回定位信息
-                    alert('当前位置获取成功,请看控制台')
-                    console.log('当前位置', data)
+                    this.$message.success('当前位置获取成功,请看控制台')
+                    // console.log('当前位置', data)
                 })
                 AMap.event.addListener(geolocation, 'error', () => {
                     // 返回定位出错信息
-                    alert('获取当前信息失败')
+                    this.$message.error('获取当前信息失败')
                 })
             })
         },
@@ -209,10 +209,10 @@ export default {
             const geoCoder = new AMap.Geocoder({})
             geoCoder.getAddress([104.065649, 30.65518], function (status, result) {
                 if (status === 'complete' && result.regeocode) {
-                    alert(`得到的地址是：${result.regeocode.formattedAddress}`)
+                    this.$message.success(`得到的地址是：${result.regeocode.formattedAddress}`)
                 } else {
-                    alert('获取地址发生错误')
-                    console.log(result)
+                    this.$message.error('获取地址发生错误')
+                    // console.log(result)
                 }
             })
         },
@@ -303,7 +303,7 @@ export default {
 
             document.getElementById('saveArea').onclick = () => {
                 polyEditor.close()
-                console.log(2)
+                // console.log(2)
             }
 
             polyEditor.on('end', (e) => {
@@ -348,7 +348,7 @@ export default {
             }
 
             document.getElementById('saveArea').onclick = () => {
-                console.log(1)
+                // console.log(1)
                 this.handleSavePath()
             }
         },

@@ -1,9 +1,10 @@
 <template>
     <div class="page_head">
-        <h1 @click="routerSkip">
-            <img src="../assets/logo.png"/>
-            <span>vue-admin</span>
-        </h1>
+        <div class="menu_fold_icon">
+            <span>
+                <i @click="handleMenuFold" :class="menuCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'"></i>
+            </span>
+        </div>
         <div class="user">
             <el-popover
                 placement="top-start"
@@ -17,7 +18,7 @@
 
 <script>
 import Cookies from 'js-cookie'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     data () {
@@ -31,14 +32,15 @@ export default {
     },
 
     computed: {
-        ...mapState(['user'])
+        ...mapState(['user', 'menuCollapse'])
     },
 
     methods: {
-        routerSkip () {
-            this.$router.push({
-                path: '/'
-            })
+        ...mapActions(['actionToggleMenu']),
+
+        /* 处理菜单的折叠 */
+        handleMenuFold () {
+            this.actionToggleMenu()
         },
 
         handleLogOut () {
@@ -67,5 +69,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/styles/layout/header.scss";
+@import "@/styles/layout/layout.scss";
 </style>

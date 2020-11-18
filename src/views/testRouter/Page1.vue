@@ -9,7 +9,7 @@
 <script>
 export default {
     mounted () {
-        console.log('page1', this.$router)
+        // console.log('page1', this.$router)
     },
     methods: {
         skip () {

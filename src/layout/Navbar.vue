@@ -1,11 +1,16 @@
 <template>
-    <div>
+    <div class="layout_nav_sidebar">
+        <h1 @click="goIndex">
+            <img src="../assets/logo.png"/>
+            <span>vue-admin</span>
+        </h1>
         <el-menu
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#fff"
             class="ud-menu"
             unique-opened
+            :collapse="menuCollapse"
             :default-openeds="open"
             :default-active="active"
             @select="handleSelect"
@@ -40,7 +45,7 @@ export default {
     data () {
         return {
             menu: [],
-            open: []
+            open: [],
         }
     },
 
@@ -49,6 +54,7 @@ export default {
     },
 
     computed: {
+        ...mapState(['menuCollapse']),
         ...mapState('user', ['roles']),
 
         active () {
@@ -66,6 +72,12 @@ export default {
             this.open = openPath
         },
 
+        goIndex () {
+            this.$router.push({
+                path: '/'
+            })
+        },
+
         routerSkip (name) {
             this.$router.push({
                 name
@@ -80,5 +92,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/layout/navbar.scss';
+@import '@/styles/layout/layout.scss';
 </style>

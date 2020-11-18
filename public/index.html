@@ -12,19 +12,16 @@
     <!-- <script src="./js/NIM_Web_NIM_v5.9.1.js"></script> -->
 
     <!-- NProgress -->
-    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
-
-    <!--阿里 icon font UI组件库 1.0 -->
-    <script src="//at.alicdn.com/t/font_1581435_mwe70rvbt2l.js"></script>
 </head>
 
 <body>
+    <!-- NProgress -->
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
     <script>
         NProgress.start()
     </script>
-    <div style="position: fixed;z-index:2000;top:15px;left:15%;color: #fff;">
+    <div style="position: fixed;z-index:2000;top:15px;left:20%;color: #fff;">
         <b>BASE_URL: <%= BASE_URL %></b>
         <b>NODE_ENV: <%= NODE_ENV %></b>
         <b>CUSTOM_NAME: <%= CUSTOM_NAME %></b>
@@ -32,10 +29,14 @@
     <noscript>
         <strong>We're sorry but vue-admin doesn't work properly without JavaScript enabled. Please enable it to
             continue.</strong>
-    </noscript>
-    <div id="app"></div>
+        </noscript>
+        <div id="app"></div>
+
+    <!--阿里 icon font UI组件库 1.0 -->
+    <script src="//at.alicdn.com/t/font_1581435_mwe70rvbt2l.js"></script>
 
     <!-- built files will be auto injected -->
+
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10"></script>
       <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
       <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->

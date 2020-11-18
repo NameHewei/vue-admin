@@ -41,14 +41,14 @@ httpService.interceptors.request.use((cfg) => {
     /**
      * @des 如果没有配置反向代理，可直接加地址
      */
-    console.log('NODE_ENV', process.env.NODE_ENV)
+    // console.log('NODE_ENV', process.env.NODE_ENV)
     if (/localhost/.test(window.location.host)) {
         // cfg.baseURL = 'http://xxx.xx:8080/'
     }
 
     return cfg
 }, (error) => {
-    console.log(error)
+    // console.log(error)
     return Promise.reject(error)
 })
 
@@ -84,7 +84,7 @@ httpService.interceptors.response.use((res) => {
 
     return res.data
 }, (error) => {
-    console.log('request error:', error)
+    // console.log('request error:', error)
     Message({
         message: error.message,
         type: 'error',

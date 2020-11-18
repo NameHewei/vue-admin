@@ -26,8 +26,8 @@ export default {
             inserted: function (el, binding) {
                 // el 可以用来直接操作 DOM
                 el.focus()
-                console.log('value', binding.value) // everyone  返回绑定的值
-                console.log('arg', binding.arg) // params 传给指令的参数
+                // console.log('value', binding.value) // everyone  返回绑定的值
+                // console.log('arg', binding.arg) // params 传给指令的参数
             }
         }
     }

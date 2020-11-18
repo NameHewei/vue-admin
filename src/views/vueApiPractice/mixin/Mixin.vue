@@ -30,7 +30,7 @@ export default {
     mounted () {
         this.key = this.keya
 
-        console.log(this.name, this.age)
+        // console.log(this.name, this.age)
     }
 }
 </script>

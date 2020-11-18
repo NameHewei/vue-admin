@@ -12,6 +12,14 @@ module.exports = {
     */
     publicPath: './',
 
+    // pages: {
+    //     index: {
+    //         /* 配置时， entry 是必填的,并且会和 chain中配置的 html-webpack-plugin 有冲突 */
+    //         entry: './src/main.js',
+    //         title: 'vue-page'
+    //     }
+    // },
+
     /* 生产环境打包时,不生成 map 文件 */
     productionSourceMap: false,
 
@@ -31,14 +39,24 @@ module.exports = {
         }
     },
 
-    /**
-     * @des 方式1：链式方式，直接启动server即可查看
-     */
-    // chainWebpack: config => {
-    //     config
-    //         .plugin('webpack-bundle-analyzer')
-    //         .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
-    // }
+    chainWebpack: config => {
+        /**
+         * @des 方式1：链式方式，直接启动server即可查看
+         */
+        // config
+        //     .plugin('webpack-bundle-analyzer')
+        //     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+        config
+            /* 这里的 html-webpack-plugin  就用html表示 */
+            .plugin('html')
+            .tap(args => {
+                // 可以用 console 将 args 打印出来
+                // console.log(args)
+                /* 这里默认是去取的 package.json 的name */
+                args[0].title = 'vue-chain'
+                return args
+            })
+    },
 
     /**
      * @des
@@ -51,7 +69,13 @@ module.exports = {
             externals: {
                 NProgress: 'NProgress'
             },
-            plugins: []
+            plugins: [],
+            performance: {
+                // 可设置的值有 'warning': 'error' | 'warning' boolean: false 是否要给出提示 默认是会输出提示
+                // hints: true,
+                /* 打包后输出的资源大小超过多少给出提示， 默认 250k */
+                // maxAssetSize: 400000
+            }
         }
 
         /**
@@ -73,6 +97,7 @@ module.exports = {
         } else {
             cn = 'develop hewitt'
         }
+        /* 创建全局常量，参考 webpack-pure/config */
         data.plugins.push(new webpack.DefinePlugin({
             CUSTOM_NAME: JSON.stringify(cn)
         }))
@@ -80,9 +105,9 @@ module.exports = {
     },
 
     // 是否每次保存时 lint 代码
-    // 'default' 编译时强制将所有 lint 错误 输出为编译错误, 错误在开发时直接显示在浏览器中
+    // default 输出错误，导致编译失败
     // true 或 'warning' lint 错误输出为编译警告 不会导致编译失败
-    // 'error' 把 lint 输出为编译错误
-    // false 禁用，如下是生产环境禁用
-    lintOnSave: process.env.NODE_ENV === 'production' ? false : 'default'
+    // error 警告、错误 输出，导致编译失败
+    // process.env.NODE_ENV !== 'production' 生产环境(打包时) 设置为false 即不会开启校验
+    lintOnSave: 'default'
 }

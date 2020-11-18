@@ -32,6 +32,8 @@ Vue.directive('permission', {
 
 Vue.prototype.$eCharts = eCharts
 Vue.prototype.$message = ElementUI.Message
+
+/* 全局挂载 utils */
 Vue.prototype.$utils = utils
 
 Vue.use(ElementUI)

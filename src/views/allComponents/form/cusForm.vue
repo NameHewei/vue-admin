@@ -174,18 +174,18 @@ export default {
         },
 
         handleSelect (item) {
-            console.log('select', item)
+            // console.log('select', item)
         },
 
         handleCompleteFocus (e) {
             /**
              * 这里通过id去获取当前操作项数据 例如 可编辑表格中获取当前操作的行
              */
-            console.log('change id', e.target.id)
+            // console.log('change id', e.target.id)
         },
 
         handleIconClick (ev) {
-            console.log(ev)
+            // console.log(ev)
         },
 
         loadAll () {
@@ -195,9 +195,9 @@ export default {
         submitForm (formName) {
             this.$refs.cusForm.validate((valid) => {
                 if (valid) {
-                    console.log(this.form)
+                    // console.log(this.form)
                 } else {
-                    console.log('error submit!!')
+                    // console.log('error submit!!')
                     return false
                 }
             })
@@ -208,11 +208,11 @@ export default {
         },
 
         handleChange (v) {
-            console.log('联级选择获取label：')
+            // console.log('联级选择获取label：')
             /* 该方法是将当前节点后其子节点一并返回 */
             const arr = this.$refs.refCas.getCheckedNodes()
             for (let i = 0; i < arr.length; i++) {
-                console.log(arr[i].label, arr[i].parent ? arr[i].parent.label : '--')
+                // console.log(arr[i].label, arr[i].parent ? arr[i].parent.label : '--')
             }
         },
 

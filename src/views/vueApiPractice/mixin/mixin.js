@@ -6,7 +6,7 @@ export default {
     },
 
     created () {
-        console.log(123)
+        // // console.log(123)
     },
     computed: {
         name () {

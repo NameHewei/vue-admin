@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        menuCollapse: false,
         /**
          * @des 直接调用下面属性，参考 Login.vue
          */
@@ -15,6 +16,11 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        /* 处理菜单的展开与隐藏 */
+        TOGGLE_MENU: state => {
+            state.menuCollapse = !state.menuCollapse
+        },
+
         /**
          * @des 第一个参数state，第二个参数为用户自定义参数
          */
@@ -27,6 +33,10 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        actionToggleMenu ({ commit }) {
+            commit('TOGGLE_MENU')
+        },
+
         /**
          * @des 第一个参数context 包含 state，commit，dispatch 等方法，第二个参数为用户自定义参数
          * 1. 如果在action中调用另一个action，就要用dispatch

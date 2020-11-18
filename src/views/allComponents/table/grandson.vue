@@ -29,13 +29,13 @@ export default {
     },
 
     created () {
-        console.log('grandson some key:', this.someKey)
+        // console.log('grandson some key:', this.someKey)
     },
 
     watch: {
         watchObj: {
             handler (v) {
-                console.log('watch watchObj:', v)
+                // console.log('watch watchObj:', v)
             },
             immediate: true
             // deep: true
@@ -45,7 +45,7 @@ export default {
     methods: {
         handleListener () {
             /* 直接获取和用prop获取只能选一个 */
-            console.log('$attrs-$listener', this.$attrs, this.$listeners)
+            // console.log('$attrs-$listener', this.$attrs, this.$listeners)
             this.$listeners.click()
             this.$emit('click')
         }

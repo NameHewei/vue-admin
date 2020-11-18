@@ -96,7 +96,7 @@ export default {
         },
 
         handleListener () {
-            console.log('console listeners')
+            // console.log('console listeners')
         },
 
         /* 批量删除 */
@@ -105,13 +105,13 @@ export default {
             let ids = ''
             const commandObj = {
                 publish: () => {
-                    console.log('publish ids', ids)
+                    console.warn('publish ids', ids)
                 },
                 offline: () => {
-                    console.log('offline ids', ids)
+                    console.warn('offline ids', ids)
                 },
                 del: () => {
-                    console.log('delete ids', ids)
+                    console.warn('delete ids', ids)
                 }
             }
             if (multipleSelection.length) {
@@ -135,7 +135,7 @@ export default {
         },
 
         handleDeleteCb (v) {
-            console.log('删除: ', v)
+            // console.log('删除: ', v)
         },
 
         handleEdit (id) {

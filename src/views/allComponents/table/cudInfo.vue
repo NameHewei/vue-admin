@@ -53,9 +53,9 @@ export default {
     },
 
     created () {
-        console.log('child otherKey:', this.otherKey)
-        console.log('created id', this.id)
-        console.log('created selectOptions', this.selectOptions)
+        // console.log('child otherKey:', this.otherKey)
+        // console.log('created id', this.id)
+        // console.log('created selectOptions', this.selectOptions)
     },
 
     data () {
@@ -110,13 +110,13 @@ export default {
         getDetail () {
             const { id } = this
             if (id) {
-                console.log('有ID')
+                // console.log('有ID')
                 this.form = {
                     name: 'detail name',
                     region: '11'
                 }
             } else {
-                console.log('无ID')
+                // console.log('无ID')
             }
         },
 
@@ -129,7 +129,7 @@ export default {
                 if (valid) {
                     this.handleHide()
                 } else {
-                    console.log('error submit!!')
+                    // console.log('error submit!!')
                     return false
                 }
             })

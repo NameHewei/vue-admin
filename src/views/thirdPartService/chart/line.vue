@@ -45,7 +45,7 @@ export default {
             this.myChart = myChart
             myChart.on('click', (params) => {
                 /* params.name 返回的是x轴值 */
-                console.log('line click', params)
+                // console.log('line click', params)
             })
             // 绘制图表
             myChart.setOption({

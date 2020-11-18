@@ -155,7 +155,7 @@ export default {
         },
 
         handleCheck (currentNode, treeStatus) {
-            console.log(currentNode, treeStatus)
+            // console.log(currentNode, treeStatus)
             /**
              * @des 根据父元素的勾选或取消勾选，将所有子级处理为选择或非选中状态
              * @param { node: Object }  当前节点

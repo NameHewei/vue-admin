@@ -46,7 +46,7 @@ export default {
 
     methods: {
         handleRemove (file, fileList) {
-            console.log(file, fileList)
+            // console.log(file, fileList)
         },
 
         handlePictureCardPreview (file) {

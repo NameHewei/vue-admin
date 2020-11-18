@@ -10,7 +10,7 @@ export default {
 
     methods: {
         buttonClick () {
-            alert('click')
+            this.$message.success('click')
         }
     },
 
