@@ -1,8 +1,8 @@
 <template>
-    <div class="page_head">
+    <div class="index_head_part">
         <div class="menu_fold_icon">
             <span>
-                <i @click="handleMenuFold" :class="menuCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'"></i>
+                <i @click="handleMenuFold" :class="menuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
             </span>
         </div>
         <div class="user">
@@ -69,5 +69,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/styles/layout/layout.scss";
+// @import "@/styles/layout/layout.scss";
 </style>

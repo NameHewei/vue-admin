@@ -1,41 +1,20 @@
 @import '../variable.scss';
 $headerH: 55px;
 $sideW: 200px;
+$sideWF: 65px;
 $footerH: 30px;
 $borderC: #897537;
 
 .main-layout{
-    position: relative;
+    display: flex;
+    flex-direction: row;
     height: 100%;
     background-color: rgb(6, 173, 132);
-    display: flex;
-
-    .layout_nav_sidebar {
-        // position: absolute;
-        // height: 100%;
-        // width: $sideW;
-        // overflow: auto;
-        // background-color: rgba(#333, .3);  
-        flex: 0 0 $sideW;
-        h1{
-            width: 150px;
-            margin: 0 15px 0 0;
-            height: $headerH;
-            line-height: $headerH;
-            font-size: 18px;
-            color: #fff;
-            cursor: pointer;
-            img{
-                margin: 0 6px;
-                height: 30px;
-                vertical-align: middle;
-            }
-        }
-    }
 
     .layout-content-container{
-        height: 100%;
         flex: 1;
+        height: 100%;
+        overflow-y: scroll;
         // position: absolute;
         // top: $headerH;
         // bottom: 0;
@@ -79,17 +58,47 @@ $borderC: #897537;
     }
 }
 
-/* header */
-.page_head{
+/* 菜单 */
+::v-deep {
+    .layout_nav_sidebar_unfold {
+        flex: 0 0 $sideW;
+    }
+    .layout_nav_sidebar_fold {
+        flex: 0 0 $sideWF;
+    }
+    .layout_nav_sidebar {
+        // position: absolute;
+        height: 100%;
+        // width: $sideW;
+        // overflow: auto;
+        transition: flex .2s;
+        background-color: rgba(#333, .3);  
+        h1{
+            margin: 0 15px 0 0;
+            height: $headerH;
+            line-height: $headerH;
+            font-size: 18px;
+            color: #fff;
+            cursor: pointer;
+            img{
+                margin: 0 6px;
+                height: 30px;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+/* 头部 */
+::v-deep .index_head_part{
     display: flex;
     .menu_fold_icon{
         flex: 1;
-        background-color: red;
         span{
             // display: inline-block;
             position: relative;
-            top: 20px;
-            font-size: 20px;
+            top: 10px;
+            font-size: 26px;
             color: $c1;
         }
     }

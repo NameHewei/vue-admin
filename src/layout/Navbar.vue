@@ -1,8 +1,8 @@
 <template>
-    <div class="layout_nav_sidebar">
+    <div :class="{ 'layout_nav_sidebar': true, 'layout_nav_sidebar_unfold': !menuCollapse, 'layout_nav_sidebar_fold': menuCollapse }">
         <h1 @click="goIndex">
             <img src="../assets/logo.png"/>
-            <span>vue-admin</span>
+            <span v-show="!menuCollapse">vue-admin</span>
         </h1>
         <el-menu
             background-color="#545c64"
@@ -10,6 +10,7 @@
             active-text-color="#fff"
             class="ud-menu"
             unique-opened
+            :collapse-transition="false"
             :collapse="menuCollapse"
             :default-openeds="open"
             :default-active="active"
@@ -92,5 +93,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/layout/layout.scss';
 </style>
