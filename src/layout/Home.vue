@@ -1,9 +1,9 @@
 <template>
-    <div class="main-layout">
+    <div :class="['main-layout', menuCollapse ? 'menu_fold': 'menu_unfold']">
         <Navbar></Navbar>
         <div class="layout-content-container">
-            <Header class="layout-header"></Header>
-            <TagsNav></TagsNav>
+            <Header></Header>
+
             <div class="layout-content">
                 <div class="content-inner">
                     <router-view></router-view>
@@ -17,20 +17,23 @@
 </template>
 
 <script>
-import Header from './Header.vue'
-import Navbar from './Navbar.vue'
-import TagsNav from './tagsNav.vue'
+import { mapState } from 'vuex'
+import Header from './header.vue'
+import Navbar from './navbar.vue'
 
 export default {
     name: 'home',
     components: {
         Header,
-        Navbar,
-        TagsNav
-    }
+        Navbar
+    },
+
+    computed: {
+        ...mapState(['menuCollapse'])
+    },
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "@/styles/layout/layout.scss";
 </style>

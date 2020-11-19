@@ -1,54 +1,41 @@
 @import '../variable.scss';
-$headerH: 55px;
+$headerH: 95px;
 $sideW: 200px;
 $sideWF: 65px;
+$logoH: 50px;
+$tagH: 40px;
 $footerH: 30px;
-$borderC: #897537;
 
 .main-layout{
     display: flex;
     flex-direction: row;
     height: 100%;
-    background-color: rgb(6, 173, 132);
+    background-color: $c4;
 
     .layout-content-container{
         flex: 1;
+        display: flex;
         height: 100%;
-        overflow-y: scroll;
-        // position: absolute;
-        // top: $headerH;
-        // bottom: 0;
-        // width: 100%;
-        // overflow: hidden;
-    }
-  
-    .layout-header{
-        height: $headerH;
-        background-color: rgba(#333, .3);    
+        flex-direction: column;
+        overflow-y: auto;
     }
 
     .layout-content{
-        // position: absolute;
-        // left: $sideW;
-        // right: 0;
-        // top: 45px;
-        // bottom: $footerH;
-        flex: auto;
-        padding: 10px;
-        overflow: auto;
+        flex: 1;
+        padding-top: $headerH;
+        background-color: $c1;
         .content-inner{
             width: 100%;
             padding: 10px;
-            background-color: #fff;
         }
     }
 
     .layout-footer{
-        flex: 1;
+        flex: 0 0 auto;
         height: $footerH;
         line-height: $footerH;
         text-align: center;
-        border-top: solid 1px $borderC;
+        border-top: solid 1px $c6;
         color: #c5c5c5;
         font-size: 12px;
         background-color: rgba(#333, .3);  
@@ -59,43 +46,51 @@ $borderC: #897537;
 }
 
 /* 菜单 */
-::v-deep {
-    .layout_nav_sidebar_unfold {
-        flex: 0 0 $sideW;
-    }
-    .layout_nav_sidebar_fold {
-        flex: 0 0 $sideWF;
-    }
-    .layout_nav_sidebar {
-        // position: absolute;
-        height: 100%;
-        // width: $sideW;
-        // overflow: auto;
-        transition: flex .2s;
-        background-color: rgba(#333, .3);  
-        h1{
-            margin: 0 15px 0 0;
-            height: $headerH;
-            line-height: $headerH;
-            font-size: 18px;
-            color: #fff;
-            cursor: pointer;
-            img{
-                margin: 0 6px;
-                height: 30px;
-                vertical-align: middle;
-            }
+.menu_unfold .layout_nav_sidebar {
+    flex: 0 0 $sideW;
+}
+.menu_fold .layout_nav_sidebar {
+    flex: 0 0 $sideWF;
+}
+.layout_nav_sidebar {
+    height: 100%;
+    transition: flex .2s;
+    h1{
+        margin: 0 15px 0 0;
+        height: $logoH;
+        line-height: $logoH;
+        font-size: 18px;
+        color: #fff;
+        cursor: pointer;
+        img{
+            margin: 0 6px;
+            height: 30px;
+            vertical-align: middle;
         }
     }
 }
 
+.menu_fold .index_head_part{
+    left: $sideWF;
+}
+.menu_unfold .index_head_part{
+    left: $sideW;
+}
 /* 头部 */
-::v-deep .index_head_part{
-    display: flex;
+.index_head_part{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    height: $headerH;
+    box-shadow: 0 0, 0 0, 0 0, 3px 1px 4px 0 $c2;
+    background-color: $c4;
+    .index_head_part_info{
+        display: flex;
+    }  
     .menu_fold_icon{
         flex: 1;
         span{
-            // display: inline-block;
             position: relative;
             top: 10px;
             font-size: 26px;
@@ -107,16 +102,41 @@ $borderC: #897537;
         height: 40px;
         line-height: 40px;
         margin-top: 7.5px;
-        color: #fff;
+        color: $c1;
     }
 }
-
 
 .ud-menu .el-submenu__title i{
     color: #fff;
 }
 .ud-menu ::v-deep .is-active{
     background-color: #409EFF!important;
+}
+
+/* 标签 */ 
+.tags-nav{
+    height: $tagH;
+    overflow: hidden;
+    user-select: none;
+    background-color: $c1;
+    .tag-nav-inner{
+        white-space: nowrap;
+        transition: margin 800ms;
+        &>div{
+            display: inline-block;
+            padding: 5px 15px;
+            margin: 3px 5px;
+            border-radius: 2px;
+            font-size: 14px;
+            color:  rgb(153, 153, 153);
+            border: 1px solid rgb(153, 153, 153);
+        }
+        .select-tag{
+            color: #fff;
+            border: 0;
+            background-color:#409EFF ;
+        }
+    }
 }
 
 

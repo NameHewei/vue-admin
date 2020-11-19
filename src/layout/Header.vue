@@ -1,26 +1,33 @@
 <template>
     <div class="index_head_part">
-        <div class="menu_fold_icon">
-            <span>
-                <i @click="handleMenuFold" :class="menuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
-            </span>
+        <div class="index_head_part_info">
+            <div class="menu_fold_icon">
+                <span>
+                    <i @click="handleMenuFold" :class="menuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
+                </span>
+            </div>
+            <div class="user">
+                <el-popover
+                    placement="top-start"
+                    trigger="hover">
+                    <div style="text-align:center;cursor:pointer" @click="handleLogOut">退出登录</div>
+                    <span slot="reference"> 欢迎： {{ username }} </span>
+                </el-popover>
+            </div>
         </div>
-        <div class="user">
-            <el-popover
-                placement="top-start"
-                trigger="hover">
-                <div style="text-align:center;cursor:pointer" @click="handleLogOut">退出登录</div>
-                <span slot="reference"> 欢迎： {{ username }} </span>
-            </el-popover>
-        </div>
+        <TagsNav></TagsNav>
     </div>
 </template>
 
 <script>
 import Cookies from 'js-cookie'
+import TagsNav from './tagsNav.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+    components: {
+        TagsNav
+    },
     data () {
         return {
             username: ''

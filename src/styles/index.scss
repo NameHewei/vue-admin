@@ -3,43 +3,7 @@
 // @import './transition.scss';
 @import './media.scss';
 @import './common.scss';
-
-body {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-family: Microsoft YaHei, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Arial, sans-serif;
-    height: 100%;
-    margin: 0;
-}
-
-html {
-    box-sizing: border-box;
-    height: 100%;
-}
-
-*,
-*:before,
-*:after {
-    box-sizing: inherit;
-}
-
-div:focus, input{
-    outline: none;
-}
-
-a:focus,
-a:active {
-    outline: none;
-}
-
-a,
-a:focus,
-a:hover {
-    cursor: pointer;
-    color: inherit;
-    text-decoration: none;
-}
+@import './reset.scss';
 
 .clearfix {
     &:after {
@@ -58,32 +22,7 @@ a:hover {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 .app{
     height: 100%;
-}
-
-::-webkit-scrollbar{
-    width: 6px;
-    height: 6px;
-    background-color: #fff;
-}
-::-webkit-scrollbar-thumb{
-    background-color: #999;
-    border-radius: 5px;
-}
-pre{
-    padding: 16px;
-    overflow: auto;
-    font-size: 85%;
-    line-height: 1.45;
-    background-color: #f6f8fa;
-    border-radius: 3px;
-}
-
-/* 处理高德地图图标 */
-.amap-logo{
-    display: none !important;
-}
-.amap-copyright{
-    display: none !important;
 }

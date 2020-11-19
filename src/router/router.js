@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Login from '@/views/login/Login.vue'
-import Home from '@/layout/Home.vue'
+import Home from '@/layout/home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
 import NotFind from '@/views/error/notFind.vue'
 

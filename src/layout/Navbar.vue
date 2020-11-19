@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'layout_nav_sidebar': true, 'layout_nav_sidebar_unfold': !menuCollapse, 'layout_nav_sidebar_fold': menuCollapse }">
+    <div class="layout_nav_sidebar">
         <h1 @click="goIndex">
             <img src="../assets/logo.png"/>
             <span v-show="!menuCollapse">vue-admin</span>

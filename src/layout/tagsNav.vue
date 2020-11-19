@@ -80,31 +80,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-$sideW: 210px;
-.tags-nav{
-    margin: 0 15px 0 $sideW;
-    height: 45px;
-    overflow: hidden;
-    user-select: none;
-    background-color: rgb(243, 243, 243);
-    .tag-nav-inner{
-        white-space: nowrap;
-        transition: margin 800ms;
-        &>div{
-            display: inline-block;
-            padding: 5px 15px;
-            margin: 3px 5px;
-            border-radius: 2px;
-            font-size: 14px;
-            color:  rgb(153, 153, 153);
-            border: 1px solid rgb(153, 153, 153);
-        }
-        .select-tag{
-            color: #fff;
-            border: 0;
-            background-color:#409EFF ;
-        }
-    }
-}
+<style lang="scss">
 </style>
