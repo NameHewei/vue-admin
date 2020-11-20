@@ -13,6 +13,7 @@ module.exports = {
     rules: {
         'no-console': ['error', { allow: ['warn', 'error'] }],
         'no-debugger': 'error' ,
+        'max-lines': ['error', {"max": 500, "skipBlankLines": true, "skipComments": true }],
         'no-alert': 2,
         "indent": [
             "error",

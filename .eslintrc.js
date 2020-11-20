@@ -17,6 +17,10 @@ module.exports = {
         'no-console': process.env.NODE_ENV === 'production' ? ['error', { allow: ['warn', 'error'] }] : ['warn', { allow: ['warn', 'error'] }],
         // 允许使用 debugger
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+        /* 文件最大行数 */
+        'max-lines': ['error', {"max": 500, "skipBlankLines": true, "skipComments": true }],
+
         'no-alert': 2,
         // 分号控制 https://cloud.tencent.com/developer/section/1135822 'semi'
         "indent": [

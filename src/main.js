@@ -8,10 +8,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import utils from './utils/index.js'
 
 // 自动全局挂载组件
-import './views/components/index.js'
+import './componentsAuto/index.js'
 
 import './vueConfig.js'
 
+/* 数据请求模拟 */
 import '../mock/mock.js'
 
 // 引入路由守卫，判断权限

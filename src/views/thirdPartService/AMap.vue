@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import { aMapLoad } from '@/utils/commonFn.js'
 export default {
     data () {
         return {
@@ -54,7 +53,7 @@ export default {
     },
 
     mounted () {
-        aMapLoad()
+        this.$utils.aMapLoad()
             .then(() => {
                 this.setMap()
             }).catch((err) => {

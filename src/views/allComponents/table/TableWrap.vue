@@ -33,7 +33,7 @@
                 </el-table-column>
             </el-table>
         </CusTable>
-         <CudInfo
+        <CudInfo
             :show="show"
             :id="id"
             @callback="handleDialogCallback"
@@ -46,11 +46,10 @@
 </template>
 
 <script>
+import tableMixIn from '@/mixIn/tableMixIn.js'
 import CudInfo from './cudInfo'
 import DeleteBtn from './deleteBtn'
 import CusTable from './cusTable.vue'
-
-import tableMixin from '@/mixin/tableMixin.js'
 
 export default {
     name: 'TableWrap',
@@ -59,7 +58,7 @@ export default {
         DeleteBtn,
         CusTable
     },
-    mixins: [tableMixin],
+    mixins: [tableMixIn],
     data () {
         return {
             show: false,

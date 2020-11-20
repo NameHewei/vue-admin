@@ -51,12 +51,11 @@ Vue.use(Router)
  * 1.只支持两级菜单
  */
 
-const
-    // 基础路由
-    baseRouter = [
-        { path: '/login', name: 'login', component: Login },
-        { path: '*', component: NotFind }
-    ]
+/* 基础路由 */
+const baseRouter = [
+    { path: '/login', name: 'login', component: Login },
+    { path: '*', component: NotFind }
+]
 
 // 路由表
 const routerTable = [
