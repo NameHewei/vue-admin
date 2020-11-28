@@ -15,6 +15,10 @@ router.beforeEach(async (to, from, next) => {
             if (store.state.user.roles.length === 0) {
                 try {
                     const userInfo = await reqUserInfo()
+                    /**
+                     * @des  这里为什么要加一个 信息请求接口 而不是放登录接口 主要目的是为了保证存 store 中的数据在刷新的时候重新请求 不丢失
+                     * 一般这些数据是比较多的，放cookie中存储又不利于操作
+                     */
                     await store.dispatch('user/actionSetUserInfo', userInfo.data)
                     next({ ...to, replace: true })
                 } catch (error) {
@@ -28,6 +32,7 @@ router.beforeEach(async (to, from, next) => {
         }
     } else {
         /* 这里还有可能是其它的一些路由地址  这里目前只有登录地址 所以直接判断 */
+        /* 这里即使只有登录 也要判断 不能直接 next({ path: '/login' }) 防止死循环 */
         if (currentPath === '/login') {
             next()
         } else {

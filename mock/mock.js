@@ -8,13 +8,13 @@ Mock.setup({
 Mock.mock('/login', (request) => {
     const body = JSON.parse(request.body)
     if (body.username === 'name') {
-        return { code: 200, message: 'sucess', data: { token: Mock.Random.id() } }
+        return { code: 200, message: 'success', data: { token: Mock.Random.id() } }
     }
     return { code: 401, message: '账号为：name' }
 })
 
-Mock.mock('/user/info', () => {
-    return { code: 200, message: 'sucess', data: { name: 'hew', age: 10, roles: ['ADMIN'] } }
+Mock.mock('http://localhost:7878/user/info', () => {
+    return { code: 200, message: 'success', data: { name: 'hew', age: 10, roles: ['ADMIN'] } }
 })
 
 console.warn(process.env.NODE_ENV)

@@ -150,6 +150,7 @@ export default {
         },
 
         handleCurrentChange (v, a) {
+            /* 设置父子不关联的情况 半选中为空 */
             this.halfIds = this.$refs.elTree.getHalfCheckedKeys()
             this.checked = [...this.halfIds, ...a.checkedKeys]
         },

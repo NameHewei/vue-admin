@@ -1,5 +1,22 @@
 import Cookies from 'js-cookie'
 
+/**
+ * 判断当前环境域名,返回对应的接口地址
+ *  */
+export const getDomain = () => {
+    let domain = ''
+    const product = ''
+    const test = 'http://localhost:7878'
+    if (/arz/.test(location.href)) {
+        domain = product
+    } else {
+        /** 测试环境 */
+        domain = test
+    }
+
+    return domain
+}
+
 export function formatToQueryString (obj) {
     // format the object as a queryString
     const temp = []
@@ -132,16 +149,6 @@ export const getFileFromLocal = (callback, inputId = 'cusSelectPhoto') => {
         callback(e.target.files)
     })
     inputElement.click()
-}
-
-/* 获取环境域名 */
-export const getDomain = () => {
-    let domain = ''
-    if (/xxx/.test(location.href)) {
-        domain = 'xxx'
-    }
-
-    return domain
 }
 
 /**

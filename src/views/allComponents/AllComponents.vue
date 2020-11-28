@@ -25,6 +25,10 @@
             <TableWrap></TableWrap>
         </div>
         <div class="part">
+            <h3>无限层级菜单</h3>
+            <InfinityMenu></InfinityMenu>
+        </div>
+        <div class="part">
             <h3>树组件</h3>
             <TreeWrap></TreeWrap>
         </div>
@@ -39,20 +43,28 @@
 </template>
 
 <script>
+import ExportWrap from '@/components/exportWrap'
+import UploadImgWrap from '@/components/uploadImgWrap'
+import BackHeader from '@/components/backHeader'
 import UploadFile from './UploadFile'
 import TableWrap from './table/TableWrap.vue'
 import TreeWrap from './tree/TreeWrap.vue'
 import CusForm from './form/cusForm.vue'
 import DisplayHtmlText from './displayHtmlText'
+import InfinityMenu from '@/components/infinityMenu'
 
 export default {
     name: 'AllComponents',
     components: {
+        BackHeader,
+        ExportWrap,
+        UploadImgWrap,
         TableWrap,
         TreeWrap,
         UploadFile,
         CusForm,
-        DisplayHtmlText
+        DisplayHtmlText,
+        InfinityMenu
     },
 
     data () {
@@ -63,6 +75,7 @@ export default {
                     type: 'select',
                     key: 'status',
                     label: '下拉选择',
+                    clearable: true,
                     // multiple: ,
                     options: [{ key: 'yes', value: '是' }, { key: 'no', value: '否' }]
                 },
