@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import menu from './modules/menu'
+
 import Login from '@/views/login/Login.vue'
 import Home from '@/layout/home.vue'
 import Welcome from '@/views/welcome/Welcome.vue'
-import NotFind from '@/views/error/notFind.vue'
+import NotFound from '@/views/notFound/notFound.vue'
 
 import AllComponents from '@/views/allComponents/AllComponents.vue'
 import CudPage from '@/views/allComponents/table/cudPage.vue'
-import Entrance from '@/views/vueApiPractice/Entrance.vue'
+// import Entrance from '@/views/vueApiPractice/Entrance.vue'
 
 import ApiPracticeList from '@/views/vueApiPractice/ApiPracticeList.vue'
 import ApiVuex from '@/views/vueApiPractice/Vuex.vue'
@@ -54,16 +56,17 @@ Vue.use(Router)
 /* 基础路由 */
 const baseRouter = [
     { path: '/login', name: 'login', component: Login },
-    { path: '*', component: NotFind }
+    { path: '*', component: NotFound }
 ]
 
 // 路由表
 const routerTable = [
+    ...menu,
     {
         /* 要在菜单可点击的路由，保持path值和name值一致，以便于保持菜单选择状态 */
-        path: 'practice',
+        path: '/practice',
         name: 'practice',
-        component: Entrance,
+        component: Home,
         meta: { title: 'Vue API 练习', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN', 'STUDENT'] },
         children: [
             { path: 'practiceVue', name: 'practiceVue', component: ApiPracticeList, meta: { title: 'practice vue', roles: ['ADMIN', 'STUDENT'], showInMenu: true } },
@@ -86,9 +89,9 @@ const routerTable = [
         ]
     },
     {
-        path: 'frequentlyUseComponent',
+        path: '/frequentlyUseComponent',
         name: 'frequentlyUseComponent',
-        component: Entrance,
+        component: Home,
         meta: { title: '常用组件', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
         children: [
             { path: 'allComponents', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN'], showInMenu: true } },
@@ -96,9 +99,9 @@ const routerTable = [
         ]
     },
     {
-        path: 'thirdPart',
+        path: '/thirdPart',
         name: 'thirdPart',
-        component: Entrance,
+        component: Home,
         meta: { title: '第三方服务', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
         children: [
             { path: 'echarts', name: 'echarts', component: Echarts, meta: { title: '图表', roles: ['ADMIN'], showInMenu: true } },
@@ -108,9 +111,9 @@ const routerTable = [
         ]
     },
     {
-        path: 'testVueRouter',
+        path: '/testVueRouter',
         name: 'testVueRouter',
-        component: Entrance,
+        component: Home,
         meta: { title: '测试路由replace', icon: 'el-icon-location', showInMenu: true, roles: ['ADMIN'] },
         children: [
             { path: 'page1', name: 'page1', component: Page1, meta: { title: 'page1', roles: ['ADMIN'], showInMenu: true } },
@@ -121,62 +124,73 @@ const routerTable = [
     }
 ]
 
+/* 获取角色数组交集 */
+const getTheSameRoles = (r1, r2) => {
+    const a = [...new Set(r1)]
+    const b = [...new Set(r2)]
+
+    return a.filter(v => b.includes(v))
+}
+
 /**
  * @des 根据权限生成路由
  */
-export const permitRouters = function (currentAccountRoles) {
-    const tempRoute = []
-    routerTable.forEach(({ name, path, component, meta, children }) => {
-        const tempChildren = []
-        // 判断当前模块是否有权限
-        if (currentAccountRoles.some(v => (meta.roles.includes(v)))) {
-            children.forEach(item => {
-                if (currentAccountRoles.some(v => (item.meta.roles.includes(v)))) {
-                    tempChildren.push(item)
+const getPermitRouters = function (currentAccountRoles) {
+    const recursionRouter = (arr) => {
+        const tempModels = []
+        arr.forEach(({ name, path, mate, component, children }) => {
+            // 判断当前模块是否有权限
+            if (getTheSameRoles(currentAccountRoles, mate.roles || []).length) {
+                const tempModel = {}
+                tempModel.path = path
+                tempModel.name = name
+                tempModel.component = component
+                if (children && children.length) {
+                    tempModel.children = recursionRouter(children)
                 }
-            })
-        }
-        tempRoute.push({
-            path,
-            name,
-            meta,
-            component,
-            children: tempChildren
+                tempModels.push(tempModel)
+            }
         })
-    })
+        return tempModels
+    }
 
-    return [{ path: '/', component: Home, children: [{ path: '', component: Welcome }, ...tempRoute] }]
+    return recursionRouter(routerTable)
+}
+
+const getMenu = (currentAccountRoles) => {
+    const recursionRouter = (arr) => {
+        const tempMenu = []
+        arr.forEach(({ name, meta: { roles, title, icon, showInMenu }, children }) => {
+            // 判断当前模块是否有权限
+            if (getTheSameRoles(currentAccountRoles, roles || []).length && showInMenu) {
+                const tempChildren = {}
+                tempChildren.name = name
+                tempChildren.title = title
+                tempChildren.icon = icon
+                if (children && children.length) {
+                    tempChildren.children = recursionRouter(children)
+                }
+                tempMenu.push(tempChildren)
+            }
+        })
+        return tempMenu
+    }
+
+    return recursionRouter(routerTable)
+}
+
+export const permitRouters = function (currentAccountRoles) {
+    return [{ path: '/', component: Home, children: [{ path: '', component: Welcome }, ...getPermitRouters(currentAccountRoles)] }]
 }
 
 /**
  * @des 根据权限生成菜单
  */
 export const permitMenu = function (currentAccountRoles) {
-    const tempMenu = []
-    routerTable.forEach(({ name, meta: { roles, title, icon, showInMenu }, children }) => {
-        const tempChildren = []
-        // 判断当前模块是否需要显示和有权限
-        if (showInMenu && currentAccountRoles.some(v => (roles.includes(v)))) {
-            children.forEach(({ name: _name, meta: { roles: _roles, title: _title, showInMenu: _showInMenu } }) => {
-                if (_showInMenu && currentAccountRoles.some(v => (_roles.includes(v)))) {
-                    tempChildren.push({
-                        title: _title,
-                        name: _name
-                    })
-                }
-            })
-        }
-        tempMenu.push({
-            title,
-            icon,
-            name,
-            children: tempChildren
-        })
-    })
-
-    return tempMenu
+    return getMenu(currentAccountRoles)
 }
 
 export default new Router({
+    /* 这里的键名必须是 routes */
     routes: baseRouter
 })

@@ -12,12 +12,14 @@ import './componentsAuto/index.js'
 
 import './vueConfig.js'
 
-/* 数据请求模拟 */
-import '../mock/mock.js'
-
-// 引入路由守卫，判断权限
+// 引入路由守卫，判断权限 希望最先执行 所以在 index.html 引入 并执行，在App.vue 创建实例后结束
 import './navigationGuard'
-// NProgress.start()
+
+/* 数据请求模拟 */
+if (process.env.NODE_ENV === 'development') {
+    const { mockHttpServer } = require('../mock/mock.js')
+    mockHttpServer()
+}
 
 /* 按钮权限 */
 Vue.directive('permission', {

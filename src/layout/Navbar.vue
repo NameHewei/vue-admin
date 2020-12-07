@@ -16,7 +16,9 @@
             :default-active="active"
             @select="handleSelect"
         >
-            <el-submenu
+
+            <Menu :menuTree="menu"/>
+            <!-- <el-submenu
                 v-for="(item, index) in menu"
                 :key="index"
                 :index="item.name"
@@ -33,16 +35,21 @@
                 >
                     {{ _item.title }}
                 </el-menu-item>
-            </el-submenu>
+            </el-submenu> -->
         </el-menu>
     </div>
 </template>
 
 <script>
+import Menu from './menu'
 import { mapState } from 'vuex'
 import { permitMenu } from '@/router/router'
 
 export default {
+    components: {
+        Menu
+    },
+
     data () {
         return {
             menu: [],
@@ -52,6 +59,7 @@ export default {
 
     created () {
         this.menu = permitMenu(this.roles)
+        // console.log(this.menu)
     },
 
     computed: {

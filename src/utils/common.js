@@ -31,11 +31,9 @@ export function formatToQueryString (obj) {
 
 /**
  * @des 获取字典值，或返回字典
- * 只有一个参数时，返回当前项的所有选项
- * 返回值可能是值、数组、对象
- * @param {Array} params 第一个值：需要的项的键值 第二个值：某一项的键值
+ * @param {Array} params 第一个值：zid 第二个值：某一项的键值
  */
-export const handleDectionary = (...params) => {
+export const handleDictionary = (...params) => {
     const reFn = (o) => {
         if (params.length === 1) {
             return o

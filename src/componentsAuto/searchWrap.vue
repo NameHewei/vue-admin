@@ -19,16 +19,10 @@
                         ></el-option>
                     </el-select>
                     <el-date-picker
-                        v-else-if="item.type === 'date'"
+                        v-else-if="item.type === 'date' || item.type === 'datetime' || item.type === 'year'"
                         v-model="formData[item.key]"
-                        type="date"
-                        :placeholder="withoutLabel ? item.label : '选择日期'">
-                    </el-date-picker>
-                    <el-date-picker
-                        v-else-if="item.type === 'dateTime'"
-                        v-model="formData[item.key]"
-                        type="datetime"
-                        :placeholder="withoutLabel ? item.label : '选择日期时间'">
+                        :type="item.type"
+                        :placeholder="withoutLabel ? item.label : '选择'">
                     </el-date-picker>
                     <el-date-picker
                         v-else-if="item.type === 'dateTimeRange'"

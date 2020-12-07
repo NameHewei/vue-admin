@@ -6,7 +6,7 @@ import { getDomain } from '@/utils/common'
 /**
  * @des get        方式只有 params 参数
  * @des post patch 等方式有 params data 参数，当只传 params 时，会转换赋值到data上 与axios需要的参数一致
- * @des 这里默认返回的数据结构 { code: '自定义状态码', data: '结果', msg: '结果描述' }
+ * @des 这里默认返回的数据结构 { code: '自定义状态码  当前项目 1 表示成功', data: '结果', msg: '结果描述' }
  */
 
 const httpService = axios.create({
@@ -68,7 +68,7 @@ httpService.interceptors.response.use((res) => {
     }
 
     /* excludeCode 默认 false，表示返回的数据格式是符合统一标准的；当设置为true时，表示不对code检测判断错误，一般用于返回数据格式不规范(没有返回code)时使用  */
-    if (data.code !== 200 && !config.excludeCode) {
+    if (data.code !== 1 && !config.excludeCode) {
         /* 这里的错误，只做提示信息的统一处理，因为每一个地方的错误处理业务不同 */
         Message({
             message: data.message,
@@ -81,11 +81,12 @@ httpService.interceptors.response.use((res) => {
 
     return res.data
 }, (error) => {
-    Message({
-        message: error.message,
-        type: 'error',
-        duration: 2000
-    })
+    // console.log(error.toJSON(), error.code)
+    if (error.status === 404) {
+        Message({ message: '接口未找到', type: 'error', duration: 5000 })
+    } else {
+        Message({ message: error.message, type: 'error', duration: 5000 })
+    }
     return Promise.reject(error)
 })
 

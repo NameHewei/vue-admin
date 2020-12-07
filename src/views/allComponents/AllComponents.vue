@@ -25,10 +25,6 @@
             <TableWrap></TableWrap>
         </div>
         <div class="part">
-            <h3>无限层级菜单</h3>
-            <InfinityMenu></InfinityMenu>
-        </div>
-        <div class="part">
             <h3>树组件</h3>
             <TreeWrap></TreeWrap>
         </div>
@@ -51,7 +47,6 @@ import TableWrap from './table/TableWrap.vue'
 import TreeWrap from './tree/TreeWrap.vue'
 import CusForm from './form/cusForm.vue'
 import DisplayHtmlText from './displayHtmlText'
-import InfinityMenu from '@/components/infinityMenu'
 
 export default {
     name: 'AllComponents',
@@ -64,7 +59,6 @@ export default {
         UploadFile,
         CusForm,
         DisplayHtmlText,
-        InfinityMenu
     },
 
     data () {
@@ -80,7 +74,8 @@ export default {
                     options: [{ key: 'yes', value: '是' }, { key: 'no', value: '否' }]
                 },
                 { type: 'date', key: 'date', label: '日期' },
-                { type: 'dateTime', key: 'dateTime', label: '日期带时间' },
+                { type: 'datetime', key: 'datetime', label: '日期带时间' },
+                { type: 'year', key: 'year', label: '年份' },
                 { type: 'dateRange', key: 'dateRange', label: '日期范围' },
                 { type: 'dateTimeRange', key: 'dateTimeRange', label: '日期范围' },
                 {

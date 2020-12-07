@@ -174,13 +174,14 @@ export default {
         },
 
         handleSelect (item) {
-            // console.log('select', item)
+            console.warn('select', item)
         },
 
         handleCompleteFocus (e) {
             /**
-             * 这里通过id去获取当前操作项数据 例如 可编辑表格中获取当前操作的行
+             * @des 这里通过id去获取当前操作项数据 例如 可编辑表格中获取当前操作的行
              */
+            // someId
             // console.log('change id', e.target.id)
         },
 
