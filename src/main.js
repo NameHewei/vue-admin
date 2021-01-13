@@ -41,6 +41,15 @@ Vue.prototype.$utils = utils
 
 Vue.use(ElementUI)
 
+/* 谨慎使用 */
+Vue.mixin({
+    methods: {
+        globalMixIn () {
+            console.warn('globalMixIn')
+        }
+    }
+})
+
 new Vue({
     router,
     store,
