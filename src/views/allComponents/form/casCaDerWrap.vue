@@ -2,6 +2,8 @@
     <div style="display:inline-block">
         <pre>可获得label(不能第一级单选，第二级多选，只能统一单选或多选)</pre>
         <pre>checkStrictly: true 是否严格的遵守父子节点不互相关联, 如果没有设置，又对数据进行了disabled 处理，则不能正常显示数据</pre>
+        <pre>:show-all-levels="false"  只显示最后一级</pre>
+
         <el-cascader
             ref="refCas"
             v-model="value"
@@ -47,6 +49,7 @@ export default {
             /**
              * multiple 在选中节点改变时，是否返回由该节点所在的各级菜单的值所组成的数组，若设置 false，则只返回该节点的值,
              * 当要设置多选默认值时，需要设置该值，否者会在视图显示上有异常
+             * emitPath 单选时只返回当前选中 不包含父级
              */
             casProps: { expandTrigger: 'hover', emitPath: false, multiple: false, checkStrictly: true },
             options: [],

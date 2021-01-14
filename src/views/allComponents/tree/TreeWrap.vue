@@ -1,6 +1,9 @@
 <template>
     <div>
         <el-checkbox v-model="checkedAll" @change="handleCheckAllChange">全选</el-checkbox>
+        <pre>
+            :expand-on-click-node  是否在点击节点的时候展开或者收缩节点， 默认值为 true
+        </pre>
         <el-tree
             show-checkbox
             default-expand-all

@@ -53,7 +53,7 @@ module.exports = {
                 // 可以用 console 将 args 打印出来
                 // console.log(args)
                 /* 这里默认是去取的 package.json 的name */
-                args[0].title = 'vue-chain'
+                args[0].title = 'vue-admin-chain'
                 return args
             })
     },

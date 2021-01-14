@@ -7,5 +7,5 @@ export function reqLogin (params) {
 
 /* 获取用户信息 */
 export function reqUserInfo () {
-    return request({ url: '/mock/user/info', method: 'post' })
+    return request({ url: '/mock/user/info', method: 'get' })
 }

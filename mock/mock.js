@@ -26,16 +26,23 @@ const mockRequestList = [
 exports.mockHttpServer = function () {
     /* 统一执行挂载 mock 请求 */
     mockRequestList.forEach((value) => {
-        const { url, method = 'get', code, message, data, reg, handler } = value
+        const { url, method = 'get', code, msg, data, reg, handler } = value
         // console.log(preUrl(url, reg))
         Mock.mock(preUrl(url, reg), method, (request) => {
             const res = {
                 code: code || 1,
-                msg: message || 'success',
+                msg: msg || 'success',
                 data
             }
             if (handler) {
-                res.data = value.handler(request)
+                const re = handler(request) || res
+                res.data = re.data
+                res.code = re.code
+                res.msg = re.msg
+            }
+
+            if (process.env.NODE_ENV === 'development') {
+                console.warn('mock请求：', url, request, res)
             }
 
             return res

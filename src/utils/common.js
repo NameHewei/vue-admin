@@ -17,6 +17,14 @@ export const getDomain = () => {
     return domain
 }
 
+/* 获取数组的交集 */
+export const arrayIntersection = (r1, r2) => {
+    const a = [...new Set(r1)]
+    const b = [...new Set(r2)]
+
+    return a.filter(v => b.includes(v))
+}
+
 export function formatToQueryString (obj) {
     // format the object as a queryString
     const temp = []

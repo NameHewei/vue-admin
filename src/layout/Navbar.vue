@@ -7,7 +7,7 @@
         <el-menu
             background-color="#545c64"
             text-color="#fff"
-            active-text-color="#fff"
+            active-text-color="#059974"
             class="ud-menu"
             unique-opened
             :collapse-transition="false"
@@ -16,26 +16,7 @@
             :default-active="active"
             @select="handleSelect"
         >
-
             <Menu :menuTree="menu"/>
-            <!-- <el-submenu
-                v-for="(item, index) in menu"
-                :key="index"
-                :index="item.name"
-            >
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>{{ item.title }}</span>
-                </template>
-                <el-menu-item
-                    v-for="(_item, _index) in item.children"
-                    :key="_index"
-                    :index="_item.name"
-                    @click="routerSkip(_item.name)"
-                >
-                    {{ _item.title }}
-                </el-menu-item>
-            </el-submenu> -->
         </el-menu>
     </div>
 </template>
@@ -46,6 +27,7 @@ import { mapState } from 'vuex'
 import { permitMenu } from '@/router/router'
 
 export default {
+    name: 'Navbar',
     components: {
         Menu
     },
@@ -59,7 +41,6 @@ export default {
 
     created () {
         this.menu = permitMenu(this.roles)
-        // console.log(this.menu)
     },
 
     computed: {
@@ -76,8 +57,8 @@ export default {
 
     methods: {
         initOpen () {
-            const rp = this.$route.path
-            const openPath = rp === '/' ? [] : rp.slice(1).split('/')
+            const { path } = this.$route
+            const openPath = path === '/' ? [] : path.slice(1).split('/')
             this.open = openPath
         },
 

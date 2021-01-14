@@ -65,7 +65,7 @@ export default {
             const { tags } = this
             if (!tags.some(val => val.name === route.name)) {
                 /* 只显示菜单中有的路由 */
-                if (route.meta.showInMenu) {
+                if (route.meta.menu) {
                     this.tags.push({ title: route.meta.title, name: route.name })
                 }
             }
@@ -132,17 +132,4 @@ export default {
 </script>
 
 <style lang="scss" scope>
-.tag_menu {
-    position: fixed;
-    z-index: 100;
-    font-size: 14px;
-    padding: 5px 0;
-    border-radius: 3px;
-    background-color: #fff;
-    box-shadow: 2px 0 5px 0 #ccc;
-    li{
-        padding: 8px 15px;
-        cursor: pointer;
-    }
-}
 </style>

@@ -35,7 +35,10 @@ export default {
 
     methods: {
         routerSkip (name) {
-            // console.log('path-name:', name)
+            if (/infinity/i.test(name)) {
+                this.$message.warning('无限菜单只做展示,不跳转')
+                return
+            }
             this.$router.push({ name })
         }
     },

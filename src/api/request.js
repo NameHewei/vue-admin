@@ -59,7 +59,8 @@ httpService.interceptors.response.use((res) => {
     const { config, data } = res
 
     /* 注意这个参数实在 api文件里面的方法中传递的，是和url同一级 */
-    if (config.showSuccessMsg && data.code === 'xxx 根据不同的后端数据结构来定义') {
+    // code === 'xxx 根据不同的后端数据结构来定义'
+    if (config.showSuccessMsg && data.code === 1) {
         Message({
             message: data.msg,
             type: 'success',
@@ -71,7 +72,7 @@ httpService.interceptors.response.use((res) => {
     if (data.code !== 1 && !config.excludeCode) {
         /* 这里的错误，只做提示信息的统一处理，因为每一个地方的错误处理业务不同 */
         Message({
-            message: data.message,
+            message: data.msg,
             type: 'error',
             duration: 2000
         })
@@ -81,11 +82,13 @@ httpService.interceptors.response.use((res) => {
 
     return res.data
 }, (error) => {
-    // console.log(error.toJSON(), error.code)
-    if (error.status === 404) {
-        Message({ message: '接口未找到', type: 'error', duration: 5000 })
+    /**
+     * 这里可以用  error.toJSON()  打印 error中的一些信息 比如 error.code
+     */
+    if (error.code === 404) {
+        Message({ message: '接口未找到', type: 'error', duration: 2000 })
     } else {
-        Message({ message: error.message, type: 'error', duration: 5000 })
+        Message({ message: error.message, type: 'error', duration: 2000 })
     }
     return Promise.reject(error)
 })

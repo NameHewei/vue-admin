@@ -138,6 +138,19 @@ $footerH: 30px;
             background-color:#409EFF ;
         }
     }
+    .tag_menu {
+        position: fixed;
+        z-index: 100;
+        font-size: 14px;
+        padding: 5px 0;
+        border-radius: 3px;
+        background-color: #fff;
+        box-shadow: 2px 0 5px 0 #ccc;
+        li{
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+    }
 }
 
 

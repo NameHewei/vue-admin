@@ -6,6 +6,10 @@ import user from './modules/user/user'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    modules: {
+        user
+    },
+
     state: {
         menuCollapse: false,
         /**
@@ -22,10 +26,10 @@ export default new Vuex.Store({
         },
 
         /**
-         * @des 第一个参数state，第二个参数为用户自定义参数
+         * @des 第一个参数state，第二个参数为用户自定义参数,只接受两个参数
          */
-        setProjectName (state, data) {
-            state.projectName = data
+        setProjectName (state, payload) {
+            state.projectName = payload
         },
 
         setSomeKey (state, data) {
@@ -54,8 +58,4 @@ export default new Vuex.Store({
             context.commit('setSomeKey', data)
         }
     },
-
-    modules: {
-        user
-    }
 })

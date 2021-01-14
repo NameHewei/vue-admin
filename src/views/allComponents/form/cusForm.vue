@@ -1,7 +1,7 @@
 <template>
     <el-form :model="form" :rules="rules" ref="cusForm" label-width="200px">
         <el-form-item label="name" prop="name">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" @focus="handleFocus"></el-input>
         </el-form-item>
 
         <pre>带推荐输入框  所有可搜索选择，或直接输入的形式输入框都采用该方式</pre>
@@ -157,6 +157,9 @@ export default {
     },
 
     methods: {
+        handleFocus () {
+        },
+
         querySearch (queryString, cb) {
             clearTimeout(this.timeout)
             this.timeout = setTimeout(() => {

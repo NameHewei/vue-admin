@@ -1,4 +1,4 @@
-import router, { permitRouters } from '@/router/router'
+import { permitRouters } from '@/router/router'
 
 export default {
     namespaced: true,
@@ -6,26 +6,34 @@ export default {
     state: {
         name: '',
         age: null,
-        roles: []
+        roles: [],
+        module: ''
     },
 
     mutations: {
-        setUserInfo (state, { name, age, roles = [] }) {
+        SET_USER_INFO (state, { name, age, roles = [] }) {
             state.name = name
             state.age = age
             state.roles = [...roles]
+        },
+        SET_MODULE (state, data) {
+            state.module = data
         }
     },
 
     actions: {
-        actionSetUserInfo ({ state, commit }, data) {
+        actionSetUserInfo ({ commit }, data) {
             try {
                 /* 根据当前登录用户的角色，添加路由 */
-                router.addRoutes(permitRouters(data.roles))
-                commit('setUserInfo', { ...data })
+                permitRouters(data.roles)
+                commit('SET_USER_INFO', { ...data })
             } catch (error) {
-                throw new Error('未获取到用户信息')
+                console.error(error)
+                throw new Error(error)
             }
+        },
+        actionSetModule ({ commit }, data) {
+            commit('SET_MODULE', data)
         }
     }
 }

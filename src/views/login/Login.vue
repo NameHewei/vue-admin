@@ -7,7 +7,7 @@
                         <el-input type="text" v-model="formData.username" placeholder="username"></el-input>
                     </el-form-item>
                     <el-form-item prop="password">
-                        <el-input :type="eyeStatus? 'text' : 'password'" v-model="formData.password" placeholder="password"></el-input>
+                        <el-input :type="eyeStatus ? 'text' : 'password'" v-model="formData.password" placeholder="password"></el-input>
                         <div :class="eyeStatus? 'eye-open': 'eye-close'" @click="handleEye"></div>
                     </el-form-item>
                     <el-checkbox class="auto-login" v-model="rememberPassword">remember login</el-checkbox>
@@ -61,6 +61,8 @@ export default {
 
     created () {
         this.autoLogin()
+
+        this.actionSetModule('测试')
     },
 
     computed: {
@@ -79,7 +81,7 @@ export default {
 
     methods: {
         ...mapActions(['actionSetProjectName']),
-        ...mapActions('user', ['actionSetUserInfo']),
+        ...mapActions('user', ['actionSetModule']),
 
         handleEye () {
             this.eyeStatus = !this.eyeStatus
@@ -88,6 +90,18 @@ export default {
         autoLogin () {
             if (Cookies.get('token')) {
                 this.$router.push({ path: '/' })
+            } else {
+                this.setNamePassword()
+            }
+        },
+
+        setNamePassword () {
+            const remember = Cookies.get('login')
+            if (remember) {
+                const np = decodeURIComponent(remember).split('&')
+                this.formData.password = np[0]
+                this.formData.username = np[1]
+                this.rememberPassword = true
             }
         },
 
@@ -95,7 +109,7 @@ export default {
             this.$refs.formLogin.validate((valid) => {
                 if (valid) {
                     const { rememberPassword, formData: { username, password } } = this
-                    reqLogin({ username })
+                    reqLogin({ username, password })
                         .then(({ code, data }) => {
                             const { token } = data
                             Cookies.set('token', token)
