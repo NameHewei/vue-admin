@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import tableMixIn from '@/mixIn/tableMixIn.js'
+import tableMixIn from '@/mixin/tableMixin.js'
 import CudInfo from './cudInfo'
 import DeleteBtn from './deleteBtn'
 import CusTable from './cusTable.vue'
