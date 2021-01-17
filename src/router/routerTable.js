@@ -3,7 +3,6 @@ import table from './modules/table'
 
 import Login from '@/views/login/Login.vue'
 import Home from '@/layout/home.vue'
-import Welcome from '@/views/welcome/Welcome.vue'
 import NotFound from '@/views/notFound/notFound.vue'
 
 import AllComponents from '@/views/allComponents/AllComponents.vue'
@@ -38,12 +37,8 @@ export const baseRouter = [
     { path: '*', component: NotFound }
 ]
 
-export const welcome = [
-    { path: '', component: Welcome }
-]
-
 export const root = [
-    { path: '/', component: Home }
+    { path: '/', component: Home, children: [{ path: '', name: 'welcome', component: () => import('@/views/welcome/welcome.vue'), roles: ['ADMIN'] }] }
 ]
 
 // 路由表
