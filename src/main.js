@@ -10,28 +10,26 @@ import utils from './utils/index.js'
 // 自动全局挂载组件
 import './componentsAuto/index.js'
 
+/**
+ * @des vue 配置
+ */
 import './vueConfig.js'
+
+/**
+ * @des 全局自定义指令
+ */
+import './directive/directive.js'
 
 // 引入路由守卫，判断权限 希望最先执行 所以在 index.html 引入 并执行，在App.vue 创建实例后结束
 import './navigationGuard'
+
+import plugin from './plugin/plugin'
 
 /* 数据请求模拟 */
 if (process.env.NODE_ENV === 'development') {
     const { mockHttpServer } = require('../mock/mock.js')
     mockHttpServer()
 }
-
-/* 按钮权限 */
-Vue.directive('permission', {
-    /* 添加inserted钩子函数 当元素被插入时执行 */
-    inserted: function (el, binding) {
-        const permission = ['2012'].includes(binding.value)
-        el.innerHTML = permission ? '有权限' : '无权限'
-        if (!permission) {
-            el.setAttribute('disabled', true)
-        }
-    }
-})
 
 Vue.prototype.$eCharts = eCharts
 Vue.prototype.$message = ElementUI.Message
@@ -40,6 +38,9 @@ Vue.prototype.$message = ElementUI.Message
 Vue.prototype.$utils = utils
 
 Vue.use(ElementUI)
+
+/* App.vue 中有调用 */
+Vue.use(plugin)
 
 /* 谨慎使用 */
 Vue.mixin({
