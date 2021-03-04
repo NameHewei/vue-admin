@@ -33,6 +33,10 @@ export default {
 </script>
 
 <style scoped>
+#get{
+    /* display:flex; */
+    /* transform: translateX(90px) */
+}
 .icon {
     width: 1em; height: 1em;
     vertical-align: -0.15em;
