@@ -1,57 +1,67 @@
 <template>
-    <el-form :model="form" :rules="rules" ref="cusForm" label-width="200px">
-        <el-form-item label="name" prop="name">
-            <el-input v-model="form.name" @focus="handleFocus"></el-input>
-        </el-form-item>
+    <div>
+        <div style="padding:10px;border: 1px solid #999;margin:10px 0;">
+            <pre>日期只选择 年月日 小时（主要为设置样式，将分钟选择隐藏）</pre>
+            <el-date-picker  type="datetime" v-model="timePickValue" popper-class="cusDate" format="yyyy-MM-dd HH" value-format="yyyy-MM-dd HH:mm:ss" placeholder="yyyy-MM-dd HH"></el-date-picker>
+            <p>
+                {{ formatTimeH(timePickValue) }}
+            </p>
+        </div>
 
-        <pre>带推荐输入框  所有可搜索选择，或直接输入的形式输入框都采用该方式</pre>
-        <el-form-item label="recommend" prop="recommend">
-            <el-autocomplete
-                popper-class="my-autocomplete"
-                v-model="form.recommend"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入内容"
-                value-key="cusVal"
-                id="someId"
-                @select="handleSelect"
-                @focus="handleCompleteFocus"
-            >
-                <i
-                    class="el-icon-edit el-input__icon"
-                    slot="suffix"
-                    @click="handleIconClick">
-                </i>
-                <template slot-scope="{ item }">
-                    <div class="name">{{ item.cusVal }}</div>
-                    <span class="addr">{{ item.address }}</span>
-                </template>
-            </el-autocomplete>
-        </el-form-item>
+        <el-form :model="form" :rules="rules" ref="cusForm" label-width="200px">
+            <el-form-item label="name" prop="name">
+                <el-input v-model="form.name" @focus="handleFocus"></el-input>
+            </el-form-item>
 
-        <pre> 这里的 value 传入整个key value 对象 </pre>
-        <el-form-item label="可返回label 可多选">
-            <el-select
-                multiple
-                v-model="form.selected"
-            >
-                <el-option
-                    v-for="item in sOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item">
-                </el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="级联选择">
-            <CasCaDerWrap v-model="form.casData" :casOptions="options" multiple/>
-        </el-form-item>
-        <el-form-item label="联动选择">
-            <RelationSelect @callbackRelationSelect="handleRelationSelect"></RelationSelect>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="submitForm">提交</el-button>
-        </el-form-item>
-    </el-form>
+            <pre>带推荐输入框  所有可搜索选择，或直接输入的形式输入框都采用该方式</pre>
+            <el-form-item label="recommend" prop="recommend">
+                <el-autocomplete
+                    popper-class="my-autocomplete"
+                    v-model="form.recommend"
+                    :fetch-suggestions="querySearch"
+                    placeholder="请输入内容"
+                    value-key="cusVal"
+                    id="someId"
+                    @select="handleSelect"
+                    @focus="handleCompleteFocus"
+                >
+                    <i
+                        class="el-icon-edit el-input__icon"
+                        slot="suffix"
+                        @click="handleIconClick">
+                    </i>
+                    <template slot-scope="{ item }">
+                        <div class="name">{{ item.cusVal }}</div>
+                        <span class="addr">{{ item.address }}</span>
+                    </template>
+                </el-autocomplete>
+            </el-form-item>
+
+            <pre> 这里的 value 传入整个key value 对象 </pre>
+            <el-form-item label="可返回label 可多选">
+                <el-select
+                    multiple
+                    v-model="form.selected"
+                >
+                    <el-option
+                        v-for="item in sOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="级联选择">
+                <CasCaDerWrap v-model="form.casData" :casOptions="options" multiple/>
+            </el-form-item>
+            <el-form-item label="联动选择">
+                <RelationSelect @callbackRelationSelect="handleRelationSelect"></RelationSelect>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm">提交</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
 </template>
 <script>
 import CasCaDerWrap from './casCaDerWrap.vue'
@@ -87,6 +97,7 @@ export default {
         }
         return {
             restaurants: [],
+            timePickValue: '',
             form: {
                 name: '',
                 recommend: '',
@@ -157,6 +168,9 @@ export default {
     },
 
     methods: {
+        formatTimeH (v) {
+            return v ? `${v.slice(0, 13)}:00:00` : v
+        },
         handleFocus () {
         },
 
@@ -226,6 +240,16 @@ export default {
     }
 }
 </script>
+
+<style>
+/* 只选小时 */
+.cusDate .el-time-spinner .el-time-spinner__wrapper{
+    width:100%
+}
+.cusDate .el-time-spinner .el-time-spinner__wrapper:nth-of-type(2) {
+    display: none;
+}
+</style>
 
 <style lang="scss">
 .my-autocomplete {
