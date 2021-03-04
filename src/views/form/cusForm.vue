@@ -165,6 +165,8 @@ export default {
         }, 3000)
 
         this.restaurants = this.loadAll()
+
+        // console.log(this.$utils.dictionary.getLocal('status', 1))
     },
 
     methods: {
