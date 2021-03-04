@@ -40,7 +40,6 @@ import UploadImgWrap from '@/components/uploadImgWrap'
 import BackHeader from '@/components/backHeader'
 import UploadFile from './UploadFile'
 import TreeWrap from './tree/TreeWrap.vue'
-import CusForm from './form/cusForm.vue'
 import DisplayHtmlText from './displayHtmlText'
 
 export default {
@@ -51,7 +50,6 @@ export default {
         UploadImgWrap,
         TreeWrap,
         UploadFile,
-        CusForm,
         DisplayHtmlText,
     },
 

@@ -5,13 +5,15 @@
         <div>
             <p>
                 使用icon 图标
-                <a href="https://www.iconfont.cn/help/detail?spm=a313x.7781069.1998910419.d8cf4382a&helptype=code" style="color:blue" target="_blank">参考链接</a>
+                <a href="https://www.iconfont.cn/help/detail?spm=a313x.7781069.1998910419.d8cf4382a&helptype=code" style="color:blue">参考链接</a>
             </p>
             <div>
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-shoutao"></use>
                 </svg>
             </div>
+            <div id="container"></div>
+
         </div>
     </div>
 </template>
@@ -33,10 +35,6 @@ export default {
 </script>
 
 <style scoped>
-#get{
-    /* display:flex; */
-    /* transform: translateX(90px) */
-}
 .icon {
     width: 1em; height: 1em;
     vertical-align: -0.15em;

@@ -40,3 +40,20 @@ pre{
     border-radius: 3px;
     background-color: rgb(245, 245, 248);
 }
+
+/* 处理多级菜单，折叠时问题 */
+/* 隐藏文字 */
+.el-menu--collapse  .el-submenu__title span{
+    display: none;
+}
+/* 隐藏 > */
+.el-menu--collapse  .el-submenu__title .el-submenu__icon-arrow{
+    display: none;
+}
+/* 一级菜单的文字隐藏 */
+.el-menu--collapse .el-menu-item {
+    color: transparent !important;
+    i{
+        color: #fff !important;
+    }
+}

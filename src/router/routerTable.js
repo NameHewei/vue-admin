@@ -1,5 +1,6 @@
 import menu from './modules/menu'
 import table from './modules/table'
+import form from './modules/form'
 
 import Login from '@/views/login/Login.vue'
 import Home from '@/layout/home.vue'
@@ -45,6 +46,7 @@ export const root = [
 export const routerTable = [
     ...menu,
     ...table,
+    ...form,
     {
         /**
          * @des 要在菜单可点击的路由，保持path值和name值一致，以便于页面刷新后保持菜单的选择状态
