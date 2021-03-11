@@ -16,7 +16,18 @@ export default new Vuex.Store({
          * @des 直接调用下面属性，参考 Login.vue
          */
         projectName: 'vueAdmin',
-        someKey: 'someKey'
+        someKey: 'someKey',
+        /* 数据字典 */
+        dictionary: {}
+    },
+
+    getters: {
+        getDictionary: state => (key, value) => {
+            if (value) {
+                return state.dictionary[key].find(item => item.value === value)
+            }
+            return state.dictionary[key]
+        }
     },
 
     mutations: {
@@ -34,6 +45,10 @@ export default new Vuex.Store({
 
         setSomeKey (state, data) {
             state.someKey = data
+        },
+
+        DICTIONARY (state, data) {
+            state.dictionary[data.key] = data.data
         }
     },
     actions: {
@@ -46,7 +61,7 @@ export default new Vuex.Store({
          * 1. 如果在action中调用另一个action，就要用dispatch
          * 2. action 方法执行后 返回的也是一个 Promise，所以在组件中调用 action 方法获取服务器数据，可以用 async 和 await 处理，保证数据已经从服务器获取成功
          * 3. dispatch 返回的也是 Promise
-         * 3. 如果是统一获取数据放入store中，不推荐在App.vue中统一获取数据，因为有些接口需要登录验证，这里是早于登录页面先加载的，会导致登录页面无法正常加载
+         * 4. 如果是统一获取数据放入store中，不推荐在App.vue中统一获取数据，因为有些接口需要登录验证，这里是早于登录页面先加载的，会导致登录页面无法正常加载
          */
         actionSetProjectName (context, data) {
             context.commit('setProjectName', data || 'vueAdmin change action')
@@ -56,6 +71,10 @@ export default new Vuex.Store({
 
         actionSetSomeKey (context, data) {
             context.commit('setSomeKey', data)
+        },
+
+        actionGetDictionary ({ commit }, data) {
+            commit('DICTIONARY', data)
         }
     },
 })

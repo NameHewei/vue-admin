@@ -3,6 +3,7 @@ const Mock = require('mockjs')
 const { getDomain } = require('@/utils/common')
 
 const user = require('./modules/user')
+const common = require('./modules/common')
 
 Mock.setup({
     timeout: 400
@@ -21,6 +22,7 @@ const preUrl = (url, reg) => {
 
 const mockRequestList = [
     ...user,
+    ...common
 ]
 
 exports.mockHttpServer = function () {

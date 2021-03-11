@@ -1,8 +1,6 @@
-import Cookies from 'js-cookie'
-
 /**
  * 判断当前环境域名,返回对应的接口地址
- *  */
+ */
 export const getDomain = () => {
     let domain = ''
     const product = ''
@@ -17,7 +15,9 @@ export const getDomain = () => {
     return domain
 }
 
-/* 获取数组的交集 */
+/**
+ * @des 获取数组的交集
+ */
 export const arrayIntersection = (r1, r2) => {
     const a = [...new Set(r1)]
     const b = [...new Set(r2)]
@@ -25,6 +25,28 @@ export const arrayIntersection = (r1, r2) => {
     return a.filter(v => b.includes(v))
 }
 
+/**
+ * @des 获取 queryString 转换为对象
+ */
+export function queryStringToObj (str) {
+    str = str || 'xxxx/xx?a=1&b=2'
+
+    const regExp = /(?:\?|&)([^&]*)/g
+    let result = ''
+    const arr = []
+
+    while ((result = regExp.exec(str)) !== null) {
+        const kv = result[1].split('=')
+        const obj = {}
+        obj[kv[0]] = kv[1]
+        arr.push(obj)
+    }
+
+    return arr
+}
+/**
+ * @des 将对象转换为 queryString
+ */
 export function formatToQueryString (obj) {
     // format the object as a queryString
     const temp = []
@@ -38,30 +60,8 @@ export function formatToQueryString (obj) {
 }
 
 /**
- * @des 获取字典值，或返回字典
- * @param {Array} params 第一个值：zid 第二个值：某一项的键值
+ * @des 格式化时间
  */
-export const handleDictionary = (...params) => {
-    const reFn = (o) => {
-        if (params.length === 1) {
-            return o
-        } else {
-            if (o instanceof Array && typeof o[0] === 'object') {
-                return o.find(v => v.key === params[1]) || {}
-            } else {
-                return o[params[1]]
-            }
-        }
-    }
-    const commandObj = {
-        val1: () => (reFn(['0', '1'])),
-        val2: () => (reFn({ a: 'a', b: 'b', c: 'c', d: 'd' })),
-        val3: () => (reFn([{ key: 0, value: 'data-1' }, { key: 2, value: 'data-2' }]))
-    }
-
-    return commandObj[params[0]]()
-}
-
 export function formatTime (dateString, type) {
     if (dateString) {
         type = type || 'precisionM'
@@ -90,16 +90,9 @@ export function formatTime (dateString, type) {
     }
 }
 
-export const cookieMethods = {
-    get (name) {
-        return Cookies.get(name)
-    },
-
-    set (name, value) {
-        Cookies.set(name, value)
-    }
-}
-
+/**
+ * @des 高德地图异步按需加载
+ */
 export const aMapLoad = () => {
     if (window.AMap) {
         return new Promise((resolve) => {

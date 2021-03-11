@@ -20,10 +20,7 @@
             <h3> 搜索组件 </h3>
             <SearchWrap :searchOptions="searchOptions" @callback="handleCallback" inline withoutLabel></SearchWrap>
         </div>
-        <div class="part">
-            <h3>树组件</h3>
-            <TreeWrap></TreeWrap>
-        </div>
+
         <div class="part">
             <h3>表单</h3>
             <CusForm></CusForm>
@@ -39,7 +36,6 @@ import ExportWrap from '@/components/exportWrap'
 import UploadImgWrap from '@/components/uploadImgWrap'
 import BackHeader from '@/components/backHeader'
 import UploadFile from './UploadFile'
-import TreeWrap from './tree/TreeWrap.vue'
 import DisplayHtmlText from './displayHtmlText'
 
 export default {
@@ -48,7 +44,6 @@ export default {
         BackHeader,
         ExportWrap,
         UploadImgWrap,
-        TreeWrap,
         UploadFile,
         DisplayHtmlText,
     },

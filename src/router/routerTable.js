@@ -82,6 +82,7 @@ export const routerTable = [
         component: Home,
         meta: { title: '常用组件', icon: 'el-icon-location', menu: true, roles: ['ADMIN'] },
         children: [
+            { path: 'tree', name: 'tree', component: () => import('@/views/allComponents/tree/tree'), meta: { title: 'tree', roles: ['ADMIN'], menu: true } },
             { path: 'allComponents', name: 'allComponents', component: AllComponents, meta: { title: '所有', roles: ['ADMIN'], menu: true } },
         ]
     },

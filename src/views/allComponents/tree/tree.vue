@@ -1,8 +1,12 @@
 <template>
     <div>
+        <div class="part">
+            <h3>树组件</h3>
+        </div>
         <el-checkbox v-model="checkedAll" @change="handleCheckAllChange">全选</el-checkbox>
         <pre>
             :expand-on-click-node  是否在点击节点的时候展开或者收缩节点， 默认值为 true
+            点击每一级，单次点击是选中，再次点击取消选中 实现产看 handleClick 方法
         </pre>
         <el-tree
             show-checkbox
@@ -10,8 +14,10 @@
             ref="elTree"
             node-key="id"
             check-strictly
+            highlight-current
             :data="treeData"
             :props="defaultProps"
+            @node-click="handleClick"
             @check="handleCurrentChange"
         >
         </el-tree>
@@ -108,7 +114,9 @@ export default {
             /** @des 所有选项的id */
             ids: [],
             halfIds: [],
-            cusChecked: []
+            cusChecked: [],
+            /* 当前选中节点 */
+            currentClickId: ''
         }
     },
 
@@ -150,6 +158,18 @@ export default {
             this.halfIds = []
             this.checked = arr
             this.$refs.elTree.setCheckedKeys(arr)
+        },
+
+        handleClick (v) {
+            /* 保证每一项单选  注意设置 highlight-current 高亮 */
+            if (v.id === this.currentClickId) {
+                this.$nextTick(() => {
+                    this.$refs.elTree.setCurrentKey(null)
+                })
+                this.currentClickId = ''
+            } else {
+                this.currentClickId = v.id
+            }
         },
 
         handleCurrentChange (v, a) {
@@ -203,5 +223,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.part {
+    border-top: 2px solid #eee;
+    h3 {
+        padding: 6px;
+        border-left: solid 2px rgb(214, 214, 214);
+        font-size: 16px;
+        font-weight: 500;
+        color: rgb(110, 110, 110);
+        background-color: rgb(238, 238, 238);
+    }
+}
 </style>

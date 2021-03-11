@@ -166,7 +166,11 @@ export default {
 
         this.restaurants = this.loadAll()
 
-        // console.log(this.$utils.dictionary.getLocal('status', 1))
+        console.warn('本地字典', this.$utils.dictionary.getLocal('status', 11))
+
+        this.$utils.dictionary.getRemote('STATUS', 2).then((res) => {
+            console.warn('服务器字典', res)
+        })
     },
 
     methods: {

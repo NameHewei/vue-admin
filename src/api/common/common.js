@@ -8,6 +8,9 @@ export function upgradeReqGetId (params) { return request({ url: '/api/res/:id/'
 export function upgradeReqPost (params) { return request({ url: '/api/res/post/', method: 'post', params }) }
 export function upgradeReqPut (params) { return request({ url: '/api/res/put/', method: 'put', params }) }
 
+/* 获取字典 */
+export function reqGetDictionary (params) { return request({ url: '/mock/dictionary', params }) }
+
 export function getNames () {
     return request({
         url: '/api/names/'

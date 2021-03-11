@@ -1,11 +1,11 @@
 import router from './router/router'
 import store from './store/store'
-import utils from '@/utils/index.js'
+import jsCookie from 'js-cookie'
 import { reqUserInfo } from '@/api/user/user.js'
 
 router.beforeEach(async (to, from, next) => {
     const currentPath = to.path
-    const token = utils.cookieMethods.get('token')
+    const token = jsCookie.get('token')
     if (token) {
         if (currentPath === '/login') {
             // 如果是进入登录页面不需要进行校验
