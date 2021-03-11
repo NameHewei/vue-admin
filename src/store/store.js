@@ -22,10 +22,7 @@ export default new Vuex.Store({
     },
 
     getters: {
-        getDictionary: state => (key, value) => {
-            if (value) {
-                return state.dictionary[key].find(item => item.value === value)
-            }
+        getDictionary: state => (key) => {
             return state.dictionary[key]
         }
     },
