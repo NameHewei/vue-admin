@@ -11,7 +11,7 @@ Mock.setup({
 
 // console.warn(process.env.NODE_ENV)
 const preUrl = (url, reg) => {
-    url = `${getDomain()}/mock${url}`
+    url = `${getDomain()}${url}`
     /* url 是否采用正则匹配，一般用于get请求在url传递参数 */
     if (reg) {
         url = url.replace(/\//g, '\\/')

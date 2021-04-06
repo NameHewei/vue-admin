@@ -2,7 +2,7 @@ const { queryStringToObj } = require('@/utils/common')
 
 module.exports = [
     {
-        url: '/dictionary',
+        url: '/api/mock/dictionary',
         data: [{ value: 1, label: '状态一' }, { value: 2, label: '状态二' }],
         method: 'get',
         reg: true,

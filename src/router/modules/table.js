@@ -11,6 +11,6 @@ export default [{
     children: [
         { path: 'tableWrap', name: 'tableWrap', component: TableWrap, meta: { title: '表格', menu: true, roles: ['ADMIN'] } },
         { path: 'edit/:id', name: 'pageEdit', component: CudPage, meta: { roles: ['ADMIN'] } },
-        { path: 'tableMerge', name: 'tableMerge', component: () => import('@/views/table/tableMerge/tableMerge.vue'), meta: { title: '表格合并', menu: true, roles: ['ADMIN'] } },
+        { path: 'tableMerge', name: 'tableMerge', component: () => import('@/views/table/tableMerge/tableMerge.vue'), meta: { title: '表格合并', menu: true, roles: ['ADMIN'] } }
     ]
 }]

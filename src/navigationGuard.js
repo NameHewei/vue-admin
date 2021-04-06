@@ -24,7 +24,7 @@ router.beforeEach(async (to, from, next) => {
                 } catch (error) {
                     /* 没有获取到信息，即可能登录超时，无法获取用户信息，所以跳转登录页面 */
                     next({ path: '/login' })
-                    console.error('beforeEach catch error:', error)
+                    console.error('beforeEach catch error【in navigationGuard.js】:', error)
                 }
             } else {
                 next()

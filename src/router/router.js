@@ -73,7 +73,10 @@ const getMenu = (currentAccountRoles) => {
 }
 
 export const permitRouters = function (currentAccountRoles) {
-    router.addRoutes([...root, ...getPermitRouters(currentAccountRoles)])
+    const arr = [...root, ...getPermitRouters(currentAccountRoles)]
+    arr.forEach(rc => {
+        router.addRoute(rc)
+    })
 }
 
 /**

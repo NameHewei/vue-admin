@@ -1,6 +1,7 @@
 import menu from './modules/menu'
 import table from './modules/table'
 import form from './modules/form'
+import flow from './modules/flow'
 
 import Login from '@/views/login/Login.vue'
 import Home from '@/layout/home.vue'
@@ -39,7 +40,13 @@ export const baseRouter = [
 ]
 
 export const root = [
-    { path: '/', component: Home, children: [{ path: '', name: 'welcome', component: () => import('@/views/welcome/welcome.vue'), roles: ['ADMIN'] }] }
+    {
+        path: '/',
+        component: Home,
+        children: [
+            { path: 'a', name: 'welcome', component: () => import('@/views/welcome/welcome.vue'), roles: ['ADMIN'] }
+        ]
+    }
 ]
 
 // 路由表
@@ -47,6 +54,7 @@ export const routerTable = [
     ...menu,
     ...table,
     ...form,
+    ...flow,
     {
         /**
          * @des 要在菜单可点击的路由，保持path值和name值一致，以便于页面刷新后保持菜单的选择状态

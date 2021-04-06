@@ -90,6 +90,7 @@ export default {
              * 这里是将原始数据直接返回，以便于不同义务需要不同的数据
              */
             this.$nextTick(() => {
+                /* 这里如果是单选，这里不用 filter  直接用获取到的数组的第一个值 */
                 this.$emit('selected', { type: 'change', value: this.$refs.refCas.getCheckedNodes().filter(v => v.checked) })
             })
         },

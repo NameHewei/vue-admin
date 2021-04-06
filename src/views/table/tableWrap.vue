@@ -1,19 +1,27 @@
 <template>
     <div>
         <p>使用树形数据与懒加载时，删除某条数据，防止列表不更新，可以采用在 table 上绑定 v-if 重新渲染绑定table上的数据</p>
+        <pre>
+            表格单选时去掉全选勾选框
+            ::v-deep .el-table__header-wrapper  .el-checkbox{
+                display:none
+            }
+        </pre>
         <CusTable @callback="handleTableCallback" :total=total>
             <template #header>
                 <el-button type="primary" @click="handleCreate">弹窗新增</el-button>
                 <el-button type="primary" @click="handleBatch('publish')">批量发布</el-button>
                 <el-button type="primary" @click="handleBatch('offline')">批量下线</el-button>
                 <el-button type="danger" @click="handleBatch('del')">批量删除</el-button>
+                <el-checkbox v-model="singleChoise" style="margin-left:20px">表格单选</el-checkbox>
             </template>
             <el-table
+                ref='refTable'
                 border
                 v-loading="loading"
                 style="width: 100%"
                 :data="tableData"
-                @selection-change="handleSelectionChange"
+                @select="handleSelectChange"
             >
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column fixed prop="date" label="序号">
@@ -63,7 +71,9 @@ export default {
         return {
             show: false,
             id: '1111',
-            selectOptions: [1, 2, 3]
+            selectOptions: [1, 2, 3],
+            singleChoise: false,
+            selected: null
         }
     },
 
@@ -131,6 +141,23 @@ export default {
             /* 这里只处理成功之后的一些操作 */
             this.show = false
             if (value) this.getTableData()
+        },
+
+        /* 选择触发方法 */
+        handleSelectChange (selection, row) {
+            if (this.singleChoise) {
+                if (selection.length) {
+                    selection.forEach(r => {
+                        this.$refs.refTable.toggleRowSelection(r, row.id === r.id)
+                    })
+                    this.selected = row
+                } else {
+                    /* 取消勾选需要将该值置空 */
+                    this.selected = null
+                }
+            } else {
+                this.multipleSelection = selection.map(({ id }) => id)
+            }
         },
 
         handleDeleteCb (v) {

@@ -16,7 +16,7 @@ const httpService = axios.create({
 })
 
 httpService.interceptors.request.use((cfg) => {
-    const { url, method, params, data } = cfg
+    const { url, method, params, data, commonPre = '/api' } = cfg
 
     /* 重置或配置 headers 的值 */
     cfg.headers.uuid = uuIdV1().replace(/-/g, '')
@@ -47,7 +47,8 @@ httpService.interceptors.request.use((cfg) => {
      * @des 如果没有配置反向代理，可直接加地址
      */
     // console.log('NODE_ENV', process.env.NODE_ENV)
-    cfg.baseURL = getDomain()
+    /* 公共前缀默认 api */
+    cfg.baseURL = `${getDomain()}${commonPre}`
 
     return cfg
 }, (error) => {
@@ -92,5 +93,11 @@ httpService.interceptors.response.use((res) => {
     }
     return Promise.reject(error)
 })
+
+/* 公共前缀 */
+export const httpCommonManage = (params) => {
+    params.commonPre = '/some'
+    return httpService(params)
+}
 
 export default httpService

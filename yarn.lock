@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+"@antv/x6@^1.18.1":
+  version "1.18.1"
+  resolved "https://registry.npm.taobao.org/@antv/x6/download/@antv/x6-1.18.1.tgz#23316d6235f03b09b22c287830ff4af763f6f7fe"
+  integrity sha1-IzFtYjXwOwmyLCh4MP9K92P29/4=
+  dependencies:
+    csstype "^3.0.3"
+    jquery "^3.5.1"
+    jquery-mousewheel "^3.1.13"
+    lodash-es "^4.17.15"
+    mousetrap "^1.6.5"
+    utility-types "^3.10.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.1":
   version "7.10.1"
   resolved "https://registry.npm.taobao.org/@babel/code-frame/download/@babel/code-frame-7.10.1.tgz?cache=0&sync_timestamp=1590617374675&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fcode-frame%2Fdownload%2F%40babel%2Fcode-frame-7.10.1.tgz#d5481c5095daa1c57e16e54c6f9198443afb49ff"
@@ -2845,6 +2857,11 @@ csso@^4.0.2:
   dependencies:
     css-tree "1.0.0-alpha.39"
 
+csstype@^3.0.3:
+  version "3.0.7"
+  resolved "https://registry.npm.taobao.org/csstype/download/csstype-3.0.7.tgz#2a5fb75e1015e84dd15692f71e89a1450290950b"
+  integrity sha1-Kl+3XhAV6E3RVpL3HomhRQKQlQs=
+
 cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/cyclist/download/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
@@ -5015,6 +5032,16 @@ jest-worker@^25.4.0:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
+jquery-mousewheel@^3.1.13:
+  version "3.1.13"
+  resolved "https://registry.npm.taobao.org/jquery-mousewheel/download/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
+  integrity sha1-BvAzXxbjU6aV5yBr9QUDy1I6buU=
+
+jquery@^3.5.1:
+  version "3.6.0"
+  resolved "https://registry.npm.taobao.org/jquery/download/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
+  integrity sha1-xyoJ8Vwb3OFC9J2/EXC9+K2sJHA=
+
 js-cookie@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
@@ -5294,6 +5321,11 @@ locate-path@^5.0.0:
   integrity sha1-Gvujlq/WdqbUJQTQpno6frn2KqA=
   dependencies:
     p-locate "^4.1.0"
+
+lodash-es@^4.17.15:
+  version "4.17.21"
+  resolved "https://registry.npm.taobao.org/lodash-es/download/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha1-Q+YmxG5lkbd1C+srUBFzkMYJ4+4=
 
 lodash.defaultsdeep@^4.6.1:
   version "4.6.1"
@@ -5649,6 +5681,11 @@ mockjs@^1.1.0:
   integrity sha512-eQsKcWzIaZzEZ07NuEyO4Nw65g0hdWAyurVol1IPl1gahRwY+svqzfgfey8U8dahLwG44d6/RwEzuK52rSa/JQ==
   dependencies:
     commander "*"
+
+mousetrap@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.npm.taobao.org/mousetrap/download/mousetrap-1.6.5.tgz#8a766d8c272b08393d5f56074e0b5ec183485bf9"
+  integrity sha1-inZtjCcrCDk9X1YHTgtewYNIW/k=
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -8455,6 +8492,11 @@ utila@^0.4.0, utila@~0.4:
   version "0.4.0"
   resolved "https://registry.npm.taobao.org/utila/download/utila-0.4.0.tgz#8a16a05d445657a3aea5eecc5b12a4fa5379772c"
   integrity sha1-ihagXURWV6Oupe7MWxKk+lN5dyw=
+
+utility-types@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.npm.taobao.org/utility-types/download/utility-types-3.10.0.tgz#ea4148f9a741015f05ed74fd615e1d20e6bed82b"
+  integrity sha1-6kFI+adBAV8F7XT9YV4dIOa+2Cs=
 
 utils-merge@1.0.1:
   version "1.0.1"

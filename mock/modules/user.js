@@ -1,6 +1,6 @@
 module.exports = [
     {
-        url: '/login',
+        url: '/api/mock/login',
         data: { token: 'token-admin' },
         method: 'post',
         /* 这里要用 this 取 data 所以没有用箭头函数 */
@@ -14,7 +14,7 @@ module.exports = [
         }
     },
     {
-        url: '/user/info',
+        url: '/api/mock/user/info',
         data: {
             roles: ['ADMIN'],
             name: 'hew',

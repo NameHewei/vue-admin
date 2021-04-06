@@ -12,7 +12,7 @@ export default [{
             component: Home,
             meta: { title: '1-1', menu: true, roles: ['ADMIN'] },
             children: [
-                { path: 'infinityMenu', name: 'infinity11', component: Home, meta: { title: '1-1-1', menu: true, roles: ['ADMIN'] } },
+                { path: 'infinityMenu/i1', name: 'infinity11', component: Home, meta: { title: '1-1-1', menu: true, roles: ['ADMIN'] } }
             ]
         },
     ]

@@ -5,9 +5,10 @@
         </div>
         <el-checkbox v-model="checkedAll" @change="handleCheckAllChange">全选</el-checkbox>
         <pre>
-            :expand-on-click-node  是否在点击节点的时候展开或者收缩节点， 默认值为 true
-            点击每一级，单次点击是选中，再次点击取消选中 实现产看 handleClick 方法
+            1. :expand-on-click-node  是否在点击节点的时候展开或者收缩节点， 默认值为 true
+            2. 点击每一级，单次点击是选中，再次点击取消选中 实现产看 handleClick 方法
         </pre>
+        <el-button type="primary" size="mini" @click="handleClickLine">选中节点 二级 4</el-button>
         <el-tree
             show-checkbox
             default-expand-all
@@ -29,9 +30,9 @@
             <h4>半选中：</h4>
             <p>{{ halfIds.toString() }}</p>
         </div>
-        <hr/>
-         <h4>结果：</h4>
+        <h4>结果：</h4>
         <p>{{ checked.toString() }}</p>
+        <hr/>
         <div>
             <h1>自定义设置，父子关联</h1>
             <pre>
@@ -148,6 +149,11 @@ export default {
             this.checked = initIds
             /* 如果设置了父id 又没有设置 父子不互相关联 那子一级将被全部选中 */
             this.$refs.elTree.setCheckedKeys(initIds)
+        },
+
+        handleClickLine () {
+            /* 一定要保证在tree 渲染完后执行 */
+            this.$refs.elTree.setCurrentKey(4)
         },
 
         handleCheckAllChange (val) {

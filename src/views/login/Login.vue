@@ -45,8 +45,8 @@ export default {
             MD5SHA1: '',
             eyeStatus: false,
             formData: {
-                username: '',
-                password: ''
+                username: 'hew',
+                password: '123456'
             },
             rules: {
                 username: [
