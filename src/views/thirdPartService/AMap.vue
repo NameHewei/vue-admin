@@ -67,6 +67,10 @@ export default {
                 zoom: 12
             })
 
+            /* 设置自定义样式,  具体用法参考： https://lbs.amap.com/demo/javascript-api/example/personalized-map/set-theme-style */
+            const styleName = 'amap://styles/macaron'
+            map.setMapStyle(styleName)
+
             const toolBar = new AMap.ToolBar({
                 visible: false
             })
@@ -239,7 +243,7 @@ export default {
             const marker = new AMap.Marker({
                 icon: icon,
                 position: [104.0689, 30.554876],
-                // 偏移的位置，这只为图标size的一半较好
+                // 偏移的位置，设置为图标size的一半较好
                 offset: new AMap.Pixel(-20, -20)
             })
             marker.setMap(this.map)
@@ -367,6 +371,15 @@ export default {
 </script>
 
 <style scoped type="text/scss" lang="scss">
+    ::v-deep{
+        /* 处理高德地图图标 */
+        .amap-logo{
+            display: none !important;
+        }
+        .amap-copyright{
+            display: none !important;
+        }
+    }
     .draw-area{
         position: relative;
         width: 100%;

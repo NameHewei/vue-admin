@@ -3,6 +3,11 @@
         <div>
             <el-button type="primary" @click="exportChart">导出图片(也可以采用toolbox方式)</el-button>
         </div>
+
+        <h2>异步数据</h2>
+        <div id="lineASync" style="width: 600px; height: 400px"></div>
+
+        <h2>折线图</h2>
         <div id="line" style="width: 600px; height: 400px"></div>
     </div>
 </template>
@@ -18,9 +23,51 @@ export default {
 
     mounted () {
         this.initLine()
+
+        this.asyncData()
     },
 
     methods: {
+        /* 异步数据处理示例 */
+        asyncData () {
+            const myChart = this.$eCharts.init(document.getElementById('lineASync'), null, {
+                renderer: 'canvas'
+            })
+            myChart.setOption({
+                title: {
+                    text: '异步数据加载示例'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['销量']
+                },
+                xAxis: {
+                    data: []
+                },
+                yAxis: {},
+                series: [{
+                    name: '销量',
+                    type: 'bar',
+                    data: []
+                }]
+            })
+
+            myChart.showLoading()
+            setTimeout(() => {
+                myChart.hideLoading()
+                myChart.setOption({
+                    xAxis: {
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    },
+                    series: [{
+                        // 根据名字对应到相应的系列
+                        name: '销量',
+                        data: [150, 230, 224, 218, 135, 147, 260],
+                    }]
+                })
+            }, 3000)
+        },
+
         exportChart () {
             const aEle = document.createElement('a')
             aEle.href = this.myChart.getDataURL({
@@ -38,6 +85,7 @@ export default {
             document.body.appendChild(aEle)
             aEle.click()
         },
+
         initLine () {
             const myChart = this.$eCharts.init(document.getElementById('line'), null, {
                 renderer: 'canvas'
@@ -49,6 +97,8 @@ export default {
             })
             // 绘制图表
             myChart.setOption({
+                /** 调色盘颜色列表。如果系列没有设置颜色，则会依次循环从该列表中取颜色作为系列颜色。 */
+                // color: ['yellow'],
                 title: {
                     text: 'line',
                     textAlign: 'left',
@@ -81,30 +131,36 @@ export default {
                     /** grid 组件离容器上侧的距离 即绘制的图表距离容器四周的距离 */
                     top: 100,
                     bottom: 45,
+                    // grid 区域是否包含坐标轴的刻度标签
+                    // false 比较适用于多个 grid 进行对齐的场景，因为往往多个 grid 对齐的时候，是依据坐标轴来对齐的
                     containLabel: true
                 },
                 xAxis: {
+                    // z:1, // X 轴组件的所有图形的z值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖。参考bar
                     type: 'category',
                     axisLabel: {
                         /** 旋转x轴显示值 */
                         rotate: 60,
-                        textStyle: {
-                            fontSize: 14
-                        }
+                        fontSize: 14,
                     },
                     /* 设置坐标轴的显示隐藏与样式 */
                     axisLine: {
                         show: true,
                         symbol: 'arrow',
                         lineStyle: {
-                            color: '#48b',
+                            color: 'pink',
                             width: 2,
                             type: 'solid'
                         }
                     },
-                    /* 垂直与x轴的分割线 */
+                    /* 网格线 */
                     splitLine: {
-                        show: true
+                        show: true,
+                        // 分割线样式
+                        // lineStyle: {
+                        //     type: 'dashed',
+                        //     color: '#c0c0c0'
+                        // },
                     },
                     /* 坐标轴刻度相关设置 */
                     axisTick: {
@@ -144,6 +200,11 @@ export default {
                         data: [90, 80, 30, 30, 10, 30, 110],
                         type: 'line',
                         stack: 'st',
+                        /* 只要有是个属性就会显示面积区域 */
+                        areaStyle: {
+                            color: 'green',
+                            opacity: 0.1
+                        },
                         itemStyle: {
                             /** 修改的是图例颜色，线条颜色默认也会取该颜色 */
                             color: 'orange'
@@ -152,6 +213,9 @@ export default {
                         label: {
                             show: true
                         },
+                        /* 打点 */
+                        // markPoint
+                        /* 打线 */
                         markLine: {
                             lineStyle: {
                                 color: '#09f2b8'

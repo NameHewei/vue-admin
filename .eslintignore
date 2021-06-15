@@ -1,3 +1,4 @@
+# 要忽略检测的文件夹/文件
 node_modules/
 
 yarn-error.log

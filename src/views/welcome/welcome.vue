@@ -19,6 +19,7 @@
 </template>
 
 <script>
+// import { queryStringToObj } from '@/utils/common'
 export default {
     data () {
         return {
@@ -26,6 +27,7 @@ export default {
     },
 
     mounted () {
+        // console.log(queryStringToObj())
     },
 
     methods: {

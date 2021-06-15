@@ -44,7 +44,7 @@ export const root = [
         path: '/',
         component: Home,
         children: [
-            { path: 'a', name: 'welcome', component: () => import('@/views/welcome/welcome.vue'), roles: ['ADMIN'] }
+            { path: '', name: 'welcome', component: () => import('@/views/welcome/welcome.vue'), roles: ['ADMIN'] }
         ]
     }
 ]

@@ -3,9 +3,12 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
 import ElementUI from 'element-ui'
-import eCharts from 'echarts'
+import * as eCharts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
 import utils from './utils/index.js'
+
+// 流程自定义节点
+import './views/flow/node.js'
 
 // 自动全局挂载组件
 import './componentsAuto/index.js'

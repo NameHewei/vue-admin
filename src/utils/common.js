@@ -26,23 +26,21 @@ export const arrayIntersection = (r1, r2) => {
 }
 
 /**
- * @des 获取 queryString 转换为对象
+ * @des 获取 queryString 转换为对象 { a: 1, b: 2 }
  */
 export function queryStringToObj (str) {
     str = str || 'xxxx/xx?a=1&b=2'
 
     const regExp = /(?:\?|&)([^&]*)/g
     let result = ''
-    const arr = []
+    const obj = {}
 
     while ((result = regExp.exec(str)) !== null) {
         const kv = result[1].split('=')
-        const obj = {}
         obj[kv[0]] = kv[1]
-        arr.push(obj)
     }
 
-    return arr
+    return obj
 }
 /**
  * @des 将对象转换为 queryString

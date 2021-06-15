@@ -32,6 +32,7 @@ export default {
                 legend: {
                     /** 当图例过多时可以滚动起来 */
                     type: 'scroll',
+                    // 垂直图例
                     orient: 'vertical',
                     left: 'right',
                     top: 'center'
@@ -45,8 +46,9 @@ export default {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        /** 兰丁格尔图  以半径radius或面积area */
+                        /** 兰丁格尔图  以半径radius或面积area, 如果是area 则每一个占的角度一样 */
                         roseType: 'radius',
+                        // 半径 数组的第一项是内半径，第二项是外半径；只设置一个表示外半径
                         radius: '55%',
                         /** 饼图圆心位置 */
                         center: ['40%', '50%'],
@@ -58,16 +60,18 @@ export default {
                             { value: 1548, name: '搜索引擎' }
                         ],
                         label: {
+                            // 设置标注的文字样式和显示内容
+                            // color: '#fff',
+                            // lineHeight: 16,
+                            // formatter: '{b}\n{d}%',
                             show: true,
-                            /** inside outside */
+                            /** inside outside  在饼图内显示数据 */
                             position: 'outside'
                         },
-                        itemStyle: {
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
                         }
                     }
                 ]

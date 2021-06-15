@@ -1,6 +1,10 @@
 <template>
     <div>
+        <h2>柱状图</h2>
         <div id="main" style="width: 800px; height: 400px;background: #ededed"></div>
+
+        <h2>横向柱状图</h2>
+        <div id="mainCrosswise" style="width: 800px; height: 400px;background: #ededed"></div>
     </div>
 </template>
 
@@ -9,6 +13,8 @@ export default {
     name: 'CustomBar',
 
     mounted () {
+        this.setCrosswise()
+
         const myChart = this.$eCharts.init(document.getElementById('main'), null, {
             renderer: 'svg'
         })
@@ -16,10 +22,37 @@ export default {
             {
                 name: 'series-name',
                 type: 'bar',
+                /* 柱状图的宽度 */
+                barWidth: 30,
                 label: {
                     show: true
                 },
+                // 柱条样式
+                itemStyle: {
+                    color: new this.$eCharts.graphic.LinearGradient(
+                        0, 0, 0, 1,
+                        [
+                            { offset: 0, color: '#83bff6' },
+                            { offset: 0.5, color: '#188df0' },
+                            { offset: 1, color: '#188df0' }
+                        ]
+                    )
+                },
+                // 鼠标放上去  高亮柱条样式
+                emphasis: {
+                    itemStyle: {
+                        color: new this.$eCharts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                { offset: 0, color: '#2378f7' },
+                                { offset: 0.7, color: '#2378f7' },
+                                { offset: 1, color: '#83bff6' }
+                            ]
+                        )
+                    }
+                },
                 data: [5, 20, 36, 10, 10, 20],
+                // 箭头线
                 markLine: {
                     silent: true,
                     lineStyle: {
@@ -83,9 +116,15 @@ export default {
                 trigger: 'axis'
             },
             xAxis: {
+                // 利用 z 和 inside 将x轴的值显示到柱子上
+                z: 2,
                 data: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6'],
                 /** 是否显示x轴 */
-                show: true
+                show: true,
+                axisLabel: {
+                    fontSize: 14,
+                    inside: true,
+                },
             },
             yAxis: {},
             series: sData
@@ -93,6 +132,53 @@ export default {
 
         // 绘制图表
         myChart.setOption(option)
+    },
+
+    methods: {
+        setCrosswise () {
+            const myChart = this.$eCharts.init(document.getElementById('mainCrosswise'), null, {
+                renderer: 'svg'
+            })
+
+            myChart.setOption({
+                xAxis: {
+                    // 坐标轴刻度最大值
+                    // 可以设置成特殊值 'dataMax'，此时取数据在该轴上的最大值作为最大刻度
+                    max: 'dataMax',
+                    // 坐标轴两边留白策略，类目轴和非类目轴的设置和表现不一样
+                    // boundaryGap: [],
+                },
+                yAxis: {
+                    type: 'category',
+                    data: ['A类', 'B', 'C', 'D', 'E'],
+                    // 是否是反向坐标轴
+                    inverse: true,
+                    animationDuration: 300,
+                    animationDurationUpdate: 300,
+                    // 如果是类目轴，数值表示显示多少条类目数据，如果值为 n ，显示 n+1 条类目数据
+                    // max: 3
+                },
+                series: [{
+                    realtimeSort: true,
+                    name: 'X',
+                    type: 'bar',
+                    data: [100, 520, 90, 199, 256],
+                    label: {
+                        show: true,
+                        position: 'inside',
+                    }
+                }],
+                legend: {
+                    show: false
+                },
+                // 这里如果要在柱状条里面显示值 需要将animation设置为false 或 animationDuration 设置为 0 否者不会正常显示
+                animation: false,
+                animationDuration: 0,
+                animationDurationUpdate: 3000,
+                animationEasing: 'linear',
+                animationEasingUpdate: 'linear'
+            })
+        }
     }
 }
 </script>

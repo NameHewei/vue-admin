@@ -8,6 +8,8 @@ Vue.directive('permission', {
         const permission = ['2012'].includes(binding.value)
         el.innerHTML = permission ? '有权限' : '无权限'
         if (!permission) {
+            // 隐藏
+            // el.setAttribute('style', 'display:none')
             el.setAttribute('disabled', true)
         }
     }
