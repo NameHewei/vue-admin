@@ -41,27 +41,25 @@ export default {
 
     created () {
         this.menu = permitMenu(this.roles)
-        this.initOpen()
     },
 
     computed: {
         ...mapState(['menuCollapse']),
         ...mapState('user', ['roles']),
+
+        active () {
+            const r = this.$route
+            const { name } = r
+            this.initOpen()
+            return name
+        }
     },
 
     methods: {
         initOpen () {
-            const { path, meta, name } = this.$route
+            const { path } = this.$route
             const openPath = path === '/' ? [] : path.slice(1).split('/')
             this.open = openPath
-
-            /* 利用路由中配置active */
-            if (meta && meta.active) {
-                this.active = meta.active
-            } else {
-                /* 最好是放弃该方式， 使用meta配置 */
-                this.active = name
-            }
         },
 
         goIndex () {
